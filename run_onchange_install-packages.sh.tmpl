@@ -1,0 +1,12 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+set -eu
+
+# packages hash: {{ .packages.arch | toString | sha256sum }}
+
+sudo pacman -S --needed --noconfirm {{ range .packages.arch.pacman }}{{ . }} {{ end }}
+
+{{ if .packages.arch.aur -}}
+paru -S --needed --noconfirm {{ range .packages.arch.aur }}{{ . }} {{ end }}
+{{ end -}}
+{{ end -}}

@@ -1,0 +1,10 @@
+packages:
+  arch:
+    pacman:
+      - zsh
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
+      - neovim
+      - git
+      - lua-language-server
+    aur:
