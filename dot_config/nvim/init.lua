@@ -1,6 +1,6 @@
--- Line numbers
-vim.o.number = true -- absolute line number on the current line
-vim.o.relativenumber = true -- relative file numbers so it's easier to jump around
+require("vim._core.ui2").enable({})
+
+require('options')
 
 -- Search
 vim.o.ignorecase = true -- Ignore the case when searching...
@@ -30,3 +30,4 @@ vim.lsp.config('lua_ls', {
   },
 })
 vim.lsp.enable('lua_ls')
+
