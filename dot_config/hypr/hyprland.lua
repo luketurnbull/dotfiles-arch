@@ -1,7 +1,46 @@
--- Variables
-local mainMod = "SUPER"
-local terminal = "ghostty"
-local browser = "zen-browser"
+-- Look and feel
+hl.config({
+  general = {
+    gaps_in = 4,
+    gaps_out = 3,
+
+    border_size = 2,
+
+    col = {
+      active_border = { colors = {"rgba(33ccffee)"}, angle = 45 },
+      inactive_border = "rgba(595959aa)",
+    },
+
+    layout = "dwindle",
+  },
+
+  decoration = {
+    -- rounding = 10,
+    -- rounding_power = 2,
+    active_opacity = 0.95,
+    inactive_opacity = 0.85,
+
+    shadow = {
+      enabled = false,
+      range = 4,
+      render_power = 3,
+      color = 0xee1a1a1a,
+    },
+
+    blur = {
+      enabled = true,
+      size = 9,
+      passes = 3,
+    },
+  },
+})
+    
+hl.config({
+  misc = {
+    force_default_wallpaper = -1,
+    disable_hyprland_logo = false,
+  },
+})
 
 -- Monitor: use 'hyprctl monitors` to get the real monitior details
 hl.monitor({
@@ -11,6 +50,10 @@ hl.monitor({
   scale     = 1,
 })
 
+-- Variables
+local mainMod = "SUPER"
+local terminal = "ghostty"
+local browser = "zen-browser"
 -- Keybinds
 -- Open Windows
 -- Terminal
@@ -47,4 +90,10 @@ hl.bind(mainMod .. " + M", hl.dsp.exit())
 -- Float window
 hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
 
+-- Windows and Workspaces
+hl.window_rule({
+  name = "supress-maximize-events",
+  match = { class = ".*" },
+  suppress_event = "maximize",
+})
 
