@@ -1,39 +1,4 @@
--- Look and feel
-hl.config({
-  general = {
-    gaps_in = 2,
-    gaps_out = 2,
-
-    border_size = 2,
-
-    col = {
-      active_border = { colors = {"rgba(33ccffee)"}, angle = 45 },
-      inactive_border = "rgba(595959aa)",
-    },
-
-    layout = "dwindle",
-  },
-
-  decoration = {
-    -- rounding = 10,
-    -- rounding_power = 2,
-    active_opacity = 0.92,
-    inactive_opacity = 0.80,
-
-    shadow = {
-      enabled = false,
-      range = 4,
-      render_power = 3,
-      color = 0xee1a1a1a,
-    },
-
-    blur = {
-      enabled = true,
-      size = 9,
-      passes = 4,
-    },
-  },
-})
+require("appearance")
 
 hl.curve("easy", { type = "spring", mass = 1, stiffness = 70, dampening = 15 })
 hl.animation({ leaf = 'windows', enabled = true, speed = 1, spring = "easy" })
@@ -63,6 +28,7 @@ hl.on("hyprland.start", function ()
   hl.exec_cmd("systemctl enable --user app-com.mitchellh.ghostty.service")
   hl.exec_cmd("clipse -listen")
   hl.exec_cmd("bitwarden-desktop --ozone-platform-hint=auto")
+  hl.exec_cmd("hyprpaper")
 end)
 
 -- Keybinds
