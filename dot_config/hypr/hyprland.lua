@@ -17,8 +17,8 @@ hl.config({
   decoration = {
     -- rounding = 10,
     -- rounding_power = 2,
-    active_opacity = 0.95,
-    inactive_opacity = 0.85,
+    active_opacity = 0.92,
+    inactive_opacity = 0.80,
 
     shadow = {
       enabled = false,
@@ -35,6 +35,9 @@ hl.config({
   },
 })
     
+hl.curve("easy", { type = "spring", mass = 1, stiffness = 70, dampening = 15 })
+hl.animation({ leaf = 'windows', enabled = true, speed = 2, spring = "easy" })
+
 hl.config({
   misc = {
     force_default_wallpaper = -1,
