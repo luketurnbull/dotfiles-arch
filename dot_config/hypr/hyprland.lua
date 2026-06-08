@@ -1,8 +1,8 @@
 -- Look and feel
 hl.config({
   general = {
-    gaps_in = 4,
-    gaps_out = 3,
+    gaps_in = 2,
+    gaps_out = 2,
 
     border_size = 2,
 
@@ -30,13 +30,13 @@ hl.config({
     blur = {
       enabled = true,
       size = 9,
-      passes = 3,
+      passes = 4,
     },
   },
 })
-    
+
 hl.curve("easy", { type = "spring", mass = 1, stiffness = 70, dampening = 15 })
-hl.animation({ leaf = 'windows', enabled = true, speed = 2, spring = "easy" })
+hl.animation({ leaf = 'windows', enabled = true, speed = 1, spring = "easy" })
 
 hl.config({
   misc = {
@@ -50,18 +50,26 @@ hl.monitor({
   output    = "DP-2",
   mode      = "3440x1440@60",
   position  = "0x0",
-  scale     = 1,
+  scale     = 1.25,
 })
 
 -- Variables
 local mainMod = "SUPER"
 local terminal = "ghostty"
 local browser = "zen-browser"
+local clipboardManager = "clipse"
+
+-- Autostart
+hl.on("hyprland.start", function ()
+  hl.exec_cmd("clipse -listen")
+end)
+
 -- Keybinds
 -- Open Windows
 -- Terminal
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("ghostty --gtk-single-instance=false --class=com.clipse.clipboard -e clipse"))
 
 -- Close Active Window
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
@@ -98,5 +106,13 @@ hl.window_rule({
   name = "supress-maximize-events",
   match = { class = ".*" },
   suppress_event = "maximize",
+})
+
+hl.window_rule({
+  name = "float-window",
+  match = { class = "^com\\.clipse\\.clipboard$" },
+  center = true,
+  float = true,
+  size = "800 600",
 })
 
