@@ -57,10 +57,10 @@ hl.monitor({
 local mainMod = "SUPER"
 local terminal = "ghostty"
 local browser = "zen-browser"
-local clipboardManager = "clipse"
 
 -- Autostart
 hl.on("hyprland.start", function ()
+  hl.exec_cmd("systemctl enable --user app-com.mitchellh.ghostty.service")
   hl.exec_cmd("clipse -listen")
 end)
 
@@ -69,6 +69,8 @@ end)
 -- Terminal
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
+-- class is coming through as "Bitwarden" not com.bitwarden when I type "hyprctl clients"
+hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("bitwarden-desktop --ozone-platform-hint=auto --class=com.bitwarden"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("ghostty --gtk-single-instance=false --class=com.clipse.clipboard -e clipse"))
 
 -- Close Active Window
@@ -109,10 +111,17 @@ hl.window_rule({
 })
 
 hl.window_rule({
-  name = "float-window",
+  name = "clipboard-window",
   match = { class = "^com\\.clipse\\.clipboard$" },
   center = true,
   float = true,
   size = "800 600",
 })
 
+hl.window_rule({
+  name = "password-window",
+  match = { class = "Bitwarden" },
+  center = true,
+  float = true,
+  size = "800 800",
+})
