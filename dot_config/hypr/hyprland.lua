@@ -36,7 +36,7 @@ end)
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("ghostty --gtk-single-instance=false --class=com.clipse.clipboard -e clipse"))
-hl.bind(mainMod .. " + P", hl.dsp.workspace.toggle_special("password-window"))
+hl.bind(mainMod .. " + A", hl.dsp.workspace.toggle_special("password-window"))
 
 -- Close Active Window
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
@@ -64,7 +64,6 @@ hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" 
 -- Quit Hyprland
 hl.bind(mainMod .. " + M", hl.dsp.exit())
 
-
 -- Float window
 hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
 
@@ -89,5 +88,9 @@ hl.window_rule({
   workspace = "special:password-window silent",
   center = true,
   float = true,
-  size = "1000 800",
+  size = {1000, 800},
+  animation = "popin 10%",
+  dim_around = true,
+  rounding = 20,
+  xray = true,
 })
