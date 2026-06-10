@@ -10,8 +10,8 @@ vim.o.smartcase = true -- ...unless the query specifically has an uppercase lett
 
 -- Tabs and spaces
 vim.o.expandtab = true -- Tabs become spaces
-vim.o.shiftwidth = 2 -- Indent width
-vim.o.tabstop = 2 -- Tab renders as 2 spaces
+vim.o.shiftwidth = 4 -- Indent width
+vim.o.tabstop = 4 -- Tab renders as 2 spaces
 vim.o.signcolumn = "yes" -- Always show the sign column
 vim.o.scrolloff = 8 -- Keep 8 lines of context above/below the cursor
 vim.o.termguicolors = true -- 24-bit colour (Needed by modern terminals)
@@ -28,7 +28,7 @@ vim.o.undofile = true
 
 vim.opt.clipboard:append("unnamedplus") -- Use system clipboard by default
 vim.opt.isfname:append("@-@")
-vim.o.guicursor = ""
+-- vim.o.guicursor = ""
 vim.o.scrolloff = 8
 
 vim.o.colorcolumn = "0"
