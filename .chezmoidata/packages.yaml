@@ -7,4 +7,9 @@ packages:
       - neovim
       - git
       - lua-language-server
+      - pipewire
+      - pipewire-audio
+      - pipewire-pulse
+      - pipewire-alsa
+      - wireplumber
     aur:

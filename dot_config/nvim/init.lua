@@ -2,11 +2,9 @@ require("vim._core.ui2").enable({})
 
 require('options')
 require('keymaps')
+require('pack')
 
--- Packages
--- Tokyo Night theme, add it as a package and set it
-vim.pack.add({ "https://github.com/folke/tokyonight.nvim"}) -- Add package
-vim.cmd.colorscheme("tokyonight-night") -- Set as colour scheme
+vim.cmd.colorscheme("tokyonight-night")
 
 -- LSP
 -- Lua LSP
