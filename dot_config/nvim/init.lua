@@ -8,7 +8,10 @@ vim.cmd.colorscheme("tokyonight-night")
 
 -- LSP
 require("blink.cmp").setup({
-  keymap = { preset = "default" },
+  keymap = {
+    preset = "default",
+    ["<Right>"] = { "select_and_accept", "fallback" },
+  },
   apperance = { nerd_font_variable = "mono" },
   sources = { default = { "lsp", "path", "snippets", "buffer" } },
   fuzzy = { implementation = "prefer_rust_with_warning" },
