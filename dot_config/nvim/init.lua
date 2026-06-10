@@ -7,23 +7,26 @@ require('pack')
 vim.cmd.colorscheme("tokyonight-night")
 
 -- LSP
+require("blink.cmp").setup({
+  keymap = { preset = "default" },
+  apperance = { nerd_font_variable = "mono" },
+  sources = { default = { "lsp", "path", "snippets", "buffer" } },
+  fuzzy = { implementation = "prefer_rust_with_warning" },
+  signature = { enabled = true },
+  completion = {
+    documentation = { auto_show = true, auto_show_delay_ms = 200 },
+    ghost_text = { enabled = true },
+  },
+})
+
 vim.lsp.enable('lua_ls')
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
     local opts = { buffer = args.buf }
 
     -- navigation
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-
-    -- intellisense: autocomplete as you type (native, no plugin)
-    if client and client:supports_method("textDocument/completion") then
-      vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-    end
   end,
 })
-
--- popup behaviour: show menu even for one match, don't auto-insert, fuzzy match
-vim.o.completeopt = 'menu,menuone,noinsert,fuzzy'
