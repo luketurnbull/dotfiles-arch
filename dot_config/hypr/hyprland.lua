@@ -4,18 +4,18 @@ hl.curve("easy", { type = "spring", mass = 1, stiffness = 70, dampening = 15 })
 hl.animation({ leaf = 'windows', enabled = true, speed = 1, spring = "easy" })
 
 hl.config({
-  misc = {
-    force_default_wallpaper = -1,
-    disable_hyprland_logo = false,
-  },
+    misc = {
+        force_default_wallpaper = -1,
+        disable_hyprland_logo = false,
+    },
 })
 
 -- Monitor: use 'hyprctl monitors` to get the real monitior details
 hl.monitor({
-  output    = "DP-2",
-  mode      = "3440x1440@60",
-  position  = "0x0",
-  scale     = 1.25,
+    output   = "DP-2",
+    mode     = "3440x1440@60",
+    position = "0x0",
+    scale    = 1.25,
 })
 
 -- Variables
@@ -24,11 +24,11 @@ local terminal = "ghostty"
 local browser = "zen-browser"
 
 -- Autostart
-hl.on("hyprland.start", function ()
-  hl.exec_cmd("systemctl enable --user app-com.mitchellh.ghostty.service")
-  hl.exec_cmd("clipse -listen")
-  hl.exec_cmd("bitwarden-desktop --ozone-platform-hint=auto")
-  hl.exec_cmd("hyprpaper")
+hl.on("hyprland.start", function()
+    hl.exec_cmd("systemctl enable --user app-com.mitchellh.ghostty.service")
+    hl.exec_cmd("clipse -listen")
+    hl.exec_cmd("bitwarden-desktop --ozone-platform-hint=auto")
+    hl.exec_cmd("hyprpaper")
 end)
 
 -- Keybinds
@@ -69,28 +69,28 @@ hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
 
 -- Windows and Workspaces
 hl.window_rule({
-  name = "supress-maximize-events",
-  match = { class = ".*" },
-  suppress_event = "maximize",
+    name = "supress-maximize-events",
+    match = { class = ".*" },
+    suppress_event = "maximize",
 })
 
 hl.window_rule({
-  name = "clipboard-window",
-  match = { class = "^com\\.clipse\\.clipboard$" },
-  center = true,
-  float = true,
-  size = "800 600",
+    name = "clipboard-window",
+    match = { class = "^com\\.clipse\\.clipboard$" },
+    center = true,
+    float = true,
+    size = "800 600",
 })
 
 hl.window_rule({
-  name = "password-window",
-  match = { class = "Bitwarden" },
-  workspace = "special:password-window silent",
-  center = true,
-  float = true,
-  size = {1000, 800},
-  animation = "popin 10%",
-  dim_around = true,
-  rounding = 20,
-  xray = true,
+    name = "password-window",
+    match = { class = "Bitwarden" },
+    workspace = "special:password-window silent",
+    center = true,
+    float = true,
+    size = { 1000, 800 },
+    animation = "popin 10%",
+    dim_around = true,
+    rounding = 20,
+    xray = true,
 })

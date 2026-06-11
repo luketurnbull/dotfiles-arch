@@ -22,10 +22,11 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Move down with cursor centered
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Move up with cursor centered" })
 
 -- Replace word cursor is over and all instances of that word within the current buffer
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>>]], { desc = "Replace word cursor is over" })
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>>]],
+    { desc = "Replace word cursor is over" })
 
 -- Native undotree
 vim.keymap.set("n", "<leader>u", function()
-  vim.cmd.packadd("nvim.undotree")
-  require("undotree").open()
+    vim.cmd.packadd("nvim.undotree")
+    require("undotree").open()
 end, { desc = "Toggle Builtin Undotree" })
