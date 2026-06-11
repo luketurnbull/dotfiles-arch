@@ -1,4 +1,5 @@
 require("appearance")
+require("monitors")
 
 hl.curve("easy", { type = "spring", mass = 1, stiffness = 70, dampening = 15 })
 hl.animation({ leaf = 'windows', enabled = true, speed = 1, spring = "easy" })
@@ -9,15 +10,6 @@ hl.config({
         disable_hyprland_logo = false,
     },
 })
-
--- Monitor: use 'hyprctl monitors` to get the real monitior details
-hl.monitor({
-    output   = "DP-2",
-    mode     = "3440x1440@60",
-    position = "0x0",
-    scale    = 1.25,
-})
-
 -- Variables
 local mainMod = "SUPER"
 local terminal = "ghostty"
