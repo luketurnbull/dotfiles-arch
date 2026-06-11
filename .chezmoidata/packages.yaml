@@ -12,4 +12,5 @@ packages:
       - pipewire-pulse
       - pipewire-alsa
       - wireplumber
+      - stylua
     aur:
