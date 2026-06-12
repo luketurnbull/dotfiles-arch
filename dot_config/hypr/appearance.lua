@@ -1,3 +1,5 @@
+hl.env("GTK_THEME", "Tokyonight-Dark")
+
 -- Look and feel
 hl.config({
     general = {

@@ -2,6 +2,9 @@
 export EDITOR="nvim"
 export VISUAL="nvim"
 
+# GTK THEME
+export GTK_THEME=Tokyonight-Dark
+
 # Saving history location and amount
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000

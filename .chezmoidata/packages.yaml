@@ -13,4 +13,8 @@ packages:
       - pipewire-alsa
       - wireplumber
       - stylua
+      - nwg-look
+      - inter-font
     aur:
+      - pwvucontrol
+      - tokyonight-gtk-theme-git 
