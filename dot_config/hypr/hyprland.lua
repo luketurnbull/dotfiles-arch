@@ -29,6 +29,7 @@ hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("ghostty --gtk-single-instance=false --class=com.clipse.clipboard -e clipse"))
 hl.bind(mainMod .. " + A", hl.dsp.workspace.toggle_special("password-window"))
+hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("pwvucontrol"))
 
 -- Close Active Window
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
@@ -56,9 +57,6 @@ hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" 
 -- Quit Hyprland
 hl.bind(mainMod .. " + M", hl.dsp.exit())
 
--- Float window
-hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
-
 -- Windows and Workspaces
 hl.window_rule({
     name = "supress-maximize-events",
@@ -71,7 +69,10 @@ hl.window_rule({
     match = { class = "^com\\.clipse\\.clipboard$" },
     center = true,
     float = true,
-    size = "800 600",
+    size = { 800, 600 },
+    dim_around = true,
+    rounding = 20,
+    xray = true,
 })
 
 hl.window_rule({
@@ -82,6 +83,17 @@ hl.window_rule({
     float = true,
     size = { 1000, 800 },
     animation = "popin 10%",
+    dim_around = true,
+    rounding = 20,
+    xray = true,
+})
+
+hl.window_rule({
+    name = "audio-mixer",
+    match = { class = "com.saivert.pwvucontrol" },
+    center = true,
+    float = true,
+    size = { 800, 500 },
     dim_around = true,
     rounding = 20,
     xray = true,
