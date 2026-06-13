@@ -35,4 +35,12 @@ hl.config({
             passes = 1,
         },
     },
+
+    misc = {
+        force_default_wallpaper = true,
+        disable_hyprland_logo = true,
+        middle_click_paste = true,
+        disable_splash_rendering = true,
+        font_family = "Inter Regular"
+    },
 })

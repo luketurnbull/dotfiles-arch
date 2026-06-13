@@ -4,12 +4,6 @@ require("monitors")
 hl.curve("easy", { type = "spring", mass = 1, stiffness = 70, dampening = 15 })
 hl.animation({ leaf = 'windows', enabled = true, speed = 1, spring = "easy" })
 
-hl.config({
-    misc = {
-        force_default_wallpaper = -1,
-        disable_hyprland_logo = false,
-    },
-})
 -- Variables
 local mainMod = "SUPER"
 local terminal = "ghostty"
