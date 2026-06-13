@@ -26,6 +26,18 @@ hl.bind(mainMod .. " + A", hl.dsp.workspace.toggle_special("password-window"))
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("pwvucontrol"))
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("superproductivity"))
 
+-- Audio keybinds
+-- Turn up
+hl.bind(mainMod .. " + F12", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"), {
+    repeating = true
+})
+-- Turn down
+hl.bind(mainMod .. " + F11", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), {
+    repeating = true
+})
+-- Mute
+hl.bind(mainMod .. " + F10", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
+
 -- Close Active Window
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
 
