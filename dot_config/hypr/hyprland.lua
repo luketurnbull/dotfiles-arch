@@ -15,6 +15,8 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("clipse -listen")
     hl.exec_cmd("bitwarden-desktop --ozone-platform-hint=auto")
     hl.exec_cmd("hyprpaper")
+    hl.exec_cmd("swayosd-server")
+    hl.exec_cmd("swaync")
 end)
 
 -- Keybinds
@@ -28,15 +30,15 @@ hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("superproductivity"))
 
 -- Audio keybinds
 -- Turn up
-hl.bind(mainMod .. " + F12", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"), {
+hl.bind(mainMod .. " + F12", hl.dsp.exec_cmd("swayosd-client --output-volume raise"), {
     repeating = true
 })
 -- Turn down
-hl.bind(mainMod .. " + F11", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), {
+hl.bind(mainMod .. " + F11", hl.dsp.exec_cmd("swayosd-client --output-volume lower"), {
     repeating = true
 })
 -- Mute
-hl.bind(mainMod .. " + F10", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
+hl.bind(mainMod .. " + F10", hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle"), { locked = true })
 
 -- Close Active Window
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
