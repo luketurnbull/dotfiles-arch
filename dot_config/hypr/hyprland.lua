@@ -24,6 +24,7 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("ghostty --gtk-single-instance=false --class=com.clipse.clipboard -e clipse"))
 hl.bind(mainMod .. " + A", hl.dsp.workspace.toggle_special("password-window"))
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("pwvucontrol"))
+hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("superproductivity"))
 
 -- Close Active Window
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
