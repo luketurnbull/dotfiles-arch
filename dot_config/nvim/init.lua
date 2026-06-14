@@ -23,8 +23,47 @@ require("blink.cmp").setup({
 })
 
 require("conform").setup({
-    formatters_by_ft = { lua = { "stylelua" } },
-    format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
+    formatters_by_ft = {
+        lua = { "stylua" },
+        javascript = { "prettier", "biome", "oxfmt", stop_after_first = true },
+        javascriptreact = { "prettier", "biome", "oxfmt", stop_after_first = true },
+        typescript = { "prettier", "biome", "oxfmt", stop_after_first = true },
+        typescriptreact = { "prettier", "biome", "oxfmt", stop_after_first = true },
+        json = { "biome", "prettier", stop_after_first = true },
+        jsonc = { "biome", "prettier", stop_after_first = true },
+        css = { "biome", "prettier", stop_after_first = true },
+        html = { "biome", "prettier", stop_after_first = true },
+    },
+    formatters = {
+        prettier = {
+            condition = function(_, ctx)
+                return vim.fs.find({
+                    ".prettierrc",
+                    ".prettierrc.json",
+                    ".prettierrc.yml",
+                    ".prettierrc.yaml",
+                    ".prettierrc.js",
+                    ".prettierrc.mjs",
+                    ".prettierrc.cjs",
+                    "prettier.config.js",
+                    "prettier.config.mjs",
+                    "prettier.config.cjs",
+                }, { path = ctx.filename, upward = true })[1] ~= nil
+            end,
+        },
+        biome = {
+            condition = function(_, ctx)
+                return vim.fs.find(
+                    { "biome.json", "biome.jsonc" },
+                    { path = ctx.filename, upward = true }
+                )[1] ~= nil
+            end,
+        },
+    },
+    format_on_save = {
+        timeout_ms = 500,
+        lsp_format = "fallback",
+    },
 })
 
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to definition" })
@@ -38,5 +77,7 @@ vim.lsp.config("*", { capabilities = capabilities })
 
 vim.lsp.enable({
     'lua_ls',
-    'clangd'
+    'clangd',
+    'ts_ls',
+    'oxlint',
 })
