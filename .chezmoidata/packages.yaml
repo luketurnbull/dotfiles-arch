@@ -19,6 +19,7 @@ packages:
       - swaync
       - greetd
       - firefoxpwa
+      - nvm
     aur:
       - pwvucontrol
       - tokyonight-gtk-theme-git 

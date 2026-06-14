@@ -27,14 +27,16 @@ require("conform").setup({
     format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
 })
 
-vim.lsp.enable('lua_ls')
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to definition" })
+vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = "Go to declaration" })
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "Format local buffer" })
+vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, { desc = "Format local buffer" })
 
-vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(args)
-        local opts = { buffer = args.buf }
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-        -- navigation
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    end,
+vim.lsp.config("*", { capabilities = capabilities })
+
+vim.lsp.enable({
+    'lua_ls',
+    'clangd'
 })
