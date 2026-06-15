@@ -20,6 +20,7 @@ packages:
       - greetd
       - firefoxpwa
       - nvm
+      - starship
     aur:
       - pwvucontrol
       - tokyonight-gtk-theme-git 

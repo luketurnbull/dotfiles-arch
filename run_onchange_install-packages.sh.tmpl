@@ -2,11 +2,14 @@
 #!/bin/bash
 set -eu
 
-# packages hash: {{ .packages.arch | toString | sha256sum }}
-
 sudo pacman -S --needed --noconfirm {{ range .packages.arch.pacman }}{{ . }} {{ end }}
 
 {{ if .packages.arch.aur -}}
-paru -S --needed --noconfirm {{ range .packages.arch.aur }}{{ . }} {{ end }}
+for pkg in {{ range .packages.arch.aur }}{{ . }} {{ end }}; do
+  if ! pacman -Q "$pkg" &>/dev/null; then
+    echo "Installing AUR package: $pkg..."
+    paru -S --noconfirm "$pkg"
+  fi
+done
 {{ end -}}
 {{ end -}}
