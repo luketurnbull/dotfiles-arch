@@ -21,6 +21,7 @@ packages:
       - firefoxpwa
       - nvm
       - starship
+      - bat
     aur:
       - pwvucontrol
       - tokyonight-gtk-theme-git 
