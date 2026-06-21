@@ -29,8 +29,6 @@ hl.animation({ leaf = "workspacesIn", enabled = true, speed = 1.21, bezier = "al
 hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" })
 
-
-
 -- hl.curve("easeInOutCubic", { type = "bezier", points = { { 0.65, 0.05 }, { 0.36, 1 } } })
 -- hl.curve("linear", { type = "bezier", points = { { 0, 0 }, { 1, 1 } } })
 -- hl.curve("almostLinear", { type = "bezier", points = { { 0.5, 0.5 }, { 0.75, 1 } } })
@@ -50,32 +48,45 @@ local browser = "zen-browser"
 
 -- Autostart
 hl.on("hyprland.start", function()
-    hl.exec_cmd("systemctl enable --user app-com.mitchellh.ghostty.service")
-    hl.exec_cmd("clipse -listen")
-    hl.exec_cmd("bitwarden-desktop --ozone-platform-hint=auto")
-    hl.exec_cmd("hyprpaper")
-    hl.exec_cmd("swayosd-server")
-    hl.exec_cmd("swaync")
+	hl.exec_cmd("systemctl enable --user app-com.mitchellh.ghostty.service")
+	hl.exec_cmd("clipse -listen")
+	hl.exec_cmd("bitwarden-desktop --ozone-platform-hint=auto")
+	hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("swayosd-server")
+	hl.exec_cmd("swaync")
 end)
 
 -- Keybinds
 -- Open Windows
+-- Terminal
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
+-- Browser
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("ghostty --gtk-single-instance=false --class=com.clipse.clipboard -e clipse"))
+-- Blender
+hl.bind(mainMod .. " + I", hl.dsp.exec_cmd("blender"))
+-- Clipboard
+hl.bind(
+	mainMod .. " + V",
+	hl.dsp.exec_cmd("ghostty --gtk-single-instance=false --class=com.clipse.clipboard -e clipse")
+)
+-- Password Manager
 hl.bind(mainMod .. " + A", hl.dsp.workspace.toggle_special("password-window"))
+-- Audio controls
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("pwvucontrol"))
+-- Superproductivity
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("superproductivity"))
+
+-- Pikuma course
 hl.bind(mainMod .. " + F1", hl.dsp.exec_cmd("firefoxpwa site launch 01KV0DNASYXYKB8YPCTT06H9PH"))
 
 -- Audio keybinds
 -- Turn up
 hl.bind(mainMod .. " + F12", hl.dsp.exec_cmd("swayosd-client --output-volume raise"), {
-    repeating = true
+	repeating = true,
 })
 -- Turn down
 hl.bind(mainMod .. " + F11", hl.dsp.exec_cmd("swayosd-client --output-volume lower"), {
-    repeating = true
+	repeating = true,
 })
 -- Mute
 hl.bind(mainMod .. " + F10", hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle"), { locked = true })
@@ -106,52 +117,52 @@ hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do
-    local key = i % 10 -- 10 maps to key 0
-    hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+	local key = i % 10 -- 10 maps to key 0
+	hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+	hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
 -- Quit Hyprland
-hl.bind(mainMod .. " + M", hl.dsp.exit())
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exit())
 
 -- Windows and Workspaces
 hl.window_rule({
-    name = "supress-maximize-events",
-    match = { class = ".*" },
-    suppress_event = "maximize",
+	name = "supress-maximize-events",
+	match = { class = ".*" },
+	suppress_event = "maximize",
 })
 
 hl.window_rule({
-    name = "clipboard-window",
-    match = { class = "^com\\.clipse\\.clipboard$" },
-    center = true,
-    float = true,
-    size = { 800, 600 },
-    dim_around = true,
-    rounding = 20,
-    xray = true,
+	name = "clipboard-window",
+	match = { class = "^com\\.clipse\\.clipboard$" },
+	center = true,
+	float = true,
+	size = { 800, 600 },
+	dim_around = true,
+	rounding = 20,
+	xray = true,
 })
 
 hl.window_rule({
-    name = "password-window",
-    match = { class = "Bitwarden" },
-    workspace = "special:password-window silent",
-    center = true,
-    float = true,
-    size = { 1000, 800 },
-    animation = "fade",
-    dim_around = true,
-    rounding = 20,
-    xray = true,
+	name = "password-window",
+	match = { class = "Bitwarden" },
+	workspace = "special:password-window silent",
+	center = true,
+	float = true,
+	size = { 1000, 800 },
+	animation = "fade",
+	dim_around = true,
+	rounding = 20,
+	xray = true,
 })
 
 hl.window_rule({
-    name = "audio-mixer",
-    match = { class = "com.saivert.pwvucontrol" },
-    center = true,
-    float = true,
-    size = { 800, 500 },
-    dim_around = true,
-    rounding = 20,
-    xray = true,
+	name = "audio-mixer",
+	match = { class = "com.saivert.pwvucontrol" },
+	center = true,
+	float = true,
+	size = { 800, 500 },
+	dim_around = true,
+	rounding = 20,
+	xray = true,
 })
