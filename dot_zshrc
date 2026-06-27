@@ -1,7 +1,10 @@
 # Default editors
 export EDITOR="nvim"
 export VISUAL="nvim"
-export MANPAGER="bat -plman"
+
+# Man page formatting
+export MANROFFOPT="-c"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # GTK THEME
 export GTK_THEME=Tokyonight-Dark
