@@ -1,7 +1,6 @@
 theme = TokyoNight Night
 
-window-padding-color = extend
-
+window-padding-color = extend-always
 window-padding-x = 10
 
 cursor-style = block

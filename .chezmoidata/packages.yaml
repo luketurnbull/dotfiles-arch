@@ -22,6 +22,10 @@ packages:
       - nvm
       - starship
       - bat
+      - ripgrep
+      - fd
+      - tree-sitter-cli
+      - unzip
     aur:
       - pwvucontrol
       - tokyonight-gtk-theme-git 
