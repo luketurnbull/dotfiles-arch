@@ -34,6 +34,7 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 alias vi="nvim"
 alias vim="nvim"
 alias cat="bat"
+alias lg="lazygit"
 
 # Source plugins
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh

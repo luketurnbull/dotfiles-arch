@@ -26,6 +26,7 @@ packages:
       - fd
       - tree-sitter-cli
       - unzip
+      - lazygit
     aur:
       - pwvucontrol
       - tokyonight-gtk-theme-git 
