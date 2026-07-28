@@ -42,3 +42,6 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 source /usr/share/nvm/init-nvm.sh
 
 eval "$(starship init zsh)"
+
+# Vite+ bin (https://viteplus.dev)
+. "$HOME/.vite-plus/env"

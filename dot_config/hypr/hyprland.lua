@@ -60,10 +60,16 @@ end)
 -- Open Windows
 -- Terminal
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
+
 -- Browser
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
+
+-- Obsidian
+hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("obsidian"))
+
 -- Blender
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd("blender"))
+
 -- Clipboard
 hl.bind(
 	mainMod .. " + V",
@@ -73,11 +79,6 @@ hl.bind(
 hl.bind(mainMod .. " + A", hl.dsp.workspace.toggle_special("password-window"))
 -- Audio controls
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("pwvucontrol"))
--- Superproductivity
-hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("superproductivity"))
-
--- Pikuma course
-hl.bind(mainMod .. " + F1", hl.dsp.exec_cmd("firefoxpwa site launch 01KV0DNASYXYKB8YPCTT06H9PH"))
 
 -- Audio keybinds
 -- Turn up
