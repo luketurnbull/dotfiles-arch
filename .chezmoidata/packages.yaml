@@ -17,7 +17,6 @@ packages:
       - inter-font
       - swayosd
       - swaync
-      - greetd
       - firefoxpwa
       - nvm
       - starship
@@ -32,4 +31,3 @@ packages:
     aur:
       - pwvucontrol
       - tokyonight-gtk-theme-git 
-      - hyprlogin-git
