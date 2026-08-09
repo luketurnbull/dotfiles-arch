@@ -42,9 +42,9 @@ hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" 
 -- hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
 --
 -- Variables
-local mainMod = "SUPER"
+local mainMod = "ALT"
 local terminal = "ghostty"
-local browser = "zen-browser"
+local browser = "qutebrowser"
 
 -- Autostart
 hl.on("hyprland.start", function()

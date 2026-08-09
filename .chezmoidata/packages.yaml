@@ -1,23 +1,24 @@
 packages:
   arch:
     pacman:
+      - ghostty
+      - hyprland
+      - hyprpaper
       - zsh
       - zsh-autosuggestions
       - zsh-syntax-highlighting
       - neovim
       - git
       - lua-language-server
+      - qutebrowser
       - pipewire
       - pipewire-audio
       - pipewire-pulse
       - pipewire-alsa
       - wireplumber
       - stylua
-      - nwg-look
-      - inter-font
       - swayosd
       - swaync
-      - firefoxpwa
       - nvm
       - starship
       - bat
@@ -28,6 +29,3 @@ packages:
       - lazygit
       - openssh
       - obsidian
-    aur:
-      - pwvucontrol
-      - tokyonight-gtk-theme-git 
