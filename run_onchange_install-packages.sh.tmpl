@@ -4,4 +4,12 @@ set -eu
 
 sudo pacman -S --needed --noconfirm {{ range .packages.arch.pacman }}{{ . }} {{ end }}
 
+{{ if .packages.arch.aur -}}
+for pkg in {{ range .packages.arch.aur }}{{ . }} {{ end }}; do
+  if ! pacman -Q "$pkg" &>/dev/null; then
+    echo "Installing AUR package: $pkg..."
+    paru -S --noconfirm "$pkg"
+  fi
+done
+{{ end -}}
 {{ end -}}

@@ -4,13 +4,13 @@ packages:
       - ghostty
       - hyprland
       - hyprpaper
+      - quickshell
       - zsh
       - zsh-autosuggestions
       - zsh-syntax-highlighting
       - neovim
       - git
       - lua-language-server
-      - qutebrowser
       - pipewire
       - pipewire-audio
       - pipewire-pulse
@@ -29,3 +29,6 @@ packages:
       - lazygit
       - openssh
       - obsidian
+    aur:
+      - opencode
+      - zen-browser-bin

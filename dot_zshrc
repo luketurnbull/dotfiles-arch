@@ -1,13 +1,11 @@
 # Default editors
 export EDITOR="nvim"
 export VISUAL="nvim"
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Man page formatting
 export MANROFFOPT="-c"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-
-# GTK THEME
-export GTK_THEME=Tokyonight-Dark
 
 # Saving history location and amount
 HISTFILE="$HOME/.zsh_history"
