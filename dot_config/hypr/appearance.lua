@@ -1,16 +1,14 @@
-hl.env("GTK_THEME", "Tokyonight-Dark")
-
 -- Look and feel
 hl.config({
 	general = {
 		gaps_in = 2,
 		gaps_out = 2,
 
-		border_size = 2,
+		border_size = 1,
 
 		col = {
-			active_border = { colors = { "rgba(33ccffee)" }, angle = 45 },
-			inactive_border = "rgba(595959aa)",
+			active_border = { colors = { "rgba(7aa2f7ee)" }, angle = 45 },
+			inactive_border = "rgba(414868aa)",
 		},
 
 		layout = "dwindle",
@@ -19,20 +17,13 @@ hl.config({
 	decoration = {
 		-- rounding = 10,
 		-- rounding_power = 2,
-		active_opacity = 0.98,
-		inactive_opacity = 0.90,
-
-		shadow = {
-			enabled = false,
-			range = 4,
-			render_power = 3,
-			color = 0xee1a1a1a,
-		},
+		active_opacity = 0.99,
+		inactive_opacity = 0.97,
 
 		blur = {
 			enabled = true,
 			size = 1,
-			passes = 1,
+			passes = 2,
 		},
 	},
 

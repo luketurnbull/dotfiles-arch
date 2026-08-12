@@ -65,8 +65,9 @@ local browser = "zen-browser"
 -- Autostart
 hl.on("hyprland.start", function()
 	hl.exec_cmd("systemctl enable --user app-com.mitchellh.ghostty.service")
-	hl.exec_cmd("bitwarden-desktop --ozone-platform-hint=auto")
+	-- hl.exec_cmd("bitwarden-desktop --ozone-platform-hint=auto")
 	hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("quickshell")
 	hl.exec_cmd("swayosd-server")
 	hl.exec_cmd("swaync")
 end)
