@@ -29,6 +29,7 @@ packages:
       - lazygit
       - openssh
       - obsidian
+      - clang
     aur:
       - opencode
       - zen-browser-bin
