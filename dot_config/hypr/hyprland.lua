@@ -13,6 +13,7 @@ hl.window_rule({
 	rounding = 20,
 	xray = true,
 })
+
 hl.curve("easeOutQuint", { type = "bezier", points = { { 0.23, 1 }, { 0.32, 1 } } })
 -- hl.curve("easeInOutCubic", { type = "bezier", points = { { 0.65, 0.05 }, { 0.36, 1 } } })
 -- hl.curve("linear", { type = "bezier", points = { { 0, 0 }, { 1, 1 } } })
@@ -80,17 +81,20 @@ hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
 -- Browser
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 
+-- Browser
+hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("obs"))
+
 -- Obsidian
 hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("obsidian"))
 
 -- Blender
-hl.bind(mainMod .. " + I", hl.dsp.exec_cmd("blender"))
-
--- Clipboard
-hl.bind(
-	mainMod .. " + V",
-	hl.dsp.exec_cmd("ghostty --gtk-single-instance=false --class=com.clipse.clipboard -e clipse")
-)
+-- hl.bind(mainMod .. " + I", hl.dsp.exec_cmd("blender"))
+--
+-- -- Clipboard
+-- hl.bind(
+-- 	mainMod .. " + V",
+-- 	hl.dsp.exec_cmd("ghostty --gtk-single-instance=false --class=com.clipse.clipboard -e clipse")
+-- )
 
 -- Audio keybinds
 -- Turn up

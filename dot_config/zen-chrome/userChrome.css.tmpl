@@ -1,0 +1,83 @@
+{{- $t := index .themes .active -}}
+/* Tokyo Night theme for Zen Browser.
+   Managed by chezmoi via ~/.config/zen-chrome/userChrome.css and symlinked
+   into the active Zen profile's chrome/ dir by run_onchange_link-zen-chrome.sh.tmpl.
+   Requires toolkit.legacyUserProfileCustomizations.stylesheets = true in about:config.
+
+   Strategy: Zen does NOT theme via per-element backgrounds. It renders the whole
+   chrome (sidebar, toolbar, urlbar, search/extensions panel, popups) through a
+   layered translucent overlay (.zen-browser-generic-background) driven by the
+   --zen-* variables defined in chrome://browser/content/zen-styles/zen-theme.css.
+   Overriding individual elements with !important backgrounds fights that overlay
+   and leaves gaps (e.g. the sidebar search/extensions panel reads a different
+   background than the tab strip). So instead we override Zen's theme variables
+   to Tokyo Night values, which unifies the entire UI. */
+
+:root {
+  color-scheme: dark;
+
+  /* Tokyo Night palette (mirrors .chezmoidata/themes.yaml) */
+  --tg-bg:           #{{ $t.colors.bg }};
+  --tg-bg-panel:     #{{ $t.colors.bg_panel }};
+  --tg-bg-highlight: #{{ $t.colors.bg_highlight }};
+  --tg-fg:           #{{ $t.colors.fg }};
+  --tg-fg-dim:       #{{ $t.colors.fg_dim }};
+  --tg-comment:      #{{ $t.colors.comment }};
+  --tg-border:       #{{ $t.colors.border }};
+  --tg-blue:         #{{ $t.colors.blue }};
+
+  /* ---- Zen theme-variable overrides (literal values, so light-dark() never
+          picks the wrong branch) ---- */
+
+  /* Accent / branding => blue */
+  --zen-primary-color:           var(--tg-blue) !important;
+  --zen-branding-bg:             var(--tg-bg) !important;        /* dark base        */
+  --zen-branding-bg-reverse:     var(--tg-fg) !important;       /* light foreground */
+
+  /* Main chrome background — sidebar AND toolbar read this, so making them
+     identical unifies the tab strip with the search/extensions panel. */
+  --zen-main-browser-background:           var(--tg-bg) !important;
+  --zen-main-browser-background-toolbar:   var(--tg-bg) !important;
+  --zen-main-browser-background-old:       var(--tg-bg) !important;
+  --zen-themed-toolbar-bg-transparent:    var(--tg-bg) !important;
+
+  /* Derived color scale */
+  --zen-colors-primary:           var(--tg-bg-panel) !important;
+  --zen-colors-secondary:         var(--tg-bg) !important;
+  --zen-colors-tertiary:          var(--tg-bg-panel) !important;
+  --zen-colors-hover-bg:         var(--tg-bg-highlight) !important;
+  --zen-colors-border:            var(--tg-border) !important;
+  --zen-colors-input-bg:         var(--tg-bg-panel) !important;
+  --zen-colors-primary-foreground: var(--tg-fg) !important;
+
+  /* URL bar */
+  --zen-urlbar-background:                var(--tg-bg-panel) !important;
+
+  /* Toolbar / tab element backgrounds */
+  --zen-toolbar-element-bg:        color-mix(in srgb, var(--tg-fg) 6%, transparent) !important;
+  --zen-toolbar-element-bg-hover: var(--tg-bg-highlight) !important;
+  --toolbarbutton-hover-background:       var(--tg-bg-highlight) !important;
+  --toolbarbutton-active-background:     var(--tg-bg-highlight) !important;
+  --toolbar-background-color:             var(--tg-bg-panel) !important;
+  --toolbar-field-background-color:       var(--tg-bg-panel) !important;
+  --toolbar-field-focus-background-color: var(--tg-bg-highlight) !important;
+
+  /* Text */
+  --toolbar-color:          var(--tg-fg) !important;
+  --toolbox-textcolor:     var(--tg-fg) !important;
+  --toolbox-textcolor-inactive: var(--tg-fg-dim) !important;
+
+  /* Panels / dialogs */
+  --arrowpanel-background:  var(--tg-bg-panel) !important;
+  --zen-dialog-background:  var(--tg-bg-panel) !important;
+
+  /* Sidebar notifications */
+  --zen-sidebar-notification-bg: var(--tg-bg-panel) !important;
+}
+
+/* Selected tab: keep readable Tokyo Night contrast on top of the variable theme. */
+.tab-background[selected] { background: var(--tg-blue) !important; color: var(--tg-bg) !important; }
+.tab-text[selected] { color: var(--tg-bg) !important; }
+
+/* URL bar focus ring */
+#urlbar[focused] { border-color: var(--tg-blue) !important; }

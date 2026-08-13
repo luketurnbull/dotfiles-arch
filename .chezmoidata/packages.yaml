@@ -30,6 +30,7 @@ packages:
       - openssh
       - obsidian
       - clang
+      - obs-studio
     aur:
       - opencode
       - zen-browser-bin

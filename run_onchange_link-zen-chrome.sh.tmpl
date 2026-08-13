@@ -1,0 +1,65 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+set -eu
+
+# Wire the chezmoi-managed ~/.config/zen-chrome/userChrome.css into each Zen
+# browser profile's chrome/ dir so the Tokyo Night theme is picked up.
+#
+# Also maintains `toolkit.legacyUserProfileCustomizations.stylesheets=true` in
+# each profile's user.js: Zen (Firefox) will not load userChrome.css without it.
+# Profiles are enumerated from ~/.config/zen/profiles.ini so the script tolerates
+# arbitrary profile dir names (e.g. "chag1z0c.Default (release)").
+
+ZEN_DIR="$HOME/.config/zen"
+SRC="$HOME/.config/zen-chrome/userChrome.css"
+
+if [ ! -f "$SRC" ]; then
+  echo "zen-chrome: $SRC not found; run 'chezmoi apply' first" >&2
+  exit 1
+fi
+
+if [ ! -f "$ZEN_DIR/profiles.ini" ]; then
+  echo "zen-chrome: $ZEN_DIR/profiles.ini not found; is Zen installed?" >&2
+  exit 0
+fi
+
+profile_paths=$(awk -F= '/^Path=/{sub(/^Path=/,"",$0); print}' "$ZEN_DIR/profiles.ini")
+
+if [ -z "$profile_paths" ]; then
+  echo "zen-chrome: no profiles found in $ZEN_DIR/profiles.ini" >&2
+  exit 0
+fi
+
+src_resolved=$(readlink -f "$SRC")
+
+while IFS= read -r rel; do
+  [ -n "$rel" ] || continue
+  profile_dir="$ZEN_DIR/$rel"
+  if [ ! -d "$profile_dir" ]; then
+    echo "zen-chrome: $profile_dir is not a directory; skipping" >&2
+    continue
+  fi
+
+  chrome_dir="$profile_dir/chrome"
+  mkdir -p "$chrome_dir"
+
+  link="$chrome_dir/userChrome.css"
+  if [ -L "$link" ] && [ "$(readlink -f "$link")" = "$src_resolved" ]; then
+    :
+  else
+    if [ -e "$link" ] && [ ! -L "$link" ]; then
+      mv "$link" "$link.bak"
+      echo "zen-chrome: backed up existing $link to $link.bak"
+    fi
+    ln -sf "$SRC" "$link"
+    echo "zen-chrome: linked $link -> $SRC"
+  fi
+
+  user_js="$profile_dir/user.js"
+  pref_line='user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);'
+  if [ ! -f "$user_js" ] || ! grep -qF "$pref_line" "$user_js"; then
+    printf '%s\n' "$pref_line" >> "$user_js"
+    echo "zen-chrome: enabled legacyUserProfileCustomizations in $user_js"
+  fi
+done <<< "$profile_paths"
+{{ end -}}
