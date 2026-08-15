@@ -31,6 +31,7 @@ packages:
       - obsidian
       - clang
       - obs-studio
+      - fastfetch
     aur:
       - opencode
       - zen-browser-bin
