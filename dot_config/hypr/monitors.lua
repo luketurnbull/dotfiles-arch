@@ -33,8 +33,12 @@ local function checkExternalMonitors()
 	end
 end
 
-checkExternalMonitors()
-setupMonitors()
+local function configureAll()
+	checkExternalMonitors()
+	setupMonitors()
+end
+
+configureAll()
 
 hl.bind("switch:off:Lid Switch", function()
 	hasLidDown = false
@@ -45,3 +49,7 @@ hl.bind("switch:on:Lid Switch", function()
 	hasLidDown = true
 	setupMonitors()
 end, { locked = true })
+
+return {
+	configureAll = configureAll,
+}

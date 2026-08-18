@@ -32,6 +32,7 @@ packages:
       - clang
       - obs-studio
       - fastfetch
+      - socat
     aur:
       - opencode
       - zen-browser-bin

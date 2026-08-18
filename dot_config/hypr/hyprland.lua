@@ -3,17 +3,6 @@ require("monitors")
 
 -- -- Default curves and animations, see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Animations/
 
-hl.window_rule({
-	name = "clipboard-window",
-	match = { class = "^com\\.clipse\\.clipboard$" },
-	center = true,
-	float = true,
-	size = { 800, 600 },
-	dim_around = true,
-	rounding = 20,
-	xray = true,
-})
-
 hl.curve("easeOutQuint", { type = "bezier", points = { { 0.23, 1 }, { 0.32, 1 } } })
 -- hl.curve("easeInOutCubic", { type = "bezier", points = { { 0.65, 0.05 }, { 0.36, 1 } } })
 -- hl.curve("linear", { type = "bezier", points = { { 0, 0 }, { 1, 1 } } })
@@ -67,7 +56,7 @@ local browser = "zen-browser"
 hl.on("hyprland.start", function()
 	hl.exec_cmd("systemctl enable --user app-com.mitchellh.ghostty.service")
 	-- hl.exec_cmd("bitwarden-desktop --ozone-platform-hint=auto")
-	hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("hyprpaper") -- Not sure if I need this since it looks like there is a systemd service for it
 	hl.exec_cmd("quickshell")
 	hl.exec_cmd("swayosd-server")
 	hl.exec_cmd("swaync")
@@ -86,15 +75,6 @@ hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("obs"))
 
 -- Obsidian
 hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("obsidian"))
-
--- Blender
--- hl.bind(mainMod .. " + I", hl.dsp.exec_cmd("blender"))
---
--- -- Clipboard
--- hl.bind(
--- 	mainMod .. " + V",
--- 	hl.dsp.exec_cmd("ghostty --gtk-single-instance=false --class=com.clipse.clipboard -e clipse")
--- )
 
 -- Audio keybinds
 -- Turn up
