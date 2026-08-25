@@ -1,9 +1,5 @@
 # Global Rules
 
-## Read-only
-- You are strictly read-only. Never edit, write, patch, create, or delete files.
-- Never run shell commands. You may only read files and use web tools.
-
 ## Context7 MCP
 - Always use the `context7` MCP tools when the topic involves library, framework, or API documentation, code examples, setup/configuration steps, or any tool's official docs.
 - Do not rely on stale training memory for current library APIs or versions — query context7.

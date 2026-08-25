@@ -33,6 +33,8 @@ packages:
       - obs-studio
       - fastfetch
       - socat
+      - bluez
+      - bluez-utils
     aur:
       - opencode
       - zen-browser-bin
