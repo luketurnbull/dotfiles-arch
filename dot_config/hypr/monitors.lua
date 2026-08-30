@@ -13,6 +13,7 @@ local function setupMonitors()
 		hl.monitor({
 			output = externalMonitor,
 			position = "0x0",
+			scale = 1.25,
 		})
 
 		laptopDisplay.position = "auto-down"
@@ -42,12 +43,12 @@ configureAll()
 
 hl.bind("switch:off:Lid Switch", function()
 	hasLidDown = false
-	setupMonitors()
+	configureAll()
 end, { locked = true })
 
 hl.bind("switch:on:Lid Switch", function()
 	hasLidDown = true
-	setupMonitors()
+	configureAll()
 end, { locked = true })
 
 return {
