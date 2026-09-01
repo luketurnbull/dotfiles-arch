@@ -42,8 +42,8 @@ chezmoi cd             # cd into the source directory
 
 ## chezmoi behavior
 
-- **Auto-commit** enabled (`chezmoi.toml`: `autoCommit=true`). Each `chezmoi apply` creates a git commit automatically.
-- Repo branch is `master` (not `main`).
+- No auto-commit — no `chezmoi.toml` exists; commits are made manually after `chezmoi apply`.
+- Repo branch is `archpad` (not `main`).
 - No `.gitignore` — everything is tracked.
 - `.chezmoiignore` lists **root `AGENTS.md`** — this file is repo-only and never applied to `~/`.
 - `dot_config/opencode/AGENTS.md` is **not** ignored — it is applied to `~/.config/opencode/AGENTS.md` (the global opencode rules).
