@@ -1,4 +1,4 @@
-theme = {{ (index .themes .active).label }}
+theme = TokyoNight Night
 
 window-padding-color = extend-always
 window-padding-x = 10

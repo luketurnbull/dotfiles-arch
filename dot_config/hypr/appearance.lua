@@ -1,4 +1,3 @@
-{{- $t := index .themes .active -}}
 -- Look and feel
 hl.config({
 	general = {
@@ -8,8 +7,8 @@ hl.config({
 		border_size = 1,
 
 		col = {
-			active_border = { colors = { "rgba({{ $t.colors.blue }}{{ $t.hypr_active_alpha }})" }, angle = 45 },
-			inactive_border = "rgba({{ $t.colors.border }}{{ $t.hypr_inactive_alpha }})",
+			active_border = { colors = { "rgba(7aa2f7ee)" }, angle = 45 },
+			inactive_border = "rgba(414868aa)",
 		},
 
 		layout = "dwindle",

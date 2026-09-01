@@ -1,4 +1,3 @@
-{{- $t := index .themes .active -}}
 /* Tokyo Night theme for Zen Browser.
    Managed by chezmoi via ~/.config/zen-chrome/userChrome.css and symlinked
    into the active Zen profile's chrome/ dir by run_onchange_link-zen-chrome.sh.tmpl.
@@ -16,15 +15,15 @@
 :root {
   color-scheme: dark;
 
-  /* Tokyo Night palette (mirrors .chezmoidata/themes.yaml) */
-  --tg-bg:           #{{ $t.colors.bg }};
-  --tg-bg-panel:     #{{ $t.colors.bg_panel }};
-  --tg-bg-highlight: #{{ $t.colors.bg_highlight }};
-  --tg-fg:           #{{ $t.colors.fg }};
-  --tg-fg-dim:       #{{ $t.colors.fg_dim }};
-  --tg-comment:      #{{ $t.colors.comment }};
-  --tg-border:       #{{ $t.colors.border }};
-  --tg-blue:         #{{ $t.colors.blue }};
+  /* Tokyo Night palette */
+  --tg-bg:           #1a1b26;
+  --tg-bg-panel:     #16161e;
+  --tg-bg-highlight: #292e42;
+  --tg-fg:           #c0caf5;
+  --tg-fg-dim:       #a9b1d6;
+  --tg-comment:      #565f89;
+  --tg-border:       #414868;
+  --tg-blue:         #7aa2f7;
 
   /* ---- Zen theme-variable overrides (literal values, so light-dark() never
           picks the wrong branch) ---- */

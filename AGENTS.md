@@ -19,15 +19,14 @@ ThinkPad T490s (`20NYS2LT01`), Arch Linux x86_64, kernel `7.1.8-arch1-3`, locale
 |---|---|---|
 | Shell | `dot_zshrc` | Edit and `chezmoi apply` |
 | Starship prompt | `dot_config/starship.toml` | Edit and `chezmoi apply` |
-| Neovim | `dot_config/nvim/` | NvChad v2.5 + lazy.nvim; entry `init.lua`, overrides in `lua/{options,mappings,autocmds,chadrc.lua.tmpl}`, plugins in `lua/plugins/init.lua`, plugin configs in `lua/configs/` |
+| Neovim | `dot_config/nvim/` | NvChad v2.5 + lazy.nvim; entry `init.lua`, overrides in `lua/{options,mappings,autocmds,chadrc.lua}`, plugins in `lua/plugins/init.lua`, plugin configs in `lua/configs/` |
 | StyLua | `dot_config/nvim/dot_stylua.toml` | Applied as `~/.config/nvim/.stylua.toml` |
-| Hyprland | `dot_config/hypr/` | Lua DSL (`hl.*`); `hyprland.lua` (entry), `appearance.lua.tmpl`, `monitors.lua`, `hyprpaper.conf` |
-| Ghostty | `dot_config/ghostty/config.ghostty.tmpl` | Terminal theme, padding, cursor, shell integration |
-| bat | `dot_config/bat/config.tmpl` + `themes/tokyonight_night.tmTheme` | `cat` alias + `MANPAGER` |
-| Zen Browser | `dot_config/zen-chrome/userChrome.css.tmpl` | TokyoNight via `--zen-*` CSS vars; wired in by `run_onchange_link-zen-chrome.sh.tmpl` |
-| opencode | `dot_config/opencode/` | `opencode.jsonc` (agents + context7 MCP), `tui.json.tmpl` (theme), `AGENTS.md` (global rules) |
+| Hyprland | `dot_config/hypr/` | Lua DSL (`hl.*`); `hyprland.lua` (entry), `appearance.lua`, `monitors.lua`, `hyprpaper.conf` |
+| Ghostty | `dot_config/ghostty/config.ghostty` | Terminal theme, padding, cursor, shell integration |
+| bat | `dot_config/bat/config` + `themes/tokyonight_night.tmTheme` | `cat` alias + `MANPAGER` |
+| Zen Browser | `dot_config/zen-chrome/userChrome.css` | TokyoNight via `--zen-*` CSS vars; wired in by `run_onchange_link-zen-chrome.sh.tmpl` |
+| opencode | `dot_config/opencode/` | `opencode.jsonc` (agents + context7 MCP), `tui.json` (theme), `AGENTS.md` (global rules) |
 | System packages | `.chezmoidata/packages.yaml` | chezmoi template data |
-| Theme data | `.chezmoidata/themes.yaml` | `active` selector + per-app theme tokens |
 | Package installer | `run_onchange_install-packages.sh.tmpl` | `pacman -S --needed` + `paru -S` for AUR |
 | Zen chrome linker | `run_onchange_link-zen-chrome.sh.tmpl` | symlinks `userChrome.css` into each Zen profile |
 
@@ -48,21 +47,11 @@ chezmoi cd             # cd into the source directory
 - No `.gitignore` — everything is tracked.
 - `.chezmoiignore` lists **root `AGENTS.md`** — this file is repo-only and never applied to `~/`.
 - `dot_config/opencode/AGENTS.md` is **not** ignored — it is applied to `~/.config/opencode/AGENTS.md` (the global opencode rules).
-- Template data lives in **two** `.chezmoidata/` files: `packages.yaml` and `themes.yaml`.
+- Template data lives in `.chezmoidata/packages.yaml`.
 
-## Unified theming
+## Theming
 
-A single `active` key in `.chezmoidata/themes.yaml` drives the TokyoNight palette across every app via templates. Only `tokyonight` is defined.
-
-- `themes.yaml` exports: `label` (Ghostty), `opencode` (opencode tui), `nvchad` (NvChad base46), `bat` (bat theme), `hypr_active_alpha`/`hypr_inactive_alpha` (Hyprland border alpha), and a `colors` map (hex, no `#`).
-- Consumers:
-  - `dot_config/nvim/lua/chadrc.lua.tmpl` → `base46.theme`
-  - `dot_config/ghostty/config.ghostty.tmpl` → `theme = <label>`
-  - `dot_config/bat/config.tmpl` → `--theme=<bat>`
-  - `dot_config/hypr/appearance.lua.tmpl` → border `col.active_border` / `inactive_border`
-  - `dot_config/opencode/tui.json.tmpl` → `theme`
-  - `dot_config/zen-chrome/userChrome.css.tmpl` → full `--tg-*` palette
-- To switch theme: add an entry under `themes:` in `themes.yaml`, set `active:` to its key, and `chezmoi apply`.
+TokyoNight is hardcoded per app — no central theme data. Values: Ghostty `config.ghostty` (`theme = TokyoNight Night`), NvChad `lua/chadrc.lua` (`theme = "tokyonight"`), bat `config` (`--theme="tokyonight_night"` + custom tmTheme), Hyprland `appearance.lua` (borders `rgba(7aa2f7ee)` active / `rgba(414868aa)` inactive), opencode `tui.json` (`"theme": "tokyonight"`), Zen `userChrome.css` (`--tg-*` palette). Theme switching via bash scripts is planned.
 
 ## Architecture notes
 
@@ -84,26 +73,26 @@ A single `active` key in `.chezmoidata/themes.yaml` drives the TokyoNight palett
 - **Autostart** (on `hyprland.start`): enable `app-com.mitchellh.ghostty.service` user unit, `hyprpaper`, `quickshell`, `swayosd-server`, `swaync`.
 - **Keybinds**: `ALT+T` terminal, `ALT+B` browser, `ALT+S` obs, `ALT+O` obsidian; `ALT+F12`/`F11`/`F10` volume raise/lower/mute; `ALT+W` close; `ALT+hjkl`/arrows focus; `ALT+SHIFT` move; `ALT+0-9` workspaces; `ALT+SHIFT+0-9` move to workspace; `ALT+SHIFT+M` exit.
 - **monitors.lua**: `eDP-1` 1920x1080@60 at scale 1.25; `HDMI-A-2` scale 1.
-- **appearance.lua.tmpl**: gaps 2, border 1, dwindle layout, border colors from theme, opacities 0.99/0.97, blur size 1 passes 2, font `Inter Regular`.
+- **appearance.lua**: gaps_in 4 / gaps_out 8, border 1, dwindle layout, hardcoded TokyoNight border colors, opacities 0.99/0.97, blur size 1 passes 2, font `Inter Regular`.
 - **hyprpaper.conf**: splash off; `neon-mountain.png` (cover) on `DP-2` and `eDP-1`.
 
 ### Ghostty
-- `config.ghostty.tmpl`: `theme = <active label>` (TokyoNight Night), `window-padding-x = 10` with `window-padding-color = extend-always`, `cursor-style = block`, `shell-integration = zsh`.
+- `config.ghostty`: `theme = TokyoNight Night`, `window-padding-x = 10` with `window-padding-color = extend-always`, `cursor-style = block`, `shell-integration = zsh`.
 
 ### Shell (zsh)
 - `dot_zshrc`: `EDITOR`/`VISUAL = nvim`; `MANPAGER` piped through `bat -l man -p`; 50000-entry history with dedup options; `compinit` with menu select + case-insensitive matching; aliases `vi`/`vim → nvim`, `cat → bat`, `lg → lazygit`; sources `zsh-autosuggestions`, `zsh-syntax-highlighting`, `nvm/init-nvm.sh`; `eval "$(starship init zsh)"`.
 - Starship (`dot_config/starship.toml`): directory truncation 3; compact `[[...]()` formats for many modules (git, node, lua, c, rust, python, etc.).
 
 ### bat
-- `cat` alias and man pager use `bat`; `config.tmpl` sets `--theme` from `themes.yaml` (`tokyonight_night`); custom tmTheme at `themes/tokyonight_night.tmTheme`.
+- `cat` alias and man pager use `bat`; `config` sets `--theme="tokyonight_night"`; custom tmTheme at `themes/tokyonight_night.tmTheme`.
 
 ### Zen Browser
-- `userChrome.css.tmpl` applies TokyoNight **by overriding Zen's `--zen-*` theme variables** (not per-element backgrounds — the comment explains Zen renders its chrome through a translucent overlay, so element-level `!important` fights it and leaves gaps).
+- `userChrome.css` applies TokyoNight **by overriding Zen's `--zen-*` theme variables** (not per-element backgrounds — the comment explains Zen renders its chrome through a translucent overlay, so element-level `!important` fights it and leaves gaps).
 - `run_onchange_link-zen-chrome.sh.tmpl` symlinks `~/.config/zen-chrome/userChrome.css` into each Zen profile's `chrome/` dir (enumerated from `~/.config/zen/profiles.ini`) and sets `toolkit.legacyUserProfileCustomizations.stylesheets = true` in each profile's `user.js`.
 
 ### opencode
 - `opencode.jsonc`: `default_agent = tutor`; context7 MCP remote at `https://mcp.context7.com/mcp` with `CONTEXT7_API_KEY` read from `~/.secrets/context7_api_key` via `{file:...}`; agents `build`/`plan`/`general` all enabled.
-- `tui.json.tmpl`: `theme = <active opencode>`.
+- `tui.json`: `"theme": "tokyonight"`.
 - `AGENTS.md`: global opencode rules (read-only, context7 usage, communication style) — applied to `~/.config/opencode/AGENTS.md`.
 
 ### Package management
