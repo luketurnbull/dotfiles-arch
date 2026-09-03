@@ -72,6 +72,11 @@
 
   /* Sidebar notifications */
   --zen-sidebar-notification-bg: var(--tg-bg-panel) !important;
+
+  /* ---- Corner rounding (match Hyprland decoration.rounding = 16) ---- */
+  --zen-border-radius: 12px !important;          /* global UI rounding var */
+  --zen-webview-border-radius: 12px !important;  /* webview card corners */
+  --zen-native-inner-radius: 12px !important;    /* what .browserSidebarContainer reads on Linux (#4864) */
 }
 
 /* Selected tab: keep readable Tokyo Night contrast on top of the variable theme. */
@@ -80,3 +85,9 @@
 
 /* URL bar focus ring */
 #urlbar[focused] { border-color: var(--tg-blue) !important; }
+
+/* Webview card: clip content to the radius. Guarded so fullscreen stays square. */
+:root:not([inDOMFullscreen="true"]) #tabbrowser-tabbox #tabbrowser-tabpanels .browserSidebarContainer {
+  border-radius: var(--zen-border-radius) !important;
+  overflow: hidden !important;
+}
