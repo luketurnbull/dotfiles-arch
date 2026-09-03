@@ -35,6 +35,7 @@ packages:
       - socat
       - bluez
       - bluez-utils
+      - eza
     aur:
       - opencode
       - zen-browser-bin
