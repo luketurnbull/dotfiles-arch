@@ -11,7 +11,7 @@ Scope {
 
             screen: modelData
             anchors.top: true
-            implicitHeight: container.height + 5
+            implicitHeight: container.height + 8
             implicitWidth: container.width
             color: "transparent"
 
@@ -22,8 +22,8 @@ Scope {
                 radius: 20
                 anchors.bottom: parent.bottom
                 implicitHeight: clock.height + margin * 2
-                implicitWidth: clock.width + margin * 8
-                color: "#000000"
+                implicitWidth: clock.width + margin * 5
+                color: "#ee1a1b26"
 
                 ClockWidget {
                     id: clock
