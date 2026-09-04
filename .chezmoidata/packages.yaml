@@ -36,6 +36,7 @@ packages:
       - bluez
       - bluez-utils
       - eza
+      - vim
     aur:
       - opencode
       - zen-browser-bin
