@@ -33,7 +33,7 @@ alias vi="nvim"
 alias vim="nvim"
 alias cat="bat"
 alias lg="lazygit"
-alias ls="eza --icons"
+alias ls="eza --icons=always"
 
 # Source plugins
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
