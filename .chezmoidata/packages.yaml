@@ -37,6 +37,8 @@ packages:
       - bluez-utils
       - eza
       - vim
+      - tmux
+      - chromium
     aur:
       - opencode
       - zen-browser-bin

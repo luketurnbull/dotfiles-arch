@@ -2,7 +2,7 @@
 -- Variables -------------------------
 --------------------------------------
 
-local mainMod = "ALT"
+local mainMod = "SUPER"
 local terminal = "ghostty"
 local browser = "zen-browser"
 local noteEditor = "obsidian"
