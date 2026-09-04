@@ -22,7 +22,7 @@ ThinkPad T490s (`20NYS2LT01`), Arch Linux x86_64, kernel `7.1.8-arch1-3`, locale
 | Neovim | `dot_config/nvim/` | NvChad v2.5 + lazy.nvim; entry `init.lua`, overrides in `lua/{options,mappings,autocmds,chadrc.lua}`, plugins in `lua/plugins/init.lua`, plugin configs in `lua/configs/` |
 | StyLua | `dot_config/nvim/dot_stylua.toml` | Applied as `~/.config/nvim/.stylua.toml` |
 | Hyprland | `dot_config/hypr/` | Lua DSL (`hl.*`); `hyprland.lua` (entry), `appearance.lua`, `monitors.lua`, `hyprpaper.conf` |
-| Ghostty | `dot_config/ghostty/config.ghostty` | Terminal theme, padding, cursor, shell integration |
+| Ghostty | `dot_config/ghostty/config.ghostty` | Terminal theme, padding, cursor, shell integration, tmux autostart (`command = tmux`) |
 | tmux | `dot_config/tmux/tmux.conf` | TokyoNight theme, vi copy mode, `C-hjkl` pane nav |
 | bat | `dot_config/bat/config` + `themes/tokyonight_night.tmTheme` | `cat` alias + `MANPAGER` |
 | Zen Browser | `dot_config/zen-chrome/userChrome.css` | TokyoNight via `--zen-*` CSS vars; wired in by `run_onchange_link-zen-chrome.sh.tmpl` |
@@ -52,7 +52,7 @@ chezmoi cd             # cd into the source directory
 
 ## Theming
 
-TokyoNight is hardcoded per app — no central theme data. Values: Ghostty `config.ghostty` (`theme = TokyoNight Night`), NvChad `lua/chadrc.lua` (`theme = "tokyonight"`), bat `config` (`--theme="tokyonight_night"` + custom tmTheme), Hyprland `appearance.lua` (borders `rgba(7aa2f7ee)` active / `rgba(414868aa)` inactive), tmux `tmux.conf` (status bg `#1a1b26` fg `#c0caf5`, current window bg `#7aa2f7`, borders matching hyprland), opencode `tui.json` (`"theme": "tokyonight"`), Zen `userChrome.css` (`--tg-*` palette). Theme switching via bash scripts is planned.
+TokyoNight is hardcoded per app — no central theme data. Values: Ghostty `config.ghostty` (`theme = TokyoNight Night`), NvChad `lua/chadrc.lua` (`theme = "tokyonight"`), bat `config` (`--theme="tokyonight_night"` + custom tmTheme), Hyprland `appearance.lua` (borders `rgba(7aa2f7ee)` active / `rgba(414868aa)` inactive), tmux `tmux.conf` (transient only: `mode-style`/`message-style` — status line and pane borders are chrome-free/blank), opencode `tui.json` (`"theme": "tokyonight"`), Zen `userChrome.css` (`--tg-*` palette). Theme switching via bash scripts is planned.
 
 ## Architecture notes
 
@@ -78,11 +78,15 @@ TokyoNight is hardcoded per app — no central theme data. Values: Ghostty `conf
 - **hyprpaper.conf**: splash off; `neon-mountain.png` (cover) on `DP-2` and `eDP-1`.
 
 ### Ghostty
-- `config.ghostty`: `theme = TokyoNight Night`, `window-padding-x = 10` with `window-padding-color = extend-always`, `cursor-style = block`, `shell-integration = zsh`.
+- `config.ghostty`: `theme = TokyoNight Night`, `window-padding-x = 10` with `window-padding-color = extend-always`, `cursor-style = block`, `shell-integration = zsh`, `command = tmux` (every new terminal starts in tmux).
+- Caveat: with `command = tmux`, ghostty doesn't auto-inject shell integration (it injects into the launched process, which is tmux not zsh) — new tabs/splits open in default cwd instead of current. Fix if it matters: source `$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration` in `dot_zshrc`.
 
 ### tmux
-- `dot_config/tmux/tmux.conf` (→ `~/.config/tmux/tmux.conf`): TokyoNight Night hardcoded; pane borders match `appearance.lua` — active `#7aa2f7` (tmux has no gradient support, so the hyprland `#3b4261→#7aa2f7` gradient collapses to its accent), inactive `#1a1b26`.
-- Vi copy mode: `v` begin-selection, `y` copies to tmux buffer + system clipboard via `wl-copy`, `Escape` cancels. Mouse off.
+- `dot_config/tmux/tmux.conf` (→ `~/.config/tmux/tmux.conf`): **zen** — chrome-free, used as an invisible scrollback/copy-mode layer. Ghostty owns window management (tabs/splits GUI); each ghostty terminal gets an independent tmux session via `command = tmux` (sessions persist on the server after a window closes — occasionally `tmux kill-server` to sweep strays).
+- `status off` (no status line); `prefix t` toggles it for a peek (session-scoped toggle — only flips the current session).
+- Pane borders (tmux 3.7+): `pane-border-lines spaces` draws borders as blank cells — invisible, gives 1-cell gap between panes (native padding rejected upstream, tmux#3097; `none` is post-3.7c master-only, errors on 3.7c); `pane-border-indicators arrows` marks the active pane with an accent arrow (`pane-active-border-style fg=#7aa2f7` colours it) instead of colouring half the shared border line (avoid `both` — arrows vanish on second pane pre-3.7, tmux#4780). These are window/session-scoped: options set globally in config apply to new windows/sessions; existing ones need `set -w`.
+- Vi copy mode: `v` begin-selection, `y` copies to tmux buffer + system clipboard via `wl-copy`, `Escape` cancels, `C-v` rectangle-toggle. `prefix r` = incremental search up through scrollback (replaces default refresh-client). Mouse off.
+- Only TokyoNight left in tmux: transient `mode-style` (copy-mode selection) + `message-style` (command prompt) — invisible unless in use.
 - `prefix v` = side-by-side split (`split-window -h`, like vim `:vsplit`).
 - Bare `C-hjkl`/`C-\` pane navigation is vim-aware (vim-tmux-navigator `is_vim` ps-detection): keys pass through to nvim at split edges and tmux hands off to nvim panes. `prefix C-l` = clear-screen fallback.
 - `terminal-overrides ",xterm-ghostty:RGB"` keeps truecolor in nvim inside tmux; `focus-events on` for nvim autoread.

@@ -8,3 +8,6 @@ cursor-style = block
 
 shell-integration = zsh
 custom-shader = ~/.config/ghostty/shaders/cursor_blaze.glsl
+
+# every new terminal starts in tmux — each window gets its own session
+command = tmux
