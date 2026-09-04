@@ -1,7 +1,7 @@
 return {
   {
     "stevearc/conform.nvim",
-    event = 'BufWritePre', -- uncomment for format on save
+    event = "BufWritePre", -- uncomment for format on save
     opts = require "configs.conform",
   },
 
@@ -25,4 +25,10 @@ return {
   -- 		},
   -- 	},
   -- },
+
+  -- seamless C-hjkl navigation between nvim splits and tmux panes
+  -- eager-loaded: the lazy keys= handler gets clobbered by nvchad.mappings
+  -- (which maps C-hjkl to <C-w>hjkl after lazy.setup); mappings.lua then
+  -- re-maps over NvChad, so mappings must be created load-order-aware
+  { "christoomey/vim-tmux-navigator", lazy = false },
 }

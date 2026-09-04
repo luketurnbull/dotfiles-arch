@@ -23,6 +23,7 @@ ThinkPad T490s (`20NYS2LT01`), Arch Linux x86_64, kernel `7.1.8-arch1-3`, locale
 | StyLua | `dot_config/nvim/dot_stylua.toml` | Applied as `~/.config/nvim/.stylua.toml` |
 | Hyprland | `dot_config/hypr/` | Lua DSL (`hl.*`); `hyprland.lua` (entry), `appearance.lua`, `monitors.lua`, `hyprpaper.conf` |
 | Ghostty | `dot_config/ghostty/config.ghostty` | Terminal theme, padding, cursor, shell integration |
+| tmux | `dot_config/tmux/tmux.conf` | TokyoNight theme, vi copy mode, `C-hjkl` pane nav |
 | bat | `dot_config/bat/config` + `themes/tokyonight_night.tmTheme` | `cat` alias + `MANPAGER` |
 | Zen Browser | `dot_config/zen-chrome/userChrome.css` | TokyoNight via `--zen-*` CSS vars; wired in by `run_onchange_link-zen-chrome.sh.tmpl` |
 | opencode | `dot_config/opencode/` | `opencode.jsonc` (agents + context7 MCP), `tui.json` (theme), `AGENTS.md` (global rules) |
@@ -51,7 +52,7 @@ chezmoi cd             # cd into the source directory
 
 ## Theming
 
-TokyoNight is hardcoded per app — no central theme data. Values: Ghostty `config.ghostty` (`theme = TokyoNight Night`), NvChad `lua/chadrc.lua` (`theme = "tokyonight"`), bat `config` (`--theme="tokyonight_night"` + custom tmTheme), Hyprland `appearance.lua` (borders `rgba(7aa2f7ee)` active / `rgba(414868aa)` inactive), opencode `tui.json` (`"theme": "tokyonight"`), Zen `userChrome.css` (`--tg-*` palette). Theme switching via bash scripts is planned.
+TokyoNight is hardcoded per app — no central theme data. Values: Ghostty `config.ghostty` (`theme = TokyoNight Night`), NvChad `lua/chadrc.lua` (`theme = "tokyonight"`), bat `config` (`--theme="tokyonight_night"` + custom tmTheme), Hyprland `appearance.lua` (borders `rgba(7aa2f7ee)` active / `rgba(414868aa)` inactive), tmux `tmux.conf` (status bg `#1a1b26` fg `#c0caf5`, current window bg `#7aa2f7`, borders matching hyprland), opencode `tui.json` (`"theme": "tokyonight"`), Zen `userChrome.css` (`--tg-*` palette). Theme switching via bash scripts is planned.
 
 ## Architecture notes
 
@@ -60,7 +61,7 @@ TokyoNight is hardcoded per app — no central theme data. Values: Ghostty `conf
 - base46 cache (`vim.g.base46_cache`) loaded via `dofile` for `defaults` + `statusline`; `mapleader` is space.
 - Overrides layered on NvChad: `lua/options.lua` (`relativenumber`), `lua/mappings.lua` (visual J/K move lines, `C-d`/`u`/`o`/`i` center cursor), `lua/autocmds.lua` (passthrough).
 - `lua/configs/lazy.lua`: lazy defaults, install colorscheme `nvchad`, performance rtp disabled-plugins list.
-- **Plugins** (`lua/plugins/init.lua`): `conform.nvim` (`BufWritePre`), `neovim/nvim-lspconfig`, `mfussenegger/nvim-dap` (loaded on `User FilePost`).
+- **Plugins** (`lua/plugins/init.lua`): `conform.nvim` (`BufWritePre`), `neovim/nvim-lspconfig`, `mfussenegger/nvim-dap` (loaded on `User FilePost`), `christoomey/vim-tmux-navigator` (`C-hjkl`/`C-\` tmux-aware split navigation, eager-loaded `lazy = false` — a lazy `keys=` handler gets clobbered by `nvchad.mappings`, which maps `C-hjkl` → `<C-w>hjkl` after `lazy.setup`; `lua/mappings.lua` re-maps them to the `TmuxNavigate*` commands after `require("nvchad.mappings")` to win the last-set-wins race).
 - **LSP** (`lua/configs/lspconfig.lua`): `nvchad.configs.lspconfig.defaults()` then `vim.lsp.enable{ "html", "cssls", "clangd", "qmlls" }`; `qmlls` cmd `qmlls6`.
 - **Formatting** (`lua/configs/conform.lua`): `stylua` (lua) and `clang-format` (c); `format_on_save` timeout 500ms, `lsp_fallback = true`.
 - **DAP**: `nvim-dap` is declared but not yet configured — see `nvim-dap-setup.md` (repo root) for the pending plan (codelldb install, `lua/configs/dap.lua`, keybinds in `mappings.lua`).
@@ -78,6 +79,13 @@ TokyoNight is hardcoded per app — no central theme data. Values: Ghostty `conf
 
 ### Ghostty
 - `config.ghostty`: `theme = TokyoNight Night`, `window-padding-x = 10` with `window-padding-color = extend-always`, `cursor-style = block`, `shell-integration = zsh`.
+
+### tmux
+- `dot_config/tmux/tmux.conf` (→ `~/.config/tmux/tmux.conf`): TokyoNight Night hardcoded; pane borders match `appearance.lua` — active `#7aa2f7` (tmux has no gradient support, so the hyprland `#3b4261→#7aa2f7` gradient collapses to its accent), inactive `#1a1b26`.
+- Vi copy mode: `v` begin-selection, `y` copies to tmux buffer + system clipboard via `wl-copy`, `Escape` cancels. Mouse off.
+- `prefix v` = side-by-side split (`split-window -h`, like vim `:vsplit`).
+- Bare `C-hjkl`/`C-\` pane navigation is vim-aware (vim-tmux-navigator `is_vim` ps-detection): keys pass through to nvim at split edges and tmux hands off to nvim panes. `prefix C-l` = clear-screen fallback.
+- `terminal-overrides ",xterm-ghostty:RGB"` keeps truecolor in nvim inside tmux; `focus-events on` for nvim autoread.
 
 ### Shell (zsh)
 - `dot_zshrc`: `EDITOR`/`VISUAL = nvim`; `MANPAGER` piped through `bat -l man -p`; 50000-entry history with dedup options; `compinit` with menu select + case-insensitive matching; aliases `vi`/`vim → nvim`, `cat → bat`, `lg → lazygit`; sources `zsh-autosuggestions`, `zsh-syntax-highlighting`, `nvm/init-nvm.sh`; `eval "$(starship init zsh)"`.

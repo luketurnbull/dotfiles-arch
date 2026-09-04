@@ -38,6 +38,7 @@ packages:
       - eza
       - vim
       - tmux
+      - wl-clipboard
       - chromium
     aur:
       - opencode
