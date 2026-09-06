@@ -2,6 +2,7 @@ require("appearance")
 require("monitors")
 require("animations")
 require("keybinds")
+require("devices")
 
 -- Autostart
 hl.on("hyprland.start", function()
