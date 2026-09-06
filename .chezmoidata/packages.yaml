@@ -51,6 +51,7 @@ packages:
       - obs-studio
       - chromium
       - blender
+      - mpv
 
     aur:
       - opencode
