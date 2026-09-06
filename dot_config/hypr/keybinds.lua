@@ -2,7 +2,16 @@
 -- Audio keybinds --------------------------------------
 --------------------------------------------------------
 local variables = require("variables")
+local appearance = require("appearance")
 local mainMod = variables.mainMod
+
+--------------------------------------------------------
+-- Toggles -----------------------------------
+--------------------------------------------------------
+-- Toggle recording view
+hl.bind("ALT + G", function()
+	appearance.toggleGaps()
+end)
 
 --------------------------------------------------------
 -- Open Applications -----------------------------------
@@ -12,9 +21,11 @@ hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(variables.terminal))
 -- Browser
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(variables.browser))
 -- OBS Studio
-hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(variables.screenRecorder))
+hl.bind(mainMod .. "+ SHIFT + S", hl.dsp.exec_cmd(variables.screenRecorder))
 -- Obsidian
-hl.bind(mainMod .. " + O", hl.dsp.exec_cmd(variables.noteEditor))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(variables.noteEditor))
+-- Blender
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(variables.blender))
 
 --------------------------------------------------------
 -- Audio keybinds --------------------------------------

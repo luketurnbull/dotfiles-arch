@@ -1,5 +1,5 @@
 local laptopDisplayName = "eDP-1"
-local hasLidDown = false
+local hasLidDown = true
 local externalMonitor = nil
 
 local function setupMonitors()

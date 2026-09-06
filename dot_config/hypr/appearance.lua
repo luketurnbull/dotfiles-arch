@@ -1,8 +1,20 @@
+local horizontalGap = 362
+
+local recordingGaps = {
+	top = 10,
+	bottom = 10,
+	left = horizontalGap,
+	right = horizontalGap,
+}
+
+local noneRecordingGap = 10
+
 -- Look and feel
 hl.config({
 	general = {
 		gaps_in = 5,
-		gaps_out = 10,
+		gaps_out = recordingGaps,
+
 		border_size = 1,
 
 		col = {
@@ -37,3 +49,19 @@ hl.config({
 		font_family = "Inter Regular",
 	},
 })
+
+local function toggleGaps()
+	local gaps = hl.get_config("general.gaps_out")
+
+	hl.notification.create({ text = gaps.left, timeout = 2000, icon = "ok" })
+
+	if gaps.left == noneRecordingGap then
+		hl.config({ general = { gaps_out = recordingGaps } })
+		hl.notification.create({ text = "Gaps: 16/9 recording", timeout = 2000, icon = "ok" })
+	else
+		hl.config({ general = { gaps_out = noneRecordingGap } })
+		hl.notification.create({ text = "Gaps: normal", timeout = 2000, icon = "ok" })
+	end
+end
+
+return { toggleGaps = toggleGaps }

@@ -7,6 +7,7 @@ local terminal = "ghostty"
 local browser = "zen-browser"
 local noteEditor = "obsidian"
 local screenRecorder = "obs"
+local blender = "blender"
 
 return {
 	mainMod = mainMod,
@@ -14,4 +15,5 @@ return {
 	browser = browser,
 	noteEditor = noteEditor,
 	screenRecorder = screenRecorder,
+	blender = blender,
 }
