@@ -1,8 +1,10 @@
 theme = TokyoNight Night
+font-size = 16
 
 window-padding-color = extend-always
 window-padding-x = 15
 window-padding-y = 0
+
 # spread sub-cell leftover pixels across all edges — tiled window heights are
 # rarely exact cell multiples, so without this the remainder pools at the bottom
 window-padding-balance = true

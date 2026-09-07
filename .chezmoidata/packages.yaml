@@ -51,6 +51,7 @@ packages:
       - chromium
       - blender
       - mpv
+      - gimp
 
     aur:
       - opencode
