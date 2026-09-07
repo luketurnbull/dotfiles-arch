@@ -55,3 +55,4 @@ packages:
     aur:
       - opencode
       - zen-browser-bin
+      - shurectl
