@@ -33,7 +33,6 @@ packages:
       - xdg-desktop-portal-hyprland
       - xdg-desktop-portal-gtk
       - qt6-wayland
-      - quickshell
       - pipewire
       - pipewire-audio
       - pipewire-pulse
