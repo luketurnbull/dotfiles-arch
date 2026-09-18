@@ -48,6 +48,7 @@ packages:
       - bluez
       - bluez-utils
       - wl-clipboard
+      - man-pages
 
       # Programs
       - obsidian
