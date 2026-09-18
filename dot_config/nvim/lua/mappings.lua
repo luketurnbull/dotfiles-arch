@@ -28,3 +28,26 @@ map("n", "<C-u>", "<C-u>zz", {
 })
 map("n", "<C-o>", "<C-o>zz", { desc = "jump back and center" })
 map("n", "<C-i>", "<C-i>zz", { desc = "jump forward and center" })
+
+-- nvim-dap
+map("n", "<F5>", function()
+	require("dap").continue()
+end, { desc = "debug continue/start" })
+map("n", "<F10>", function()
+	require("dap").step_over()
+end, { desc = "debug step over" })
+map("n", "<F11>", function()
+	require("dap").step_into()
+end, { desc = "debug step into" })
+map("n", "<F12>", function()
+	require("dap").step_out()
+end, { desc = "debug step out" })
+map("n", "<leader>db", function()
+	require("dap").toggle_breakpoint()
+end, { desc = "debug toggle breakpoint" })
+map("n", "<leader>du", function()
+	-- require dap first: requiring dapui cold loads nvim-dap-ui → its module
+	-- requires dap → runs configs/dap.lua → requires dapui again mid-load = loop
+	require("dap")
+	require("dapui").toggle()
+end, { desc = "debug toggle ui" })

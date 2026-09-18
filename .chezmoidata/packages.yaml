@@ -27,6 +27,9 @@ packages:
       - clang
       - nvm
       - pnpm
+      - bash-language-server
+      - shellcheck
+      - gdb
 
       # OS
       - hyprland
@@ -59,3 +62,4 @@ packages:
       - opencode
       - zen-browser-bin
       - shurectl
+      - autotools-language-server
