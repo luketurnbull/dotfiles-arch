@@ -7,7 +7,12 @@ local recordingGaps = {
 	right = horizontalGap,
 }
 
-local noneRecordingGap = 10
+local noneRecordingGap = {
+	top = 0,
+	bottom = 10,
+	left = 10,
+	right = 10,
+}
 
 -- Look and feel
 hl.config({

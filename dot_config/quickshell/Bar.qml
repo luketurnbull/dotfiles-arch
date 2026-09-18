@@ -17,13 +17,13 @@ Scope {
             }
 
             color: "transparent"
-            implicitHeight: clockContainer.implicitHeight + 5
+            implicitHeight: clockContainer.implicitHeight + 10
             implicitWidth: clockContainer.implicitWidth
 
             Rectangle {
                 id: clockContainer
                 property real marginX: 20
-                property real marginY: 10
+                property real marginY: 8
                 anchors.centerIn: parent
 
                 implicitWidth: clock.implicitWidth + marginX * 2

@@ -4,6 +4,6 @@ Text {
     color: "#ffffff"
     text: Time.time
     font.bold: true
-    font.pointSize: 12
+    font.pointSize: 10
     font.capitalization: Font.AllUppercase
 }

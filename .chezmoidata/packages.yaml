@@ -26,6 +26,7 @@ packages:
       - stylua
       - clang
       - nvm
+      - pnpm
 
       # OS
       - hyprland
@@ -51,6 +52,7 @@ packages:
       - chromium
       - blender
       - mpv
+      - raylib
       - gimp
 
     aur:
