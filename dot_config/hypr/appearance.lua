@@ -1,14 +1,14 @@
 local horizontalGap = 362
 
 local recordingGaps = {
-	top = 0,
+	top = 10,
 	bottom = 10,
 	left = horizontalGap,
 	right = horizontalGap,
 }
 
 local noneRecordingGaps = {
-	top = 0,
+	top = 10,
 	bottom = 10,
 	left = 10,
 	right = 10,

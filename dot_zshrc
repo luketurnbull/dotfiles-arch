@@ -2,6 +2,8 @@
 export EDITOR="nvim"
 export VISUAL="nvim"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Pi
+export PATH="/home/luke/.local/share/pi-node/node-v22.23.2-linux-x64/bin:$PATH"
 
 # Man page formatting
 export MANROFFOPT="-c"

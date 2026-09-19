@@ -7,8 +7,13 @@ Scope {
 
         PanelWindow {
             required property var modelData
+            readonly property real gap: 10
 
             screen: modelData
+
+            margins.top: gap
+            margins.right: gap
+            margins.left: gap
 
             anchors {
                 top: true
@@ -17,7 +22,7 @@ Scope {
             }
 
             color: "transparent"
-            implicitHeight: clock.implicitHeight + 10
+            implicitHeight: clock.implicitHeight
 
             ClockWidget {
                 id: clock

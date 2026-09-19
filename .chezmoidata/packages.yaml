@@ -51,6 +51,7 @@ packages:
       - wl-clipboard
       - man-pages
       - upower
+      - htop
 
       # Programs
       - obsidian
