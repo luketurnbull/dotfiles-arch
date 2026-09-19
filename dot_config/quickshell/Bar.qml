@@ -17,24 +17,14 @@ Scope {
             }
 
             color: "transparent"
-            implicitHeight: clockContainer.implicitHeight + 10
-            implicitWidth: clockContainer.implicitWidth
+            implicitHeight: clock.implicitHeight + 10
 
-            Rectangle {
-                id: clockContainer
-                property real marginX: 20
-                property real marginY: 8
-                anchors.centerIn: parent
+            ClockWidget {
+                id: clock
+            }
 
-                implicitWidth: clock.implicitWidth + marginX * 2
-                implicitHeight: clock.implicitHeight + marginY * 2
-                color: "#ee1a1b26"
-                radius: 999
-
-                ClockWidget {
-                    id: clock
-                    anchors.centerIn: parent
-                }
+            BatteryWidget {
+                id: battery
             }
         }
     }

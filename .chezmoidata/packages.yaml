@@ -49,6 +49,7 @@ packages:
       - bluez-utils
       - wl-clipboard
       - man-pages
+      - upower
 
       # Programs
       - obsidian
