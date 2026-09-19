@@ -1,127 +1,45 @@
 # AGENTS.md
 
-This is a **chezmoi dotfiles repository** for Arch Linux (`luketurnbull/dotfiles-arch`).
-The `dot_` prefix maps to `.` in the home directory (e.g., `dot_zshrc` → `~/.zshrc`).
+Chezmoi dotfiles for Arch Linux (`luketurnbull/dotfiles-arch`), branch `archpad`.
+`dot_` prefix maps to `.` in `~/` (`dot_zshrc` → `~/.zshrc`).
+Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 
-## Host hardware
+## Layout
 
-ThinkPad T490s (`20NYS2LT01`), Arch Linux x86_64, kernel `7.1.8-arch1-3`, locale `en_AU.UTF-8`.
-- **CPU**: Intel Core i7-8665U, 8 logical cores @ 4.80 GHz
-- **GPU**: Intel UHD Graphics 620 (integrated) @ 1.15 GHz
-- **RAM**: 15.40 GiB (no swap)
-- **Disk**: 116.24 GiB ext4 on `/`
-- **Displays**: internal `CMN14F5` 14" 1920x1080@60, scale 1.25 (`eDP-1`); external `GF340C` 34" 2560x1440@60
-- **Stack**: zsh 5.9.2, Hyprland 0.56.2 (Wayland), ghostty 1.3.1, JetBrainsMono Nerd Font 12pt, Adwaita cursor
-
-## Quick reference
-
-| What | Where | How to modify |
+| What | Where | Docs |
 |---|---|---|
-| Shell | `dot_zshrc` | Edit and `chezmoi apply` |
-| Starship prompt | `dot_config/starship.toml` | Edit and `chezmoi apply` |
-| Neovim | `dot_config/nvim/` | NvChad v2.5 + lazy.nvim; entry `init.lua`, overrides in `lua/{options,mappings,autocmds,chadrc.lua}`, plugins in `lua/plugins/init.lua`, plugin configs in `lua/configs/` |
-| StyLua | `dot_config/nvim/dot_stylua.toml` | Applied as `~/.config/nvim/.stylua.toml` |
-| Hyprland | `dot_config/hypr/` | Lua DSL (`hl.*`); `hyprland.lua` (entry), `appearance.lua`, `monitors.lua`, `hyprpaper.conf` |
-| Ghostty | `dot_config/ghostty/config.ghostty` | Terminal theme, padding, cursor, shell integration, tmux autostart (`command = tmux`) |
-| tmux | `dot_config/tmux/tmux.conf` | TokyoNight theme, vi copy mode, `C-hjkl` pane nav |
-| bat | `dot_config/bat/config` + `themes/tokyonight_night.tmTheme` | `cat` alias + `MANPAGER` |
-| Zen Browser | `dot_config/zen-chrome/userChrome.css` | TokyoNight via `--zen-*` CSS vars; wired in by `run_onchange_link-zen-chrome.sh.tmpl` |
-| opencode | `dot_config/opencode/` | `opencode.jsonc` (agents + context7 MCP), `tui.json` (theme), `AGENTS.md` (global rules) |
-| System packages | `.chezmoidata/packages.yaml` | chezmoi template data |
-| Package installer | `run_onchange_install-packages.sh.tmpl` | `pacman -S --needed` + `paru -S` for AUR |
-| Zen chrome linker | `run_onchange_link-zen-chrome.sh.tmpl` | symlinks `userChrome.css` into each Zen profile |
+| Shell (zsh) | `dot_zshrc` | `docs/shell.md` |
+| Starship | `dot_config/starship.toml` | `docs/shell.md` |
+| Neovim | `dot_config/nvim/` (NvChad v2.5 + lazy.nvim) | `docs/neovim.md` |
+| Hyprland | `dot_config/hypr/` (Lua DSL, `hl.*`) | `docs/hyprland.md` |
+| Quickshell | `dot_config/quickshell/` (QML bar) | `docs/quickshell.md` |
+| Ghostty | `dot_config/ghostty/` | `docs/ghostty.md` |
+| tmux | `dot_config/tmux/tmux.conf` | `docs/tmux.md` |
+| bat | `dot_config/bat/` | `docs/shell.md` |
+| Zen Browser | `dot_config/zen-chrome/userChrome.css` | `docs/zen-browser.md` |
+| opencode | `dot_config/opencode/` | `docs/opencode.md` |
+| Packages | `.chezmoidata/packages.yaml` + `run_onchange_install-packages.sh.tmpl` | `docs/packages.md` |
+| Host hardware | — | `docs/computer.md` |
+| Theming | hardcoded TokyoNight per app | `docs/theming.md` |
 
-## Key commands
+## Rules
 
-```bash
-chezmoi apply          # apply pending changes
-chezmoi diff           # review changes before applying
-chezmoi status         # see what has changed
-chezmoi add ~/.zshrc   # add a new file to management
-chezmoi cd             # cd into the source directory
-```
+- Workflow: edit → `chezmoi diff` → `chezmoi apply` → commit manually. No auto-commit, no `chezmoi.toml`, no `.gitignore`.
+- `.chezmoiignore`: `AGENTS.md`, `README.md`, `docs/` — repo-only, never applied to `~/`.
+- `dot_config/opencode/AGENTS.md` **is** applied (→ `~/.config/opencode/AGENTS.md`, global opencode rules).
+- **No secrets in this repo.** context7 key lives at `~/.secrets/context7_api_key`, read via `{file:...}` in `opencode.jsonc`.
+- Add a package: edit `packages.yaml`, `chezmoi apply`. AUR via paru, rest via pacman `--needed`.
+- No CI, no tests, no build system.
 
-## chezmoi behavior
+## Keybinds (Hyprland, mainMod = SUPER)
 
-- No auto-commit — no `chezmoi.toml` exists; commits are made manually after `chezmoi apply`.
-- Repo branch is `archpad` (not `main`).
-- No `.gitignore` — everything is tracked.
-- `.chezmoiignore` lists **root `AGENTS.md`** — this file is repo-only and never applied to `~/`.
-- `dot_config/opencode/AGENTS.md` is **not** ignored — it is applied to `~/.config/opencode/AGENTS.md` (the global opencode rules).
-- Template data lives in `.chezmoidata/packages.yaml`.
+`SUPER+T` ghostty · `SUPER+B` zen · `SUPER+N` obsidian · `SUPER+SHIFT+S` obs · `SUPER+SHIFT+B` blender · `SUPER+W` close · `SUPER+hjkl/arrows` focus · `SUPER+SHIFT+*` move · `SUPER+0-9` workspace · `SUPER+F10/F11/F12` mute/vol · `SUPER+SHIFT+M` exit · `ALT+G` toggle 16:9 recording gaps. tmux prefix is default `C-b`.
 
-## Theming
+## Gotchas
 
-TokyoNight is hardcoded per app — no central theme data. Values: Ghostty `config.ghostty` (`theme = TokyoNight Night`), NvChad `lua/chadrc.lua` (`theme = "tokyonight"`), bat `config` (`--theme="tokyonight_night"` + custom tmTheme), Hyprland `appearance.lua` (borders `rgba(7aa2f7ee)` active / `rgba(414868aa)` inactive), tmux `tmux.conf` (transient only: `mode-style`/`message-style` — status line and pane borders are chrome-free/blank), opencode `tui.json` (`"theme": "tokyonight"`), Zen `userChrome.css` (`--tg-*` palette). Theme switching via bash scripts is planned.
-
-## Architecture notes
-
-### Neovim (NvChad v2.5 + lazy.nvim)
-- **NOT** `vim.pack.add` — `init.lua` bootstraps `folke/lazy.nvim` into `stdpath/lazy/lazy.nvim` and runs `lazy.setup` with `NvChad` (branch `v2.5`, imports `nvchad.plugins`) and the local `plugins` spec.
-- base46 cache (`vim.g.base46_cache`) loaded via `dofile` for `defaults` + `statusline`; `mapleader` is space.
-- Overrides layered on NvChad: `lua/options.lua` (`relativenumber`), `lua/mappings.lua` (visual J/K move lines, `C-d`/`u`/`o`/`i` center cursor), `lua/autocmds.lua` (passthrough).
-- `lua/configs/lazy.lua`: lazy defaults, install colorscheme `nvchad`, performance rtp disabled-plugins list.
-- **Plugins** (`lua/plugins/init.lua`): `conform.nvim` (`BufWritePre`), `neovim/nvim-lspconfig`, `mfussenegger/nvim-dap` (+ `rcarriga/nvim-dap-ui`, `nvim-neotest/nvim-nio`, `mxsdev/nvim-dap-vscode-js`), `christoomey/vim-tmux-navigator` (`C-hjkl`/`C-\` tmux-aware split navigation, eager-loaded `lazy = false` — a lazy `keys=` handler gets clobbered by `nvchad.mappings`, which maps `C-hjkl` → `<C-w>hjkl` after `lazy.setup`; `lua/mappings.lua` re-maps them to the `TmuxNavigate*` commands after `require("nvchad.mappings")` to win the last-set-wins race).
-- **LSP** (`lua/configs/lspconfig.lua`): `nvchad.configs.lspconfig.defaults()` then `vim.lsp.enable{ "html", "cssls", "clangd", "qmlls", "bashls", "autotools_ls" }`; `qmlls` cmd `qmlls6`. Server binaries come from pacman/AUR (`bash-language-server`, `autotools-language-server`), **not** Mason — NvChad sets mason `PATH = "skip"`, so Mason-installed binaries are invisible to `vim.lsp.enable`. `shellcheck` (pacman) feeds bashls diagnostics.
-- **Formatting** (`lua/configs/conform.lua`): `stylua` (lua) and `clang-format` (c); `format_on_save` timeout 500ms, `lsp_fallback = true`.
-- **DAP** (`lua/configs/dap.lua`): C/C++ via gdb's built-in DAP (`gdb --interpreter=dap`, zero extra install — compile targets with `-g`); JS/TS via Mason's prebuilt `js-debug-adapter` (referenced by absolute path `stdpath/data/mason/bin/js-debug-adapter` because of the mason `PATH = "skip"` gotcha) through `dap-vscode-js` (`pwa-node`/`pwa-chrome`/`node-terminal`; configs: launch file, attach). dap-ui auto opens/closes with the session. Keybinds in `mappings.lua`: `F5` continue, `F10`/`F11`/`F12` step over/into/out, `<leader>db` breakpoint, `<leader>du` toggle UI. Mason packages are installed manually (`:MasonInstall`) — avoid `:MasonInstallAll`, which scrapes the lspconfig list and would duplicate the pacman-installed servers inside Mason.
-- StyLua config in `dot_config/nvim/dot_stylua.toml` (→ `~/.config/nvim/.stylua.toml`): column 120, 2-space indent, AutoPreferDouble quotes, no call parens.
-
-### Hyprland (Lua DSL)
-- Entry `hyprland.lua` requires `appearance` + `monitors`, then defines a clipboard window rule, curves/springs, animations, variables, autostart, and keybinds.
-- `.luarc.json` points lua-language-server at `/usr/share/hypr/stubs` for `hl.*` LSP.
-- **Variables**: `mainMod = ALT`, `terminal = ghostty`, `browser = zen-browser`.
-- **Autostart** (on `hyprland.start`): enable `app-com.mitchellh.ghostty.service` user unit, `hyprpaper`, `quickshell`, `swayosd-server`, `swaync`.
-- **Keybinds**: `ALT+T` terminal, `ALT+B` browser, `ALT+S` obs, `ALT+O` obsidian; `ALT+F12`/`F11`/`F10` volume raise/lower/mute; `ALT+W` close; `ALT+hjkl`/arrows focus; `ALT+SHIFT` move; `ALT+0-9` workspaces; `ALT+SHIFT+0-9` move to workspace; `ALT+SHIFT+M` exit.
-- **monitors.lua**: `eDP-1` 1920x1080@60 at scale 1.25; `HDMI-A-2` scale 1.
-- **appearance.lua**: gaps_in 4 / gaps_out 8, border 1, dwindle layout, hardcoded TokyoNight border colors, opacities 0.99/0.97, blur size 1 passes 2, font `Inter Regular`.
-- **hyprpaper.conf**: splash off; `neon-mountain.png` (cover) on `DP-2` and `eDP-1`.
-
-### Ghostty
-- `config.ghostty`: `theme = TokyoNight Night`, `window-padding-x = 10` with `window-padding-color = extend-always`, `cursor-style = block`, `shell-integration = zsh`, `command = tmux` (every new terminal starts in tmux).
-- Caveat: with `command = tmux`, ghostty doesn't auto-inject shell integration (it injects into the launched process, which is tmux not zsh) — new tabs/splits open in default cwd instead of current. Fix if it matters: source `$GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration` in `dot_zshrc`.
-
-### tmux
-- `dot_config/tmux/tmux.conf` (→ `~/.config/tmux/tmux.conf`): **zen** — chrome-free, used as an invisible scrollback/copy-mode layer. Ghostty owns window management (tabs/splits GUI); each ghostty terminal gets an independent tmux session via `command = tmux` (sessions persist on the server after a window closes — occasionally `tmux kill-server` to sweep strays).
-- `status off` (no status line); `prefix t` toggles it for a peek (session-scoped toggle — only flips the current session).
-- Pane borders (tmux 3.7+): `pane-border-lines spaces` draws borders as blank cells — invisible, gives 1-cell gap between panes (native padding rejected upstream, tmux#3097; `none` is post-3.7c master-only, errors on 3.7c); `pane-border-indicators arrows` marks the active pane with an accent arrow (`pane-active-border-style fg=#7aa2f7` colours it) instead of colouring half the shared border line (avoid `both` — arrows vanish on second pane pre-3.7, tmux#4780). These are window/session-scoped: options set globally in config apply to new windows/sessions; existing ones need `set -w`.
-- Vi copy mode: `v` begin-selection, `y` copies to tmux buffer + system clipboard via `wl-copy`, `Escape` cancels, `C-v` rectangle-toggle. `prefix r` = incremental search up through scrollback (replaces default refresh-client). Mouse off.
-- Only TokyoNight left in tmux: transient `mode-style` (copy-mode selection) + `message-style` (command prompt) — invisible unless in use.
-- `prefix v` = side-by-side split (`split-window -h`, like vim `:vsplit`).
-- Bare `C-hjkl`/`C-\` pane navigation is vim-aware (vim-tmux-navigator `is_vim` ps-detection): keys pass through to nvim at split edges and tmux hands off to nvim panes. `prefix C-l` = clear-screen fallback.
-- `terminal-overrides ",xterm-ghostty:RGB"` keeps truecolor in nvim inside tmux; `focus-events on` for nvim autoread.
-
-### Shell (zsh)
-- `dot_zshrc`: `EDITOR`/`VISUAL = nvim`; `MANPAGER` piped through `bat -l man -p`; 50000-entry history with dedup options; `compinit` with menu select + case-insensitive matching; aliases `vi`/`vim → nvim`, `cat → bat`, `lg → lazygit`; sources `zsh-autosuggestions`, `zsh-syntax-highlighting`, `nvm/init-nvm.sh`; `eval "$(starship init zsh)"`.
-- Starship (`dot_config/starship.toml`): directory truncation 3; compact `[[...]()` formats for many modules (git, node, lua, c, rust, python, etc.).
-
-### bat
-- `cat` alias and man pager use `bat`; `config` sets `--theme="tokyonight_night"`; custom tmTheme at `themes/tokyonight_night.tmTheme`.
-
-### Zen Browser
-- `userChrome.css` applies TokyoNight **by overriding Zen's `--zen-*` theme variables** (not per-element backgrounds — the comment explains Zen renders its chrome through a translucent overlay, so element-level `!important` fights it and leaves gaps).
-- `run_onchange_link-zen-chrome.sh.tmpl` symlinks `~/.config/zen-chrome/userChrome.css` into each Zen profile's `chrome/` dir (enumerated from `~/.config/zen/profiles.ini`) and sets `toolkit.legacyUserProfileCustomizations.stylesheets = true` in each profile's `user.js`.
-
-### opencode
-- `opencode.jsonc`: `default_agent = tutor`; context7 MCP remote at `https://mcp.context7.com/mcp` with `CONTEXT7_API_KEY` read from `~/.secrets/context7_api_key` via `{file:...}`; agents `build`/`plan`/`general` all enabled.
-- `tui.json`: `"theme": "tokyonight"`.
-- `AGENTS.md`: global opencode rules (read-only, context7 usage, communication style) — applied to `~/.config/opencode/AGENTS.md`.
-
-### Package management
-- `packages.yaml` lists `packages.arch.pacman` and `packages.arch.aur`. Installed by `run_onchange_install-packages.sh.tmpl`: `sudo pacman -S --needed --noconfirm` for the pacman list; for each AUR package, `paru -S --noconfirm` if not already installed.
-- To add a package: edit `packages.yaml`, `chezmoi apply`.
-
-## Secrets
-
-- **No secret is committed to this repo.** `dot_zshrc` contains no API key.
-- The context7 MCP key lives at `~/.secrets/context7_api_key` (outside the repo) and is read by `dot_config/opencode/opencode.jsonc` via `{file:~/.secrets/context7_api_key}`. Do not move the key into a tracked file.
-
-## Known inconsistency
-
-- **External monitor name disagrees across files**: `monitors.lua` configures `HDMI-A-2` while `hyprpaper.conf` targets `DP-2`. fastfetch reports the external panel as `GF340C`. Run `hyprctl monitors` to confirm the live output name and reconcile both files. AGENTS.md documents the mismatch but does **not** fix it — verify before changing.
-
-## What is NOT here
-
-- No CI, no tests, no build system, no task runner.
-- No README — the files are the documentation.
-- No `.gitignore` — everything under the source dir is tracked.
+- **NvChad sets mason `PATH = "skip"`** — LSP servers come from pacman/AUR, not Mason; `js-debug-adapter` is referenced by absolute `stdpath/data/mason` path. Never `:MasonInstallAll`.
+- **`devices.lua` disables the internal ThinkPad keyboard** — re-enable if no external keyboard.
+- **`monitors.lua` is dynamic**: any non-`eDP-1` output = external (scale 1.25 at `0x0`, laptop `auto-down`); lid switch toggles `eDP-1`. `monitor-added.sh` (socat hotplug watcher) exists but is **not wired into autostart** — currently unused.
+- **ghostty `command = tmux`** blocks auto shell-integration injection → new tabs/splits open in default cwd, not current. Fix documented in `docs/ghostty.md`.
+- **Zen chrome linker script was removed** — `userChrome.css` must be symlinked into each profile manually (steps in `docs/zen-browser.md`).
+- `quickshell` autostarts from `hyprland.lua`; bar is a minimal starter (clock + battery). `qmlls6` comes from `qt6-declarative` (quickshell dep).
