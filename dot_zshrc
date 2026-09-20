@@ -1,13 +1,13 @@
 # Default editors
 export EDITOR="nvim"
 export VISUAL="nvim"
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Pi
+export PATH="/home/luke/.local/share/pi-node/node-v22.23.2-linux-x64/bin:$PATH"
 
 # Man page formatting
 export MANROFFOPT="-c"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-
-# GTK THEME
-export GTK_THEME=Tokyonight-Dark
 
 # Saving history location and amount
 HISTFILE="$HOME/.zsh_history"
@@ -32,9 +32,9 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # Aliases
 alias vi="nvim"
-alias vim="nvim"
 alias cat="bat"
 alias lg="lazygit"
+alias ls="eza --icons=always"
 
 # Source plugins
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -43,5 +43,3 @@ source /usr/share/nvm/init-nvm.sh
 
 eval "$(starship init zsh)"
 
-# Vite+ bin (https://viteplus.dev)
-. "$HOME/.vite-plus/env"

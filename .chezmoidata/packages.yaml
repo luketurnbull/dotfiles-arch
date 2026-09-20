@@ -1,33 +1,69 @@
 packages:
   arch:
     pacman:
+      # Terminal
+      - ghostty
       - zsh
       - zsh-autosuggestions
       - zsh-syntax-highlighting
+      - starship
+      - bat
+      - ripgrep
+      - fd
+      - eza
+      - vim
+      - tmux
+      - openssh
+      - fastfetch
+      - socat
+
+      # Code
       - neovim
+      - tree-sitter-cli
+      - lazygit
       - git
       - lua-language-server
+      - stylua
+      - clang
+      - nvm
+      - pnpm
+      - bash-language-server
+      - shellcheck
+      - gdb
+
+      # OS
+      - hyprland
+      - hyprpaper
+      - quickshell
+      - xdg-desktop-portal-hyprland
+      - xdg-desktop-portal-gtk
+      - qt6-wayland
       - pipewire
       - pipewire-audio
       - pipewire-pulse
       - pipewire-alsa
       - wireplumber
-      - stylua
-      - nwg-look
-      - inter-font
       - swayosd
       - swaync
-      - firefoxpwa
-      - nvm
-      - starship
-      - bat
-      - ripgrep
-      - fd
-      - tree-sitter-cli
       - unzip
-      - lazygit
-      - openssh
+      - bluez
+      - bluez-utils
+      - wl-clipboard
+      - man-pages
+      - upower
+      - htop
+
+      # Programs
       - obsidian
+      - obs-studio
+      - chromium
+      - blender
+      - mpv
+      - raylib
+      - gimp
+
     aur:
-      - pwvucontrol
-      - tokyonight-gtk-theme-git 
+      - opencode
+      - zen-browser-bin
+      - shurectl
+      - autotools-language-server

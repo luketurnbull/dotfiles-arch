@@ -1,8 +1,20 @@
 theme = TokyoNight Night
+font-size = 12
 
 window-padding-color = extend-always
-window-padding-x = 10
+window-padding-x = 15
+window-padding-y = 0
+
+# spread sub-cell leftover pixels across all edges — tiled window heights are
+# rarely exact cell multiples, so without this the remainder pools at the bottom
+window-padding-balance = true
 
 cursor-style = block
 
 shell-integration = zsh
+custom-shader = ~/.config/ghostty/shaders/cursor_blaze.glsl
+
+# every new terminal starts in tmux — each window gets its own session
+command = tmux
+
+confirm-close-surface = false

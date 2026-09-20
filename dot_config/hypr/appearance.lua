@@ -1,38 +1,48 @@
-hl.env("GTK_THEME", "Tokyonight-Dark")
+local horizontalGap = 362
+
+local recordingGaps = {
+	top = 10,
+	bottom = 10,
+	left = horizontalGap,
+	right = horizontalGap,
+}
+
+local noneRecordingGaps = {
+	top = 10,
+	bottom = 10,
+	left = 10,
+	right = 10,
+}
 
 -- Look and feel
 hl.config({
 	general = {
-		gaps_in = 2,
-		gaps_out = 2,
+		gaps_in = 5,
+		gaps_out = recordingGaps,
 
-		border_size = 2,
+		border_size = 1,
 
 		col = {
-			active_border = { colors = { "rgba(33ccffee)" }, angle = 45 },
-			inactive_border = "rgba(595959aa)",
+			active_border = { colors = { "rgb(3b4261)", "rgb(7aa2f7)" }, angle = 45 },
+			inactive_border = "rgb(1a1b26)",
 		},
 
 		layout = "dwindle",
 	},
 
 	decoration = {
-		-- rounding = 10,
-		-- rounding_power = 2,
+		rounding = 16,
+		rounding_power = 4,
 		active_opacity = 0.98,
-		inactive_opacity = 0.90,
-
-		shadow = {
-			enabled = false,
-			range = 4,
-			render_power = 3,
-			color = 0xee1a1a1a,
-		},
+		inactive_opacity = 0.94,
 
 		blur = {
 			enabled = true,
-			size = 1,
+			size = 4,
 			passes = 1,
+			brightness = 1,
+			vibrancy = 1,
+			vibrancy_darkness = 0.2,
 		},
 	},
 
@@ -44,3 +54,19 @@ hl.config({
 		font_family = "Inter Regular",
 	},
 })
+
+local function toggleGaps()
+	local gaps = hl.get_config("general.gaps_out")
+
+	hl.notification.create({ text = gaps.left, timeout = 2000, icon = "ok" })
+
+	if gaps.left == horizontalGap then
+		hl.config({ general = { gaps_out = noneRecordingGaps } })
+		hl.notification.create({ text = "Gaps: 16/9 recording", timeout = 2000, icon = "ok" })
+	else
+		hl.config({ general = { gaps_out = recordingGaps } })
+		hl.notification.create({ text = "Gaps: normal", timeout = 2000, icon = "ok" })
+	end
+end
+
+return { toggleGaps = toggleGaps }
