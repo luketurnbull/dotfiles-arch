@@ -21,11 +21,16 @@ hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(variables.terminal))
 -- Browser
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(variables.browser))
 -- OBS Studio
-hl.bind(mainMod .. "+ SHIFT + S", hl.dsp.exec_cmd(variables.screenRecorder))
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(variables.screenRecorder))
 -- Obsidian
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(variables.noteEditor))
 -- Blender
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(variables.blender))
+
+--------------------------------------------------------
+-- Quickshell ------------------------------------------
+--------------------------------------------------------
+hl.bind(mainMod .. " + S", hl.dsp.global("quickshell:toggle-sidebar"))
 
 --------------------------------------------------------
 -- Audio keybinds --------------------------------------

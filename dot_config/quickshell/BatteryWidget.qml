@@ -4,20 +4,17 @@ import Quickshell.Services.UPower
 Rectangle {
     id: batteryRoot
 
-    property real marginX: 20
-    property real marginY: 8
-
     property real percentage: UPower.displayDevice.percentage
 
     property string colorWarning: "#ff0000"
     property string colorNormal: "#ffffff"
 
-    implicitWidth: timeText.implicitWidth + marginX * 2
-    implicitHeight: timeText.implicitHeight + marginY * 2
+    anchors.horizontalCenter: parent.horizontalCenter
 
-    anchors.right: parent.right
+    implicitWidth: batteryText.width + 20
+    implicitHeight: batteryText.height + 20
 
-    color: "#ee1a1b26"
+    color: "transparent"
     radius: 999
 
     function isBatteryLow(): bool {
@@ -33,7 +30,7 @@ Rectangle {
     }
 
     Text {
-        id: timeText
+        id: batteryText
         text: "%1 \%".arg(batteryRoot.percentage * 100)
 
         anchors.centerIn: parent

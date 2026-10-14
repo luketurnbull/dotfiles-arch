@@ -1,22 +1,19 @@
 import QtQuick
 
 Rectangle {
-    property real marginX: 20
-    property real marginY: 8
-
-    implicitWidth: timeText.implicitWidth + marginX * 2
-    implicitHeight: timeText.implicitHeight + marginY * 2
-
-    anchors.centerIn: parent
-    color: "#ee1a1b26"
+    color: "transparent"
     radius: 999
+
+    implicitWidth: timeText.width + 20
+    implicitHeight: timeText.height + 20
+    anchors.horizontalCenter: parent.horizontalCenter
 
     Text {
         id: timeText
         text: Time.time
 
-        anchors.centerIn: parent
         color: "#ffffff"
+        anchors.centerIn: parent
 
         font.bold: true
         font.pointSize: 10

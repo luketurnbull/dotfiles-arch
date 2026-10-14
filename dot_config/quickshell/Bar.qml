@@ -1,5 +1,6 @@
 import Quickshell
 import QtQuick
+import QtQuick.Layouts
 
 Scope {
     Variants {
@@ -7,29 +8,64 @@ Scope {
 
         PanelWindow {
             required property var modelData
-            readonly property real gap: 10
 
             screen: modelData
-
-            margins.top: gap
-            margins.right: gap
-            margins.left: gap
+            color: "transparent"
+            implicitWidth: columnContainer.implicitWidth + 20
 
             anchors {
                 top: true
-                left: true
+                bottom: true
                 right: true
             }
 
-            color: "transparent"
-            implicitHeight: clock.implicitHeight
+            Rectangle {
+                id: columnContainer
+                color: "transparent"
+                radius: 20
+                implicitWidth: columnBar.implicitWidth + 10
+                implicitHeight: columnBar.implicitHeight + 20
+                height: parent.height - 20
+                anchors.centerIn: parent
 
-            ClockWidget {
-                id: clock
-            }
+                ColumnLayout {
+                    id: columnBar
 
-            BatteryWidget {
-                id: battery
+                    property real rows: 3
+
+                    implicitWidth: SidebarState.expanded ? 250 : 40
+                    height: parent.height - 10
+                    anchors.horizontalCenter: columnContainer.horizontalCenter
+
+                    Rectangle {
+                        color: "transparent"
+                        Layout.preferredWidth: parent.width
+                        Layout.preferredHeight: parent.height / columnBar.rows
+
+                        ClockWidget {
+                            id: clock
+                            color: "#ee1a1b26"
+                        }
+                    }
+
+                    Rectangle {
+                        color: "transparent"
+                        Layout.preferredWidth: parent.width
+                        Layout.preferredHeight: parent.height / columnBar.rows
+                    }
+
+                    Rectangle {
+                        Layout.preferredWidth: parent.width
+                        Layout.preferredHeight: parent.height / columnBar.rows
+                        color: "transparent"
+
+                        BatteryWidget {
+                            id: battery
+                            color: "#ee1a1b26"
+                            anchors.bottom: parent.bottom
+                        }
+                    }
+                }
             }
         }
     }

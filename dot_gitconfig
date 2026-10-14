@@ -1,3 +1,5 @@
 [user]
 	email = luke.turn.dev@gmail.com
 	name = Luke Turnbull
+[init]
+	defaultBranch = main

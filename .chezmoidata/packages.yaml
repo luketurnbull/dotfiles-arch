@@ -30,6 +30,9 @@ packages:
       - bash-language-server
       - shellcheck
       - gdb
+      - dotnet-sdk
+      - aspnet-runtime
+      - aspnet-targeting-pack
 
       # OS
       - hyprland
@@ -67,3 +70,5 @@ packages:
       - zen-browser-bin
       - shurectl
       - autotools-language-server
+      - roslyn-language-server
+      - netcoredbg

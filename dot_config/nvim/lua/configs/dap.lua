@@ -33,6 +33,29 @@ dap.configurations.c = {
 }
 dap.configurations.cpp = dap.configurations.c
 
+-- C#/.NET: netcoredbg from AUR (build with `dotnet build` first)
+dap.adapters.coreclr = {
+	type = "executable",
+	command = "netcoredbg",
+	args = { "--interpreter=vscode" },
+}
+dap.configurations.cs = {
+	{
+		type = "coreclr",
+		name = "Launch",
+		request = "launch",
+		program = function()
+			return vim.fn.input("Path to dll: ", vim.fn.getcwd() .. "/bin/Debug/", "file")
+		end,
+	},
+	{
+		type = "coreclr",
+		name = "Attach",
+		request = "attach",
+		processId = require("dap.utils").pick_process,
+	},
+}
+
 -- JS/TS: Mason's prebuilt js-debug-adapter (absolute path; mason PATH=skip)
 require("dap-vscode-js").setup({
 	debugger_cmd = { vim.fn.stdpath("data") .. "/mason/bin/js-debug-adapter" },

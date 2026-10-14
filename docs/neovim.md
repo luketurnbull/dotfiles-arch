@@ -23,9 +23,9 @@
 
 ## LSP (`lua/configs/lspconfig.lua`)
 
-`nvchad.configs.lspconfig.defaults()` then `vim.lsp.enable{ "html", "cssls", "clangd", "qmlls", "bashls", "autotools_ls" }`; `qmlls` overridden with `cmd = { "qmlls6" }` (from `qt6-declarative`, a quickshell dep).
+`nvchad.configs.lspconfig.defaults()` then `vim.lsp.enable{ "html", "cssls", "clangd", "qmlls", "bashls", "autotools_ls", "roslyn_ls" }`; `qmlls` overridden with `cmd = { "qmlls6" }` (from `qt6-declarative`, a quickshell dep).
 
-**Server binaries come from pacman/AUR, not Mason** — NvChad sets mason `PATH = "skip"`, so Mason-installed binaries are invisible to `vim.lsp.enable`. `bash-language-server` + `shellcheck` (pacman) feed bashls; `autotools-language-server` from AUR. Avoid `:MasonInstallAll` — it scrapes the lspconfig list and would duplicate pacman servers inside Mason.
+**Server binaries come from pacman/AUR, not Mason** — NvChad sets mason `PATH = "skip"`, so Mason-installed binaries are invisible to `vim.lsp.enable`. `bash-language-server` + `shellcheck` (pacman) feed bashls; `autotools-language-server` + `roslyn-language-server` from AUR (the AUR binary name matches lspconfig's `roslyn_ls` fallback cmd, so no override needed; roots on `.sln`/`.slnx`/`.csproj`). Avoid `:MasonInstallAll` — it scrapes the lspconfig list and would duplicate pacman servers inside Mason.
 
 ## Formatting (`lua/configs/conform.lua`)
 
@@ -34,6 +34,7 @@
 ## DAP (`lua/configs/dap.lua`)
 
 - **C/C++**: gdb's built-in DAP (`gdb --interpreter=dap`, zero extra install — compile targets with `-g`).
+- **C#/.NET**: `netcoredbg` (AUR) via a `coreclr` adapter; launch prompts for the dll (default `cwd/bin/Debug/` — run `dotnet build` first), attach uses `pick_process`.
 - **JS/TS**: Mason's prebuilt `js-debug-adapter` referenced by **absolute path** (`stdpath/data/mason/bin/js-debug-adapter`, because of the mason `PATH = "skip"` gotcha) via `dap-vscode-js` (`pwa-node`/`pwa-chrome`/`node-terminal`; launch file, attach). Install manually with `:MasonInstall js-debug-adapter`.
 - dap-ui auto opens/closes with the session.
 - Keys: `F5` continue, `F10`/`F11`/`F12` step over/into/out, `<leader>db` breakpoint, `<leader>du` toggle UI.
