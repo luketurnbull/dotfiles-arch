@@ -5,7 +5,7 @@ Rectangle {
     radius: 999
 
     implicitWidth: timeText.width + 20
-    implicitHeight: timeText.height + 20
+    implicitHeight: timeText.height + 30
     anchors.horizontalCenter: parent.horizontalCenter
 
     Text {

@@ -1,6 +1,7 @@
 import Quickshell
 import QtQuick
 import QtQuick.Layouts
+import Quickshell.Hyprland
 
 Scope {
     Variants {
@@ -11,7 +12,7 @@ Scope {
 
             screen: modelData
             color: "transparent"
-            implicitWidth: columnContainer.implicitWidth + 20
+            implicitWidth: columnContainer.implicitWidth + 10
 
             anchors {
                 top: true
@@ -19,23 +20,22 @@ Scope {
                 right: true
             }
 
-            Rectangle {
+            Item {
                 id: columnContainer
-                color: "transparent"
-                radius: 20
-                implicitWidth: columnBar.implicitWidth + 10
-                implicitHeight: columnBar.implicitHeight + 20
+                implicitWidth: columnBar.implicitWidth + 5
                 height: parent.height - 20
-                anchors.centerIn: parent
+                anchors.right: parent.right
 
                 ColumnLayout {
                     id: columnBar
-
                     property real rows: 3
 
-                    implicitWidth: SidebarState.expanded ? 250 : 40
+                    implicitWidth: SidebarState.expanded ? 200 : 40
                     height: parent.height - 10
-                    anchors.horizontalCenter: columnContainer.horizontalCenter
+
+                    Item {
+                        implicitHeight: 5
+                    }
 
                     Rectangle {
                         color: "transparent"
@@ -44,18 +44,50 @@ Scope {
 
                         ClockWidget {
                             id: clock
+                            anchors.right: parent.right
                             color: "#ee1a1b26"
                         }
                     }
 
                     Rectangle {
+                        id: middleContainer
                         color: "transparent"
-                        Layout.preferredWidth: parent.width
                         Layout.preferredHeight: parent.height / columnBar.rows
+                        Layout.preferredWidth: parent.width
+
+                        ColumnLayout {
+                            id: workspaces
+                            spacing: 5
+                            anchors.right: middleContainer.right
+
+                            Repeater {
+                                model: Hyprland.workspaces
+
+                                Rectangle {
+                                    id: workspace
+                                    required property var modelData
+
+                                    opacity: workspace.modelData.active ? 1 : 0.6
+                                    color: "#1a1b26"
+                                    radius: 999
+                                    implicitWidth: columnBar.implicitWidth
+                                    implicitHeight: workspaceText.implicitHeight + 20
+
+                                    Text {
+                                        id: workspaceText
+                                        text: "%1".arg(workspace.modelData.name)
+                                        color: "#ffffff"
+                                        anchors.centerIn: parent
+                                        font.bold: true
+                                        font.pointSize: 10
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     Rectangle {
-                        Layout.preferredWidth: parent.width
+                        Layout.preferredWidth: battery.width
                         Layout.preferredHeight: parent.height / columnBar.rows
                         color: "transparent"
 

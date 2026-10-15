@@ -58,14 +58,10 @@ hl.config({
 local function toggleGaps()
 	local gaps = hl.get_config("general.gaps_out")
 
-	hl.notification.create({ text = gaps.left, timeout = 2000, icon = "ok" })
-
 	if gaps.left == horizontalGap then
 		hl.config({ general = { gaps_out = noneRecordingGaps } })
-		hl.notification.create({ text = "Gaps: 16/9 recording", timeout = 2000, icon = "ok" })
 	else
 		hl.config({ general = { gaps_out = recordingGaps } })
-		hl.notification.create({ text = "Gaps: normal", timeout = 2000, icon = "ok" })
 	end
 end
 
