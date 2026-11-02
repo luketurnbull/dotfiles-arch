@@ -6,7 +6,7 @@
 
 | Key | Value |
 |---|---|
-| `theme` | `TokyoNight Night` |
+| `theme` | `static-noir` — custom theme file `themes/static-noir` (16 ANSI colors, bg `#0a0a0a`, fg `#ededed`, cursor `#ff3b30`) |
 | `font-size` | `12` (no family set — ghostty default monospace) |
 | `window-padding-x` / `-y` | `15` / `0` |
 | `window-padding-color` | `extend-always` |

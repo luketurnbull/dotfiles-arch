@@ -6,8 +6,8 @@
 ## Chrome
 
 - `status off` — no status line. `prefix t` toggles it for a peek (session-scoped).
-- Pane borders: `pane-border-style` and `pane-active-border-style` both `fg=#3b4261`.
-- Only TokyoNight left: transient `mode-style` (`bg=#3b4261,fg=#c0caf5`, copy-mode selection) + `message-style` (`bg=#7aa2f7,fg=#1a1b26`, command prompt) — invisible unless in use.
+- Pane borders: `pane-border-style` `fg=#333333`, `pane-active-border-style` `fg=#ff3b30` (static noir accent).
+- Only static noir left: transient `mode-style` (`bg=#333333,fg=#ededed`, copy-mode selection) + `message-style` (`bg=#ff3b30,fg=#0a0a0a`, command prompt) — invisible unless in use.
 - Note: the file's header comment still mentions `pane-border-lines spaces`/`pane-border-indicators arrows`, but neither option is currently set.
 
 ## Base

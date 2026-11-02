@@ -23,8 +23,8 @@ hl.config({
 		border_size = 1,
 
 		col = {
-			active_border = { colors = { "rgb(3b4261)", "rgb(7aa2f7)" }, angle = 45 },
-			inactive_border = "rgb(1a1b26)",
+			active_border = { colors = { "rgb(666666)", "rgb(ff3b30)" }, angle = 45 },
+			inactive_border = "rgb(333333)",
 		},
 
 		layout = "dwindle",

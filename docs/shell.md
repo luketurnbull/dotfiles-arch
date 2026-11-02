@@ -19,5 +19,4 @@
 ## bat (`dot_config/bat/`)
 
 - Used by the `cat` alias and the man pager.
-- `config`: `--theme="tokyonight_night"`.
-- Custom theme: `themes/tokyonight_night.tmTheme`.
+- `config`: `--theme="ansi"` — no custom theme file; output follows the terminal (ghostty static-noir) palette.

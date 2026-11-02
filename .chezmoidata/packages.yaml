@@ -21,6 +21,7 @@ packages:
       - neovim
       - tree-sitter-cli
       - lazygit
+      - git-delta
       - git
       - lua-language-server
       - stylua

@@ -55,7 +55,7 @@ Fully dynamic — no hardcoded external output name:
 ## Appearance (`appearance.lua`)
 
 - `gaps_in = 5`; `gaps_out` defaults to **recording layout** `{ top 0, bottom 10, left/right 362 }` — centers a 16:9-safe area on the 3440px ultrawide. `ALT+G` toggles to normal `{ 0, 10, 10, 10 }`.
-- Border 1px; active = gradient `rgb(3b4261)` → `rgb(7aa2f7)` @ 45°, inactive `rgb(1a1b26)`.
+- Border 1px; active = gradient `rgb(666666)` → `rgb(ff3b30)` @ 45°, inactive `rgb(333333)`.
 - `rounding = 16`, `rounding_power = 4`; opacity 0.98 active / 0.94 inactive.
 - Blur: size 4, passes 1, `vibrancy_darkness = 0.2`.
 - Font `Inter Regular`; misc: no logo/splash, middle-click paste, force default wallpaper off... (`force_default_wallpaper = true`, `disable_hyprland_logo = true`, `disable_splash_rendering = true`, `middle_click_paste = true`).

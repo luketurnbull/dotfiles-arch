@@ -45,7 +45,7 @@ Scope {
                         ClockWidget {
                             id: clock
                             anchors.right: parent.right
-                            color: "#ee1a1b26"
+                            color: "#ee0a0a0a"
                         }
                     }
 
@@ -68,7 +68,7 @@ Scope {
                                     required property var modelData
 
                                     opacity: workspace.modelData.active ? 1 : 0.6
-                                    color: "#1a1b26"
+                                    color: "#0a0a0a"
                                     radius: 999
                                     implicitWidth: columnBar.implicitWidth
                                     implicitHeight: workspaceText.implicitHeight + 20
@@ -76,7 +76,7 @@ Scope {
                                     Text {
                                         id: workspaceText
                                         text: "%1".arg(workspace.modelData.name)
-                                        color: "#ffffff"
+                                        color: "#ededed"
                                         anchors.centerIn: parent
                                         font.bold: true
                                         font.pointSize: 10
@@ -93,7 +93,7 @@ Scope {
 
                         BatteryWidget {
                             id: battery
-                            color: "#ee1a1b26"
+                            color: "#ee0a0a0a"
                             anchors.bottom: parent.bottom
                         }
                     }

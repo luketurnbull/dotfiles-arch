@@ -20,7 +20,7 @@ Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 | opencode | `dot_config/opencode/` | `docs/opencode.md` |
 | Packages | `.chezmoidata/packages.yaml` + `run_onchange_install-packages.sh.tmpl` | `docs/packages.md` |
 | Host hardware | — | `docs/computer.md` |
-| Theming | hardcoded TokyoNight per app | `docs/theming.md` |
+| Theming | hardcoded Static Noir per app (ported from `dotfiles_macbook`) | `docs/theming.md` |
 
 ## Rules
 

@@ -7,7 +7,8 @@
 | File | Purpose |
 |---|---|
 | `opencode.jsonc` | Main config |
-| `tui.json` | `"theme": "tokyonight"` |
+| `tui.json` | `"theme": "static-noir"` |
+| `themes/static-noir.json` | Custom TUI theme (verbatim copy from `dotfiles_macbook`) |
 | `AGENTS.md` | Global agent rules (communication style, context7 usage) — applied to `~/.config/opencode/AGENTS.md`, **not** chezmoi-ignored |
 
 ## opencode.jsonc

@@ -14,7 +14,7 @@ Status bar in QML: `dot_config/quickshell/` → `~/.config/quickshell/`. quicksh
 
 ## Styling
 
-Both widgets are pills: `Rectangle` with `color = "#ee1a1b26"` (TokyoNight bg at ~93% opacity), `radius = 999`, bold white 10pt uppercase text, 20px horizontal / 8px vertical margins.
+Both widgets are pills: `Rectangle` with `color = "#ee0a0a0a"` (static noir bg at ~93% opacity), `radius = 999`, bold white 10pt uppercase text, 20px horizontal / 8px vertical margins.
 
 ## Battery logic
 

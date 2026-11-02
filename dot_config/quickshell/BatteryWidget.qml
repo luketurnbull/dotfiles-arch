@@ -6,8 +6,8 @@ Rectangle {
 
     property real percentage: UPower.displayDevice.percentage
 
-    property string colorWarning: "#ff0000"
-    property string colorNormal: "#ffffff"
+    property string colorWarning: "#ff4d42"
+    property string colorNormal: "#ededed"
 
     anchors.horizontalCenter: parent.horizontalCenter
 

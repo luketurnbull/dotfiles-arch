@@ -1,9 +1,8 @@
-theme = TokyoNight Night
+theme = static-noir
 font-size = 12
 
-window-padding-color = extend-always
-window-padding-x = 15
-window-padding-y = 0
+window-padding-x = 20
+window-padding-y = 15
 
 # spread sub-cell leftover pixels across all edges — tiled window heights are
 # rarely exact cell multiples, so without this the remainder pools at the bottom

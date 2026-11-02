@@ -1,4 +1,4 @@
-/* Tokyo Night theme for Zen Browser.
+/* Static Noir theme for Zen Browser.
    Managed by chezmoi via ~/.config/zen-chrome/userChrome.css and symlinked
    into the active Zen profile's chrome/ dir by run_onchange_link-zen-chrome.sh.tmpl.
    Requires toolkit.legacyUserProfileCustomizations.stylesheets = true in about:config.
@@ -10,20 +10,20 @@
    Overriding individual elements with !important backgrounds fights that overlay
    and leaves gaps (e.g. the sidebar search/extensions panel reads a different
    background than the tab strip). So instead we override Zen's theme variables
-   to Tokyo Night values, which unifies the entire UI. */
+   to Static Noir values, which unifies the entire UI. */
 
 :root {
   color-scheme: dark;
 
-  /* Tokyo Night palette */
-  --tg-bg:           #1a1b26;
-  --tg-bg-panel:     #16161e;
-  --tg-bg-highlight: #292e42;
-  --tg-fg:           #c0caf5;
-  --tg-fg-dim:       #a9b1d6;
-  --tg-comment:      #565f89;
-  --tg-border:       #414868;
-  --tg-blue:         #7aa2f7;
+  /* Static Noir palette */
+  --tg-bg:           #0a0a0a;
+  --tg-bg-panel:     #101010;
+  --tg-bg-highlight: #333333;
+  --tg-fg:           #ededed;
+  --tg-fg-dim:       #c9c9c9;
+  --tg-comment:      #7d7d7d;
+  --tg-border:       #333333;
+  --tg-blue:         #7fb2e8;
 
   /* ---- Zen theme-variable overrides (literal values, so light-dark() never
           picks the wrong branch) ---- */

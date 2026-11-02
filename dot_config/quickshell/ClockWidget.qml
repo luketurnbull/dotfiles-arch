@@ -12,7 +12,7 @@ Rectangle {
         id: timeText
         text: Time.time
 
-        color: "#ffffff"
+        color: "#ededed"
         anchors.centerIn: parent
 
         font.bold: true
