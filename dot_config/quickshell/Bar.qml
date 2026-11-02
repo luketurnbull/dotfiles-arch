@@ -23,18 +23,18 @@ Scope {
             Item {
                 id: columnContainer
                 implicitWidth: columnBar.implicitWidth + 2
-                height: parent.height - 20
+                height: parent.height - 16
                 anchors.right: parent.right
 
                 ColumnLayout {
                     id: columnBar
                     property real rows: 3
 
-                    implicitWidth: SidebarState.expanded ? 120 : 30
-                    height: parent.height - 10
+                    implicitWidth: SidebarState.expanded ? 100 : 30
+                    height: parent.height - 8
 
                     Item {
-                        implicitHeight: 5
+                        implicitHeight: 2
                     }
 
                     Rectangle {

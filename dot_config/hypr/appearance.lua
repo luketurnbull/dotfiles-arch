@@ -1,30 +1,30 @@
 local horizontalGap = 362
+local normalGap = 5
 
 local recordingGaps = {
-	top = 10,
-	bottom = 10,
+	top = normalGap,
+	bottom = normalGap,
 	left = horizontalGap,
 	right = horizontalGap,
 }
 
 local noneRecordingGaps = {
-	top = 10,
-	bottom = 10,
-	left = 10,
+	top = normalGap,
+	bottom = normalGap,
+	left = normalGap,
 	right = 0,
 }
 
 -- Look and feel
 hl.config({
 	general = {
-		gaps_in = 5,
+		gaps_in = 2,
 		gaps_out = recordingGaps,
-
 		border_size = 1,
 
 		col = {
-			active_border = { colors = { "rgb(666666)", "rgb(ff3b30)" }, angle = 45 },
-			inactive_border = "rgb(333333)",
+			active_border = "rgb(ff3b30)",
+			inactive_border = "rgb(000000)",
 		},
 
 		layout = "dwindle",
@@ -33,13 +33,13 @@ hl.config({
 	decoration = {
 		rounding = 16,
 		rounding_power = 4,
-		active_opacity = 0.96,
-		inactive_opacity = 0.93,
+		active_opacity = 0.92,
+		inactive_opacity = 0.91,
 
 		blur = {
 			enabled = true,
 			size = 4,
-			passes = 1,
+			passes = 3,
 			brightness = 1,
 			vibrancy = 1,
 			vibrancy_darkness = 0.2,
