@@ -12,7 +12,7 @@ Rectangle {
     anchors.horizontalCenter: parent.horizontalCenter
 
     implicitWidth: batteryText.width + 20
-    implicitHeight: batteryText.height + 30
+    implicitHeight: batteryText.height + 10
 
     color: "transparent"
     radius: 999

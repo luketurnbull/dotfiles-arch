@@ -12,7 +12,7 @@ Scope {
 
             screen: modelData
             color: "transparent"
-            implicitWidth: columnContainer.implicitWidth + 10
+            implicitWidth: columnContainer.implicitWidth + 4
 
             anchors {
                 top: true
@@ -22,7 +22,7 @@ Scope {
 
             Item {
                 id: columnContainer
-                implicitWidth: columnBar.implicitWidth + 5
+                implicitWidth: columnBar.implicitWidth + 2
                 height: parent.height - 20
                 anchors.right: parent.right
 
@@ -30,7 +30,7 @@ Scope {
                     id: columnBar
                     property real rows: 3
 
-                    implicitWidth: SidebarState.expanded ? 200 : 40
+                    implicitWidth: SidebarState.expanded ? 120 : 30
                     height: parent.height - 10
 
                     Item {
@@ -57,7 +57,7 @@ Scope {
 
                         ColumnLayout {
                             id: workspaces
-                            spacing: 5
+                            spacing: 2
                             anchors.right: middleContainer.right
 
                             Repeater {
@@ -71,7 +71,7 @@ Scope {
                                     color: "#0a0a0a"
                                     radius: 999
                                     implicitWidth: columnBar.implicitWidth
-                                    implicitHeight: workspaceText.implicitHeight + 20
+                                    implicitHeight: workspaceText.implicitHeight + 5
 
                                     Text {
                                         id: workspaceText
