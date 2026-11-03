@@ -1,6 +1,6 @@
 # Ghostty
 
-`dot_config/ghostty/` → `~/.config/ghostty/`. ghostty 1.3.1.
+`dot_config/ghostty/` → `~/.config/ghostty/`. ghostty 1.4.0.
 
 ## Config (`config.ghostty`)
 
@@ -8,8 +8,9 @@
 |---|---|
 | `theme` | `static-noir` — custom theme file `themes/static-noir` (16 ANSI colors, bg `#0a0a0a`, fg `#ededed`, cursor `#ff3b30`) |
 | `font-size` | `12` (no family set — ghostty default monospace) |
-| `window-padding-x` / `-y` | `15` / `0` |
-| `window-padding-color` | `extend-always` |
+| `background-opacity` | `0.99` — invisible on its own; real translucency comes from Hyprland's `active_opacity`. Exists only to unlock `background-blur` (see caveat) |
+| `background-blur` | `true` — opts into the `ext-background-effect-v1` blur region so Hyprland blurs behind the window |
+| `window-padding-x` / `-y` | `20` / `15` |
 | `window-padding-balance` | `true` — spreads sub-cell leftover pixels across all edges (tiled heights are rarely exact cell multiples; without it the remainder pools at the bottom) |
 | `cursor-style` | `block` |
 | `shell-integration` | `zsh` |
@@ -20,6 +21,10 @@
 ## Shader
 
 `shaders/cursor_blaze.glsl` — custom cursor trail effect, loaded via `custom-shader`.
+
+## Caveat: blur needs ghostty opt-in (GTK 4.24 + Hyprland ≥0.56)
+
+Hyprland ≥0.56 honors `ext-background-effect-v1`: if a surface has a background-effect object, Hyprland blurs only the client-set blur region. GTK 4.24 creates that object with an **empty** region on every toplevel unless the app asks (GNOME/gtk#8344, omarchy#15924), which silently disables compositor blur behind all GTK4 windows. Ghostty ≥1.4 sets the region itself, but only when `background-blur` is set **and** `background-opacity < 1` — hence the `0.99` + `true` pair. Non-GTK terminals (kitty/foot) are unaffected. If blur vanishes again after a ghostty/GTK upgrade, check these two keys first.
 
 ## Caveat: shell integration + `command = tmux`
 
