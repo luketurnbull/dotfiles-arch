@@ -19,7 +19,7 @@ local noneRecordingGaps = {
 	top = normalGap,
 	bottom = normalGap,
 	left = normalGap,
-	right = 0,
+	right = normalGap,
 }
 
 -- Look and feel

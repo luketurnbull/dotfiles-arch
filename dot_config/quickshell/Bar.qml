@@ -21,28 +21,18 @@ Scope {
                 right: true
             }
 
-            BatteryWidget {
-                id: battery
-                anchors.top: parent.top
-                anchors.left: parent.left
-                color: theme.bg
-                colorNormal: theme.text
-                colorWarning: theme.warn
-            }
-
-            ClockWidget {
-                id: clock
-                anchors.centerIn: parent
-                color: theme.bg
-                textColor: theme.text
+            // Mirror hyprland normal gaps_out (appearance.lua): 5 both sides.
+            // Hardcoded — desyncs while ALT+G recording gaps are active.
+            margins {
+                left: 5
+                right: 5
             }
 
             Row {
                 id: workspaces
                 spacing: 2
                 anchors.top: parent.top
-                anchors.right: parent.right
-                anchors.rightMargin: 4
+                anchors.left: parent.left
 
                 Repeater {
                     model: Hyprland.workspaces
@@ -57,6 +47,23 @@ Scope {
                         textColor: theme.text
                     }
                 }
+            }
+
+            ClockWidget {
+                id: clock
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: theme.bg
+                textColor: theme.text
+            }
+
+            BatteryWidget {
+                id: battery
+                anchors.top: parent.top
+                anchors.right: parent.right
+                color: theme.bg
+                colorNormal: theme.text
+                colorWarning: theme.warn
             }
         }
     }

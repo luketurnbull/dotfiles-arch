@@ -1,13 +1,13 @@
 # Quickshell
 
-Status bar in QML: `dot_config/quickshell/` → `~/.config/quickshell/`. quickshell `0.3.2`, autostarted by `hyprland.lua` (`hl.exec_cmd("quickshell")`). Top bar: battery top-left, clock centered, Hyprland workspaces top-right.
+Status bar in QML: `dot_config/quickshell/` → `~/.config/quickshell/`. quickshell `0.3.2`, autostarted by `hyprland.lua` (`hl.exec_cmd("quickshell")`). Top bar: Hyprland workspaces top-left, clock centered, battery top-right.
 
 ## Files
 
 | File | Role |
 |---|---|
 | `shell.qml` | Root `Scope` → `Bar {}` |
-| `Bar.qml` | One `PanelWindow` per screen (`Variants` over `Quickshell.screens`), anchored top/left/right, `implicitHeight: 30`, transparent. Battery pill left, `ClockWidget` centered (`anchors.centerIn` — exact center regardless of unbalanced sides), `Row` + `Repeater` over `Hyprland.workspaces` right |
+| `Bar.qml` | One `PanelWindow` per screen (`Variants` over `Quickshell.screens`), anchored top/left/right, `implicitHeight: 30`, transparent. `margins.left/right: 5` mirror hyprland's normal `gaps_out` (hardcoded — desyncs while ALT+G recording gaps are on; Quickshell can't read `general.gaps_out` live). `Row` + `Repeater` over `Hyprland.workspaces` left, `ClockWidget` centered (`anchors.horizontalCenter` + `anchors.top` — exact center, flush top like the other pills), battery pill right |
 | `Pill.qml` | Generic pill: `Rectangle` + centered bold 10pt uppercase `Text`. Props: `text` (required), `textColor`, `horizontalPadding`, `verticalPadding`. `radius: 999` with `topLeftRadius`/`topRightRadius: 0` (Qt ≥6.7 per-corner radii) → flat top flush with screen edge, rounded bottom |
 | `ClockWidget.qml` | `Pill` bound to `Time.time` |
 | `Time.qml` | `pragma Singleton`: `SystemClock` formatted `hh:mm`. Uses `SystemClock.Minutes` precision — seconds aren't displayed, and the quickshell docs note Minutes improves battery life (fewer wake-ups/repaints) |
