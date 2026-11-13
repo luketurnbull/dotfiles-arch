@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell.Services.UPower
 
-Rectangle {
+Pill {
     id: batteryRoot
 
     property real percentage: UPower.displayDevice.percentage
@@ -9,13 +9,8 @@ Rectangle {
     property string colorWarning: "#ff4d42"
     property string colorNormal: "#ededed"
 
-    anchors.horizontalCenter: parent.horizontalCenter
-
-    implicitWidth: batteryText.width + 20
-    implicitHeight: batteryText.height + 10
-
-    color: "transparent"
-    radius: 999
+    text: "%1 \%".arg(batteryRoot.percentage * 100)
+    textColor: batteryRoot.getTextColor()
 
     function isBatteryLow(): bool {
         return percentage < 0.15;
@@ -27,17 +22,5 @@ Rectangle {
         }
 
         return colorNormal;
-    }
-
-    Text {
-        id: batteryText
-        text: "%1 \%".arg(batteryRoot.percentage * 100)
-
-        anchors.centerIn: parent
-        color: batteryRoot.getTextColor()
-
-        font.bold: true
-        font.pointSize: 10
-        font.capitalization: Font.AllUppercase
     }
 }

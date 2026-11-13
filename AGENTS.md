@@ -44,4 +44,4 @@ Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 - **`~/.config/themes/current/` + `~/.local/state/theme/` are runtime state** written by `theme-set` — never add them to the chezmoi source; chezmoi would revert them on apply.
 - **`hyprctl dispatch exec` is broken by the hypr Lua DSL** — scripts spawn processes via `setsid … &` instead (see `bin/theme-set`).
 - **Zen chrome linker script was removed** — `userChrome.css` must be symlinked into each profile manually (steps in `docs/zen-browser.md`).
-- `quickshell` autostarts from `hyprland.lua`; bar is a minimal starter (clock + battery). `qmlls6` comes from `qt6-declarative` (quickshell dep).
+- `quickshell` autostarts from `hyprland.lua`; top bar = battery + clock + workspaces, all built on the shared `Pill.qml`. `qmlls6` comes from `qt6-declarative` (quickshell dep).

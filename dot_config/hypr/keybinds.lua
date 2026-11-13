@@ -28,11 +28,6 @@ hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(variables.noteEditor))
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(variables.blender))
 
 --------------------------------------------------------
--- Quickshell ------------------------------------------
---------------------------------------------------------
-hl.bind(mainMod .. " + S", hl.dsp.global("quickshell:toggle-sidebar"))
-
---------------------------------------------------------
 -- Audio keybinds --------------------------------------
 --------------------------------------------------------
 -- Volume up

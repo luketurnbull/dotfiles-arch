@@ -1,6 +1,5 @@
 import Quickshell
 import QtQuick
-import QtQuick.Layouts
 import Quickshell.Hyprland
 
 Scope {
@@ -14,93 +13,48 @@ Scope {
 
             screen: modelData
             color: "transparent"
-            implicitWidth: columnContainer.implicitWidth + 4
+            implicitHeight: 30
 
             anchors {
                 top: true
-                bottom: true
+                left: true
                 right: true
             }
 
-            Item {
-                id: columnContainer
-                implicitWidth: columnBar.implicitWidth + 2
-                height: parent.height - 16
+            BatteryWidget {
+                id: battery
+                anchors.top: parent.top
+                anchors.left: parent.left
+                color: theme.bg
+                colorNormal: theme.text
+                colorWarning: theme.warn
+            }
+
+            ClockWidget {
+                id: clock
+                anchors.centerIn: parent
+                color: theme.bg
+                textColor: theme.text
+            }
+
+            Row {
+                id: workspaces
+                spacing: 2
+                anchors.top: parent.top
                 anchors.right: parent.right
+                anchors.rightMargin: 4
 
-                ColumnLayout {
-                    id: columnBar
-                    property real rows: 3
+                Repeater {
+                    model: Hyprland.workspaces
 
-                    implicitWidth: SidebarState.expanded ? 100 : 30
-                    height: parent.height - 8
+                    Pill {
+                        id: workspace
+                        required property var modelData
 
-                    Item {
-                        implicitHeight: 2
-                    }
-
-                    Rectangle {
-                        color: "transparent"
-                        Layout.preferredWidth: parent.width
-                        Layout.preferredHeight: parent.height / columnBar.rows
-
-                        ClockWidget {
-                            id: clock
-                            anchors.right: parent.right
-                            color: theme.bg
-                            textColor: theme.text
-                        }
-                    }
-
-                    Rectangle {
-                        id: middleContainer
-                        color: "transparent"
-                        Layout.preferredHeight: parent.height / columnBar.rows
-                        Layout.preferredWidth: parent.width
-
-                        ColumnLayout {
-                            id: workspaces
-                            spacing: 2
-                            anchors.right: middleContainer.right
-
-                            Repeater {
-                                model: Hyprland.workspaces
-
-                                Rectangle {
-                                    id: workspace
-                                    required property var modelData
-
-                                    opacity: workspace.modelData.active ? 1 : 0.6
-                                    color: theme.bgSolid
-                                    radius: 999
-                                    implicitWidth: columnBar.implicitWidth
-                                    implicitHeight: workspaceText.implicitHeight + 5
-
-                                    Text {
-                                        id: workspaceText
-                                        text: "%1".arg(workspace.modelData.name)
-                                        color: theme.text
-                                        anchors.centerIn: parent
-                                        font.bold: true
-                                        font.pointSize: 10
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    Rectangle {
-                        Layout.preferredWidth: battery.width
-                        Layout.preferredHeight: parent.height / columnBar.rows
-                        color: "transparent"
-
-                        BatteryWidget {
-                            id: battery
-                            color: theme.bg
-                            colorNormal: theme.text
-                            colorWarning: theme.warn
-                            anchors.bottom: parent.bottom
-                        }
+                        opacity: workspace.modelData.active ? 1 : 0.6
+                        color: theme.bgSolid
+                        text: "%1".arg(workspace.modelData.name)
+                        textColor: theme.text
                     }
                 }
             }
