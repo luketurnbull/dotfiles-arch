@@ -13,6 +13,20 @@ return {
 		end,
 	},
 
+	-- kill the left padding inside nvim-tree (ghostty already adds window padding):
+	-- signcolumn "yes" costs 2 columns of textoff, and files at depth 0 get a
+	-- 2-space prefix to stay aligned with folder arrows — disable both
+	{
+		"nvim-tree/nvim-tree.lua",
+		opts = {
+			view = { signcolumn = "no" },
+			renderer = {
+				indent_markers = { enable = false },
+				icons = { show = { folder_arrow = false } },
+			},
+		},
+	},
+
 	{
 		"mfussenegger/nvim-dap",
 		dependencies = {

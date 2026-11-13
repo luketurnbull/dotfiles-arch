@@ -25,9 +25,9 @@ M.base46 = {
 
 -- M.nvdash = { load_on_startup = true }
 M.ui = {
-	--  tabufline = {
-	--     lazyload = false
-	-- }
+	-- hide the top buffer tabline; nvchad's <leader>x close_buffer relies on
+	-- tabufline's vim.t.bufs state, so mappings.lua provides its own remap
+	tabufline = { enabled = false },
 }
 
 return M

@@ -4,6 +4,32 @@ require("nvchad.mappings")
 
 local map = vim.keymap.set
 
+-- tabufline is disabled (chadrc.lua), which kills nvchad's <leader>x
+-- (it needs tabufline's vim.t.bufs state) — re-implement it standalone
+map("n", "<leader>x", function()
+	local bufnr = vim.api.nvim_get_current_buf()
+	if vim.bo[bufnr].buftype == "terminal" then
+		vim.cmd(vim.bo.buflisted and "set nobl | enew" or "hide")
+		return
+	end
+	if vim.bo[bufnr].buflisted then
+		-- jump to another listed buffer first so the window survives the :bd
+		local bufs = vim.tbl_filter(function(b)
+			return b ~= bufnr and vim.api.nvim_buf_is_valid(b) and vim.bo[b].buflisted
+		end, vim.api.nvim_list_bufs())
+		if #bufs > 0 then
+			vim.cmd("b" .. bufs[1])
+		else
+			vim.cmd("enew")
+		end
+	end
+	vim.cmd("confirm bd" .. bufnr)
+end, { desc = "close buffer" })
+
+-- nvchad's <tab>/<S-tab> buffer cycling also lives in tabufline — same problem
+map("n", "<tab>", "<cmd>bnext<cr>", { desc = "buffer goto next" })
+map("n", "<S-tab>", "<cmd>bprevious<cr>", { desc = "buffer goto prev" })
+
 -- tmux-aware split/pane nav — overrides nvchad.mappings C-hjkl (<C-w>hjkl)
 -- note: no <C-U> inside <cmd> — keycodes are translated to raw control bytes
 -- before <cmd> extracts the Ex command, so it becomes a literal ^U command
