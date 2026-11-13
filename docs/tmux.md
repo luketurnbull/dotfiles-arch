@@ -1,7 +1,7 @@
 # tmux
 
 `dot_config/tmux/tmux.conf` → `~/.config/tmux/tmux.conf`. tmux 3.7c.
-**Zen setup**: chrome-free, an invisible scrollback/copy-mode layer inside ghostty. Prefix is default `C-b`.
+**Zen setup**: chrome-free, scrollback/copy-mode layer. No longer auto-started by ghostty (run `tmux` manually). Prefix is default `C-b`.
 
 ## Chrome
 

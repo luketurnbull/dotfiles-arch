@@ -40,7 +40,7 @@ Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 - **NvChad sets mason `PATH = "skip"`** — LSP servers come from pacman/AUR, not Mason; `js-debug-adapter` is referenced by absolute `stdpath/data/mason` path. Never `:MasonInstallAll`.
 - **`devices.lua` disables the internal ThinkPad keyboard** — re-enable if no external keyboard.
 - **`monitors.lua` is dynamic**: any non-`eDP-1` output = external (scale 1.25 at `0x0`, laptop `auto-down`); lid switch toggles `eDP-1`. `monitor-added.sh` (socat hotplug watcher) exists but is **not wired into autostart** — currently unused.
-- **ghostty `command = tmux`** blocks auto shell-integration injection → new tabs/splits open in default cwd, not current. Fix documented in `docs/ghostty.md`.
+- **ghostty no longer runs `command = tmux`** — shell integration now injects normally (tabs/splits inherit cwd). Detached tmux sessions keep their apps alive invisibly — sweep occasionally (command in `docs/ghostty.md`).
 - **`~/.config/themes/current/` + `~/.local/state/theme/` are runtime state** written by `theme-set` — never add them to the chezmoi source; chezmoi would revert them on apply.
 - **`hyprctl dispatch exec` is broken by the hypr Lua DSL** — scripts spawn processes via `setsid … &` instead (see `bin/theme-set`).
 - **Zen chrome linker script was removed** — `userChrome.css` must be symlinked into each profile manually (steps in `docs/zen-browser.md`).

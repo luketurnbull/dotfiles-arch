@@ -12,6 +12,6 @@ Singleton {
 
     SystemClock {
         id: clock
-        precision: SystemClock.Seconds
+        precision: SystemClock.Minutes // seconds not displayed — per quickshell docs, Minutes improves battery life
     }
 }

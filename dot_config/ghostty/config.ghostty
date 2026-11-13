@@ -18,11 +18,11 @@ window-padding-y = 15
 window-padding-balance = true
 
 cursor-style = block
+# no blinking — a blinking block cursor forces a full redraw of every terminal
+# window at ~1Hz, forever; visible as constant ghostty renderer CPU on battery
+cursor-style-blink = false
 
 shell-integration = zsh
 custom-shader = ~/.config/ghostty/shaders/cursor_blaze.glsl
-
-# every new terminal starts in tmux — each window gets its own session
-command = tmux
 
 confirm-close-surface = false

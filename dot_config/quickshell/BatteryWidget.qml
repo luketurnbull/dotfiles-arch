@@ -40,15 +40,4 @@ Rectangle {
         font.pointSize: 10
         font.capitalization: Font.AllUppercase
     }
-
-    Connections {
-        function onPercentageChanged(): void {
-            if (!UPower.displayDevice.ready)
-                return;
-
-            batteryRoot.percentage = UPower.displayDevice.percentage;
-        }
-
-        target: UPower.displayDevice
-    }
 }

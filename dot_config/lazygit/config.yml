@@ -26,10 +26,9 @@ gui:
     defaultFgColor:
       - "#ededed"
 git:
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: delta --dark --paging=never --syntax-theme=ansi
+      command: delta --dark --paging=never --syntax-theme=ansi
   autoFetch: true
   autoRefresh: true
-
   previewCommandTemplate: "bat --style=full --color=always --theme=ansi {{filename}}"
