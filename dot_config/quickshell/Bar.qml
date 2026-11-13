@@ -17,7 +17,8 @@ Scope {
             color: "transparent"
 
             // Content-driven height — pills can never be clipped by the window.
-            implicitHeight: Math.max(workspaces.implicitHeight, clock.implicitHeight)
+            // workspaces.y accounts for the row's topMargin.
+            implicitHeight: Math.max(workspaces.y + workspaces.implicitHeight, clock.implicitHeight)
 
             anchors {
                 top: true
@@ -38,6 +39,7 @@ Scope {
                 id: workspaces
                 spacing: 2
                 anchors.top: parent.top
+                anchors.topMargin: 2
                 anchors.left: parent.left
 
                 Repeater {
@@ -49,6 +51,9 @@ Scope {
 
                         opacity: workspace.modelData.active ? 1 : 0.6
                         color: theme.bgSolid
+                        // Same border as a hyprland active window (border_size = 1).
+                        border.width: workspace.modelData.active ? 1 : 0
+                        border.color: theme.border
                         radius: height / 2
                         implicitWidth: workspaceLabel.implicitWidth + 18
                         implicitHeight: workspaceLabel.implicitHeight + 4

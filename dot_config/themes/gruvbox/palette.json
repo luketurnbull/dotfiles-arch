@@ -3,5 +3,6 @@
   "bgSolid": "#282828",
   "text": "#ebdbb2",
   "accent": "#fabd2f",
-  "warn": "#fb4934"
+  "warn": "#fb4934",
+  "border": "#fabd2f"
 }

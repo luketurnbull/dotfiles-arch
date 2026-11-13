@@ -10,6 +10,8 @@ QtObject {
     property string text: "#ededed"
     property string accent: "#ff3b30"
     property string warn: "#ff4d42"
+    // Active window border — mirrors hyprland.lua `active` per theme.
+    property string border: "#444444"
 
     property FileView _file: FileView {
         path: Quickshell.env("HOME") + "/.config/themes/current/palette.json"
@@ -27,6 +29,7 @@ QtObject {
             if (data.text) text = data.text;
             if (data.accent) accent = data.accent;
             if (data.warn) warn = data.warn;
+            if (data.border) border = data.border;
         } catch (e) {}
     }
 }

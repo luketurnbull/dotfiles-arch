@@ -15,7 +15,7 @@ Each theme dir holds a canonical palette + per-app files derived from it:
 | `nvim` | NvChad | base46 theme name only (`tokyonight`, `gruvbox`, or a custom file in `nvim/lua/themes/`) |
 | `tmux.conf` | tmux | `pane-border-style`, `pane-active-border-style`, `mode-style`, `message-style` |
 | `hyprland.lua` | Hyprland | returns `{ active = "rgb(...)", inactive = "rgb(...)" }` |
-| `palette.json` | quickshell | `{ bg, bgSolid, text, accent, warn }` — `bg` carries the `ee` alpha prefix |
+| `palette.json` | quickshell | `{ bg, bgSolid, text, accent, warn, border }` — `bg` carries the `ee` alpha prefix; `border` mirrors `hyprland.lua` `active` |
 
 ## Hookups (chezmoi-managed side)
 

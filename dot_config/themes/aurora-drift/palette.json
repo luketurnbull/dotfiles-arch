@@ -3,5 +3,6 @@
   "bgSolid": "#050814",
   "text": "#e6f1ff",
   "accent": "#00e5ff",
-  "warn": "#ff6b6b"
+  "warn": "#ff6b6b",
+  "border": "#00e5ff"
 }
