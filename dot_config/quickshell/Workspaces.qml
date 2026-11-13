@@ -16,7 +16,7 @@ Row {
             // Same border as a hyprland active window (border_size = 1).
             border.width: workspace.modelData.active ? 1 : 0
             border.color: Theme.border
-            radius: height / 2
+            radius: 6
             implicitWidth: workspaceLabel.implicitWidth + 18
             implicitHeight: workspaceLabel.implicitHeight + 4
 
