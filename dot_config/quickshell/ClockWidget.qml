@@ -1,6 +1,8 @@
 import QtQuick
 
 Rectangle {
+    property string textColor: "#ededed"
+
     color: "transparent"
     radius: 999
 
@@ -12,7 +14,7 @@ Rectangle {
         id: timeText
         text: Time.time
 
-        color: "#ededed"
+        color: textColor
         anchors.centerIn: parent
 
         font.bold: true

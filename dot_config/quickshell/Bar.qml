@@ -4,6 +4,8 @@ import QtQuick.Layouts
 import Quickshell.Hyprland
 
 Scope {
+    Theme { id: theme }
+
     Variants {
         model: Quickshell.screens
 
@@ -45,7 +47,8 @@ Scope {
                         ClockWidget {
                             id: clock
                             anchors.right: parent.right
-                            color: "#ee0a0a0a"
+                            color: theme.bg
+                            textColor: theme.text
                         }
                     }
 
@@ -68,7 +71,7 @@ Scope {
                                     required property var modelData
 
                                     opacity: workspace.modelData.active ? 1 : 0.6
-                                    color: "#0a0a0a"
+                                    color: theme.bgSolid
                                     radius: 999
                                     implicitWidth: columnBar.implicitWidth
                                     implicitHeight: workspaceText.implicitHeight + 5
@@ -76,7 +79,7 @@ Scope {
                                     Text {
                                         id: workspaceText
                                         text: "%1".arg(workspace.modelData.name)
-                                        color: "#ededed"
+                                        color: theme.text
                                         anchors.centerIn: parent
                                         font.bold: true
                                         font.pointSize: 10
@@ -93,7 +96,9 @@ Scope {
 
                         BatteryWidget {
                             id: battery
-                            color: "#ee0a0a0a"
+                            color: theme.bg
+                            colorNormal: theme.text
+                            colorWarning: theme.warn
                             anchors.bottom: parent.bottom
                         }
                     }

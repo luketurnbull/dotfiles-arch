@@ -1,3 +1,10 @@
+-- border colours come from the active theme (written by theme-set); fallback = noir
+local themeBorders = { active = "rgb(444444)", inactive = "rgb(000000)" }
+local ok, theme = pcall(dofile, os.getenv("HOME") .. "/.config/themes/current/hyprland.lua")
+if ok and type(theme) == "table" then
+	themeBorders = theme
+end
+
 local horizontalGap = 362
 local normalGap = 5
 
@@ -19,12 +26,12 @@ local noneRecordingGaps = {
 hl.config({
 	general = {
 		gaps_in = 2,
-		gaps_out = recordingGaps,
+		gaps_out = noneRecordingGaps,
 		border_size = 1,
 
 		col = {
-			active_border = "rgb(444444)",
-			inactive_border = "rgb(000000)",
+			active_border = themeBorders.active,
+			inactive_border = themeBorders.inactive,
 		},
 
 		layout = "dwindle",

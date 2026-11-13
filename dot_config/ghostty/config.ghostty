@@ -1,4 +1,6 @@
-theme = static-noir
+# active theme, written by theme-set (relative to this file)
+config-file = ?../themes/current/ghostty
+
 font-size = 12
 
 # opt into the ext-background-effect-v1 blur region — since GTK 4.24 every GTK

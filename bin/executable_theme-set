@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+# theme-set — switch the active theme across ghostty, nvim, tmux, hyprland, quickshell.
+#
+# Themes:      ~/.config/themes/<name>/   (chezmoi-managed registry)
+# Active copy: ~/.config/themes/current/  (script-owned, NOT chezmoi-managed)
+# Name record: ~/.local/state/theme/current
+#
+# Copy-swap, not symlinks: file watchers (quickshell FileView) need new inodes.
+#
+# Usage: theme-set [name] · theme-set list · theme-set current
+set -euo pipefail
+
+themes_dir="$HOME/.config/themes"
+state_dir="$HOME/.local/state/theme"
+current_dir="$themes_dir/current"
+
+list_themes() {
+	find "$themes_dir" -mindepth 1 -maxdepth 1 -type d ! -name current ! -name '.*' -printf '%f\n' | sort
+}
+
+case "${1:-}" in
+	list)
+		list_themes
+		exit 0
+		;;
+	current)
+		cat "$state_dir/current" 2>/dev/null || echo "none"
+		exit 0
+		;;
+	"")
+		if command -v fzf >/dev/null 2>&1; then
+			name=$(list_themes | fzf --prompt='theme> ') || exit 0
+		else
+			select choice in $(list_themes); do
+				name=$choice
+				break
+			done
+			[[ -n ${name:-} ]] || exit 1
+		fi
+		;;
+	*)
+		name=$1
+		;;
+esac
+
+if [[ ! -d $themes_dir/$name ]]; then
+	echo "theme '$name' does not exist:" >&2
+	list_themes >&2
+	exit 1
+fi
+
+# swap
+tmp="$themes_dir/.next"
+rm -rf "$tmp"
+mkdir "$tmp"
+cp -a "$themes_dir/$name/." "$tmp/"
+rm -rf "$current_dir"
+mv "$tmp" "$current_dir"
+
+mkdir -p "$state_dir"
+printf '%s\n' "$name" >"$state_dir/current"
+
+# apply
+pkill -SIGUSR2 ghostty 2>/dev/null || true
+hyprctl reload >/dev/null 2>&1 || true
+tmux source-file "$current_dir/tmux.conf" 2>/dev/null || true
+
+# quickshell: FileView watches palette.json, but the swap replaces the whole dir — restart.
+# (no hyprctl dispatch exec: the Lua DSL rewrites its syntax)
+pkill -x quickshell 2>/dev/null || true
+sleep 0.3
+setsid quickshell >/dev/null 2>&1 &
+
+# nvim: base46 caches compiled highlights and never recompiles on its own — rebuild for next launch
+rm -rf "$HOME/.local/share/nvim/base46"
+nvim --headless "+lua require('base46').load_all_highlights()" "+qa!" >/dev/null 2>&1 || true
+
+# bat uses --theme=ansi — follows the terminal palette, nothing to do
+
+echo "theme: $name (open a new nvim to see it there)"

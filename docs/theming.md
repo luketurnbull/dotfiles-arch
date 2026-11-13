@@ -1,45 +1,54 @@
 # Theming
 
-**Static Noir**, hardcoded per app — no central theme data on this branch. (A `.chezmoidata/themes.yaml` + templated configs exist in an unmerged commit on another branch; theme switching via scripts is still a future idea.)
+Omarchy-style switchable themes. Registry in `dot_config/themes/<name>/` (chezmoi-managed); the **active** theme is copied to `~/.config/themes/current/` by `theme-set` (script-owned, never in the repo — chezmoi would revert it on apply).
 
-Ported from [`dotfiles_macbook`](https://github.com/luketurnbull/dotfiles_macbook) (Nov 2026). The custom theme files — `ghostty/themes/static-noir`, `nvim/lua/themes/static_noir.lua`, `opencode/themes/static-noir.json`, the lazygit `gui.theme` block — are verbatim copies, so both machines stay in sync.
+Ships: `noir` (the old static-noir, preserved), `tokyo-night`, `gruvbox`, `adventure`, `after-hours`, `aurora-drift`.
 
-## Per-app values
+## Theme dir layout
 
-| App | Where | Value |
+Each theme dir holds a canonical palette + per-app files derived from it:
+
+| File | Used by | Content |
 |---|---|---|
-| Ghostty | `config.ghostty` + `themes/static-noir` | `theme = static-noir` (custom theme file; no opacity/blur — Hyprland handles that per window) |
-| NvChad | `lua/chadrc.lua` + `lua/themes/static_noir.lua` | `theme = "static_noir"` + `transparency = true` (Hyprland window opacity shows through) |
-| lazygit | `lazygit/config.yml` | custom noir `gui.theme` (accent `#ff3b30`); delta pager + `bat --theme=ansi` preview |
-| bat | `config` | `--theme="ansi"` — follows the terminal (ghostty static-noir) palette |
-| Hyprland | `appearance.lua` | active border gradient `rgb(666666)` → `rgb(ff3b30)` @45°, inactive `rgb(333333)` |
-| Quickshell | `Bar`/`Clock`/`BatteryWidget.qml` | pill bg `#ee0a0a0a`, text `#ededed` (red `#ff4d42` on low battery) |
-| tmux | `tmux.conf` | transient only: `mode-style` `bg=#333333,fg=#ededed`, `message-style` `bg=#ff3b30,fg=#0a0a0a`; pane borders `fg=#333333` (active `#ff3b30`) |
-| opencode | `tui.json` + `themes/static-noir.json` | `"theme": "static-noir"` (custom theme file) |
-| Zen | `userChrome.css` | `--zen-*` vars overridden from a `--tg-*` palette (static noir values) |
+| `colors.toml` | reference / future gen scripts | canonical palette: `background`, `foreground`, `cursor*`, `selection_*`, `accent`, `warn`, `dim`, `color0`–`color15` |
+| `ghostty` | ghostty | raw palette keys — **not** `theme = name` (file is pulled in via `config-file`; raw keys keep non-builtin themes possible) |
+| `nvim` | NvChad | base46 theme name only (`tokyonight`, `gruvbox`, or a custom file in `nvim/lua/themes/`) |
+| `tmux.conf` | tmux | `pane-border-style`, `pane-active-border-style`, `mode-style`, `message-style` |
+| `hyprland.lua` | Hyprland | returns `{ active = "rgb(...)", inactive = "rgb(...)" }` |
+| `palette.json` | quickshell | `{ bg, bgSolid, text, accent, warn }` — `bg` carries the `ee` alpha prefix |
 
-## Palette in use
+## Hookups (chezmoi-managed side)
 
-| Hex | Role |
+| App | Mechanism |
 |---|---|
-| `#0a0a0a` | background |
-| `#050505` | background (darkest, nvim) |
-| `#101010` | background (panel) |
-| `#191919` | element bg |
-| `#ee0a0a0a` | `#0a0a0a` @ ~93% opacity — quickshell pills |
-| `#232323` / `#2d2d2d` | bg greys (nvim) |
-| `#333333` | selection / borders |
-| `#666666` | muted dark (hypr gradient start) |
-| `#7d7d7d` / `#929292` | comment / muted |
-| `#c9c9c9` | foreground dim |
-| `#ededed` | foreground |
-| `#ff3b30` | accent red — cursor, active borders |
-| `#ff4d42` / `#ff6e64` | red / red bright (errors, low battery) |
-| `#9fd08a` / `#b7e2a3` | green / green bright |
-| `#e6c15c` / `#f2d47c` | yellow |
-| `#7fb2e8` / `#9dc7f2` | blue accent |
-| `#d093d0` / `#e0aede` | violet |
-| `#74cfd1` / `#93e1e2` | teal |
-| `#f3874f` | orange |
+| Ghostty | `config-file = ?../themes/current/ghostty` in `config.ghostty` (`?` = optional, relative to the config file) |
+| NvChad | `chadrc.lua` reads `current/nvim` at startup, fallback `static_noir`; custom themes in `lua/themes/` |
+| tmux | `source-file -q ~/.config/themes/current/tmux.conf` |
+| Hyprland | `appearance.lua`: `pcall(dofile, …/current/hyprland.lua)`, fallback noir values |
+| Quickshell | `Theme.qml`: `FileView` on `current/palette.json` with `watchChanges` |
+| bat | **nothing** — `--theme="ansi"` follows the terminal palette for free |
 
-To change the theme: touch every row in the first table. There is no single source of truth — yet.
+## `theme-set` (`~/bin/theme-set`)
+
+Usage: `theme-set [name]` (fzf picker, `select` fallback) · `theme-set list` · `theme-set current`
+
+1. Copy-swaps `themes/<name>` → `themes/current` — real files, not symlinks (file watchers need new inodes)
+2. Writes the name to `~/.local/state/theme/current`
+3. Reloads: `pkill -SIGUSR2 ghostty` (official reload signal), `hyprctl reload`, `tmux source-file`
+4. Restarts quickshell via `setsid` (`hyprctl dispatch exec` is broken by the hypr Lua DSL)
+5. Rebuilds the base46 highlight cache headlessly (the `docs/neovim.md` gotcha, automated)
+
+nvim needs a fresh launch to pick up the theme; everything else applies live.
+
+## Adding a theme
+
+1. `mkdir dot_config/themes/<name>/` and write `colors.toml` first
+2. Derive the per-app files from it. Ghostty builtin palettes to copy: `/usr/share/ghostty/themes/` (browse with `ghostty +list-themes`); Omarchy palettes live in `omarchy/themes/<name>/colors.toml`
+3. If no base46 theme matches, add `dot_config/nvim/lua/themes/<name>.lua` (copy `after_hours.lua` as a template) and put the name in the theme's `nvim` file
+4. `chezmoi diff` → `chezmoi apply` → `theme-set <name>`
+
+## Not switched (still static / pinned)
+
+- **opencode** — `tui.json` + `themes/static-noir.json`; theme selection would fight chezmoi. Parked.
+- **lazygit** — custom noir `gui.theme`. Parked.
+- **Helium browser** — no file/CLI theming exists (color picker is manual, Web Store themes broken). Parked.

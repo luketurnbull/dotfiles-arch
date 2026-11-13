@@ -6,7 +6,7 @@
 
 | Key | Value |
 |---|---|
-| `theme` | `static-noir` — custom theme file `themes/static-noir` (16 ANSI colors, bg `#0a0a0a`, fg `#ededed`, cursor `#ff3b30`) |
+| `config-file` | `?../themes/current/ghostty` — active theme, written by `theme-set` (raw palette keys per theme dir; see `docs/theming.md`) |
 | `font-size` | `12` (no family set — ghostty default monospace) |
 | `background-opacity` | `0.99` — invisible on its own; real translucency comes from Hyprland's `active_opacity`. Exists only to unlock `background-blur` (see caveat) |
 | `background-blur` | `true` — opts into the `ext-background-effect-v1` blur region so Hyprland blurs behind the window |

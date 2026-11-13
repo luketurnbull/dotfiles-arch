@@ -4,7 +4,7 @@
 
 local mainMod = "SUPER"
 local terminal = "ghostty"
-local browser = "zen-browser"
+local browser = "~/Applications/helium.AppImage"
 local noteEditor = "obsidian"
 local screenRecorder = "obs"
 local blender = "blender"

@@ -11,10 +11,11 @@ Status bar in QML: `dot_config/quickshell/` → `~/.config/quickshell/`. quicksh
 | `ClockWidget.qml` | Pill showing `Time.time` |
 | `Time.qml` | `pragma Singleton`: `SystemClock` (seconds precision) formatted `ddd d MMM hh:mm` |
 | `BatteryWidget.qml` | Pill showing battery % from `Quickshell.Services.UPower` |
+| `Theme.qml` | Active-theme palette loader: `FileView` on `~/.config/themes/current/palette.json` (`watchChanges`, noir defaults) exposing `bg`/`bgSolid`/`text`/`accent`/`warn` |
 
 ## Styling
 
-Both widgets are pills: `Rectangle` with `color = "#ee0a0a0a"` (static noir bg at ~93% opacity), `radius = 999`, bold white 10pt uppercase text, 20px horizontal / 8px vertical margins.
+Both widgets are pills: `Rectangle` with `radius = 999`, bold 10pt uppercase text, 20px horizontal / 8px vertical margins. Colours come from `Theme.qml` (see table) — `theme-set` restarts the bar on switch since the swap replaces the whole `current/` dir.
 
 ## Battery logic
 

@@ -6,8 +6,7 @@
 ## Chrome
 
 - `status off` — no status line. `prefix t` toggles it for a peek (session-scoped).
-- Pane borders: `pane-border-style` `fg=#333333`, `pane-active-border-style` `fg=#ff3b30` (static noir accent).
-- Only static noir left: transient `mode-style` (`bg=#333333,fg=#ededed`, copy-mode selection) + `message-style` (`bg=#ff3b30,fg=#0a0a0a`, command prompt) — invisible unless in use.
+- All colour (pane borders, transient `mode-style` copy-mode highlight + `message-style` command prompt — invisible unless in use) comes from the active theme: `source-file -q ~/.config/themes/current/tmux.conf` (written by `theme-set`, see `docs/theming.md`).
 - Note: the file's header comment still mentions `pane-border-lines spaces`/`pane-border-indicators arrows`, but neither option is currently set.
 
 ## Base

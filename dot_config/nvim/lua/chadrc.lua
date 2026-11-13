@@ -5,8 +5,16 @@
 ---@type ChadrcConfig
 local M = {}
 
+-- theme comes from the active theme dir (written by theme-set); fallback = static_noir
+local theme = "static_noir"
+local f = io.open(os.getenv("HOME") .. "/.config/themes/current/nvim", "r")
+if f then
+	theme = f:read("*l") or theme
+	f:close()
+end
+
 M.base46 = {
-	theme = "static_noir",
+	theme = theme,
 	transparency = true,
 
 	-- hl_override = {

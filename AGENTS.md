@@ -20,7 +20,7 @@ Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 | opencode | `dot_config/opencode/` | `docs/opencode.md` |
 | Packages | `.chezmoidata/packages.yaml` + `run_onchange_install-packages.sh.tmpl` | `docs/packages.md` |
 | Host hardware | — | `docs/computer.md` |
-| Theming | hardcoded Static Noir per app (ported from `dotfiles_macbook`) | `docs/theming.md` |
+| Theming | `dot_config/themes/<name>/` registry + `bin/theme-set` switcher; state (`themes/current/`, `~/.local/state/theme/`) script-owned | `docs/theming.md` |
 
 ## Rules
 
@@ -33,7 +33,7 @@ Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 
 ## Keybinds (Hyprland, mainMod = SUPER)
 
-`SUPER+T` ghostty · `SUPER+B` zen · `SUPER+N` obsidian · `SUPER+SHIFT+S` obs · `SUPER+SHIFT+B` blender · `SUPER+W` close · `SUPER+hjkl/arrows` focus · `SUPER+SHIFT+*` move · `SUPER+0-9` workspace · `SUPER+F10/F11/F12` mute/vol · `SUPER+SHIFT+M` exit · `ALT+G` toggle 16:9 recording gaps. tmux prefix is default `C-b`.
+`SUPER+T` ghostty · `SUPER+B` helium · `SUPER+N` obsidian · `SUPER+SHIFT+S` obs · `SUPER+SHIFT+B` blender · `SUPER+W` close · `SUPER+hjkl/arrows` focus · `SUPER+SHIFT+*` move · `SUPER+0-9` workspace · `SUPER+F10/F11/F12` mute/vol · `SUPER+SHIFT+M` exit · `ALT+G` toggle 16:9 recording gaps. tmux prefix is default `C-b`.
 
 ## Gotchas
 
@@ -41,5 +41,7 @@ Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 - **`devices.lua` disables the internal ThinkPad keyboard** — re-enable if no external keyboard.
 - **`monitors.lua` is dynamic**: any non-`eDP-1` output = external (scale 1.25 at `0x0`, laptop `auto-down`); lid switch toggles `eDP-1`. `monitor-added.sh` (socat hotplug watcher) exists but is **not wired into autostart** — currently unused.
 - **ghostty `command = tmux`** blocks auto shell-integration injection → new tabs/splits open in default cwd, not current. Fix documented in `docs/ghostty.md`.
+- **`~/.config/themes/current/` + `~/.local/state/theme/` are runtime state** written by `theme-set` — never add them to the chezmoi source; chezmoi would revert them on apply.
+- **`hyprctl dispatch exec` is broken by the hypr Lua DSL** — scripts spawn processes via `setsid … &` instead (see `bin/theme-set`).
 - **Zen chrome linker script was removed** — `userChrome.css` must be symlinked into each profile manually (steps in `docs/zen-browser.md`).
 - `quickshell` autostarts from `hyprland.lua`; bar is a minimal starter (clock + battery). `qmlls6` comes from `qt6-declarative` (quickshell dep).
