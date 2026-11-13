@@ -1,14 +1,11 @@
 import QtQuick
 import Quickshell.Services.UPower
 
-Text {
+StyledText {
     id: batteryRoot
 
     property real percentage: UPower.displayDevice.percentage
     property bool charging: UPower.displayDevice.state === UPowerDeviceState.Charging
-
-    property string colorNormal: "#ededed"
-    property string colorWarning: "#ff4d42"
 
     // Nerd Font battery glyphs, low → full. v3+ codepoints; charging set is
     // non-contiguous (10/50/70 in the F089x block), so both sets are hardcoded.
@@ -17,10 +14,6 @@ Text {
 
     text: batteryRoot.getGlyph()
     color: batteryRoot.getTextColor()
-
-    font.bold: true
-    font.pointSize: 11
-    font.capitalization: Font.AllUppercase
 
     function getGlyph(): string {
         const index = Math.min(9, Math.floor(percentage * 10));
@@ -32,10 +25,6 @@ Text {
     }
 
     function getTextColor(): string {
-        if (isBatteryLow()) {
-            return colorWarning;
-        }
-
-        return colorNormal;
+        return isBatteryLow() ? Theme.warn : Theme.text;
     }
 }

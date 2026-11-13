@@ -1,10 +1,12 @@
+pragma Singleton
+
 import QtQuick
 import Quickshell
 import Quickshell.Io
 
 // Active-theme palette, read from ~/.config/themes/current/palette.json
 // (written by theme-set). Defaults = noir, used if the file is missing/invalid.
-QtObject {
+Singleton {
     property string bg: "#ee0a0a0a"
     property string bgSolid: "#0a0a0a"
     property string text: "#ededed"

@@ -9,9 +9,13 @@ Top bar, pill-shaped widgets on a transparent background. Height is content-driv
 | File | Role |
 |---|---|
 | `shell.qml` | Root: `Scope` + `Variants` over `Quickshell.screens` |
-| `Bar.qml` | One `PanelWindow` per screen; all pills declared inline (no shared pill component) |
-| `ClockWidget.qml` | `Text` showing `Time.time` (12pt, bold, uppercase) |
-| `BatteryWidget.qml` | `Text` showing a Nerd Font battery glyph (12pt) |
+| `Bar.qml` | One `PanelWindow` per screen; layout only (positions `Workspaces` + clock pill) |
+| `Workspaces.qml` | Workspace pills (`Row` + `Repeater` over `Hyprland.workspaces`); owns the `Hyprland` import |
+| `ClockWidget.qml` | `StyledText` showing `Time.time` |
+| `BatteryWidget.qml` | `StyledText` showing a Nerd Font battery glyph |
+| `StyledText.qml` | Shared `Text` base: bold, uppercase, `Theme.text` color, `Appearance.fontSize` |
+| `Theme.qml` | `pragma Singleton`: color palette from `palette.json` |
+| `Appearance.qml` | `pragma Singleton`: theme-independent sizing (font size, bar margins) |
 | `Time.qml` | `pragma Singleton`: `SystemClock` with `Minutes` precision |
 
 All positioned with `anchors.top: parent.top`. Left: workspaces. Center: clock + battery in one `Row`.
@@ -19,16 +23,17 @@ All positioned with `anchors.top: parent.top`. Left: workspaces. Center: clock +
 ## Styling
 
 - Pills: `Rectangle` with `radius: height / 2` (fully circular), 20px horizontal / 8px vertical padding.
-- Window margins 5 all sides (mirroring hyprland `gaps_out`), so pills float off the screen edges.
+- Window margins from `Appearance.barMargin` (mirrors hyprland `gaps_out`), so pills float off the screen edges.
 - Workspace pills dimmed (opacity 0.6) unless active.
-- Colors from `Theme.qml` (reads `~/.config/themes/current/palette.json`).
+- All text is `StyledText`: bold, uppercase, `Appearance.fontSize` (11).
+- Colors from the `Theme` singleton (reads `~/.config/themes/current/palette.json`); sizes from the `Appearance` singleton. Components read both directly — no prop-passing.
 
 ## Battery logic
 
 - `percentage` is a plain property bound to `UPower.displayDevice.percentage` (0–1), event-driven over DBus, no polling.
 - Text shows a Nerd Font glyph picked from a 10-step array (`floor(percentage * 10)`, clamped to 9).
 - `charging` (from `UPowerDevice.state`) swaps to the charging glyph set.
-- Glyphs turn red (`#ff4d42`) below 15%.
+- Glyphs turn `Theme.warn` red below 15%.
 
 ## Gotchas
 
@@ -37,4 +42,4 @@ All positioned with `anchors.top: parent.top`. Left: workspaces. Center: clock +
 
 ## Extending
 
-New widget = new `.qml` file, add to the clock/battery `Row` in `Bar.qml` (for center) or a new position in `Bar.qml`. Quickshell auto-reloads on save.
+New widget = new `.qml` file (root `StyledText` if it shows text), reading the `Theme`/`Appearance` singletons directly. Add the instance to the clock/battery `Row` in `Bar.qml` (for center) or a new position in `Bar.qml`. Quickshell auto-reloads on save.
