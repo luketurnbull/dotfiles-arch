@@ -11,7 +11,7 @@ Row {
             id: workspace
             required property var modelData
 
-            opacity: workspace.modelData.active ? 1 : 0.6
+            opacity: workspace.modelData.active ? 1 : 0.75
             color: Theme.bgSolid
             // Same border as a hyprland active window (border_size = 1).
             border.width: workspace.modelData.active ? 1 : 0
