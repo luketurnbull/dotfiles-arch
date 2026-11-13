@@ -4,23 +4,22 @@ Status bar in QML: `dot_config/quickshell/` → `~/.config/quickshell/`.
 
 ## Layout
 
-Top bar, 30px tall, pill-shaped widgets on a transparent background.
+Top bar, pill-shaped widgets on a transparent background. Height is content-driven (`Math.max` of the two pill groups), never hardcoded.
 
 | File | Role |
 |---|---|
 | `shell.qml` | Root: `Scope` + `Variants` over `Quickshell.screens` |
-| `Bar.qml` | One `PanelWindow` per screen, holds all pills |
-| `Pill.qml` | Generic pill: `Rectangle` + centered content. Props: `text`, `textColor`, `horizontalPadding`, `verticalPadding`, `fontPointSize`, `contentItem`. Default content is a `Text` label; override `contentItem` to host custom content. |
-| `CenterBlock.qml` | Center pill: clock + battery in a `Row` (12pt, `verticalPadding: 12`). Uses `Pill` with custom `contentItem`. Add future widgets to this Row. |
+| `Bar.qml` | One `PanelWindow` per screen; all pills declared inline (no shared pill component) |
 | `ClockWidget.qml` | `Text` showing `Time.time` (12pt, bold, uppercase) |
 | `BatteryWidget.qml` | `Text` showing a Nerd Font battery glyph (12pt) |
 | `Time.qml` | `pragma Singleton`: `SystemClock` with `Minutes` precision |
 
-All positioned with `anchors.top: parent.top`. Left: workspaces. Center: `CenterBlock`. Right: battery (now part of `CenterBlock`).
+All positioned with `anchors.top: parent.top`. Left: workspaces. Center: clock + battery in one `Row`.
 
 ## Styling
 
-- `horizontalPadding: 20`, `verticalPadding: 10`, `radius: 999` with flat top corners.
+- Pills: `Rectangle` with `radius: height / 2` (fully circular), 20px horizontal / 8px vertical padding.
+- Window margins 5 all sides (mirroring hyprland `gaps_out`), so pills float off the screen edges.
 - Workspace pills dimmed (opacity 0.6) unless active.
 - Colors from `Theme.qml` (reads `~/.config/themes/current/palette.json`).
 
@@ -38,4 +37,4 @@ All positioned with `anchors.top: parent.top`. Left: workspaces. Center: `Center
 
 ## Extending
 
-New widget = new `.qml` file, add to `CenterBlock.qml`'s `Row` (for center) or `Bar.qml` (for a new position). Quickshell auto-reloads on save.
+New widget = new `.qml` file, add to the clock/battery `Row` in `Bar.qml` (for center) or a new position in `Bar.qml`. Quickshell auto-reloads on save.

@@ -19,7 +19,7 @@ Text {
     color: batteryRoot.getTextColor()
 
     font.bold: true
-    font.pointSize: 12
+    font.pointSize: 11
     font.capitalization: Font.AllUppercase
 
     function getGlyph(): string {

@@ -3,7 +3,9 @@ import Quickshell
 import Quickshell.Hyprland
 
 Scope {
-    Theme { id: theme }
+    Theme {
+        id: theme
+    }
 
     Variants {
         model: Quickshell.screens
@@ -13,7 +15,9 @@ Scope {
 
             screen: modelData
             color: "transparent"
-            implicitHeight: 30
+
+            // Content-driven height — pills can never be clipped by the window.
+            implicitHeight: Math.max(workspaces.implicitHeight, clock.implicitHeight)
 
             anchors {
                 top: true
@@ -21,9 +25,11 @@ Scope {
                 right: true
             }
 
-            // Mirror hyprland gaps_out (appearance.lua): 5 both sides.
-            // Hardcoded — desyncs while ALT+G recording gaps are active.
+            // Mirror hyprland gaps_out (appearance.lua): 5 all sides, so the
+            // pills float off the screen edges. Hardcoded — desyncs while
+            // ALT+G recording gaps are active.
             margins {
+                top: 0
                 left: 5
                 right: 5
             }
@@ -37,26 +43,58 @@ Scope {
                 Repeater {
                     model: Hyprland.workspaces
 
-                    Pill {
+                    Rectangle {
                         id: workspace
                         required property var modelData
 
                         opacity: workspace.modelData.active ? 1 : 0.6
                         color: theme.bgSolid
-                        text: "%1".arg(workspace.modelData.name)
-                        textColor: theme.text
-                        fontPointSize: 12
+                        radius: height / 2
+                        implicitWidth: workspaceLabel.implicitWidth + 18
+                        implicitHeight: workspaceLabel.implicitHeight + 4
+
+                        Text {
+                            id: workspaceLabel
+                            anchors.centerIn: parent
+                            text: "%1".arg(workspace.modelData.name)
+                            color: theme.text
+
+                            font.bold: true
+                            font.pointSize: 11
+                            font.capitalization: Font.AllUppercase
+                        }
                     }
                 }
             }
 
-            CenterBlock {
+            Rectangle {
                 id: clock
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
+
                 color: theme.bg
-                textColor: theme.text
-                colorWarning: theme.warn
+                radius: height / 2
+                topLeftRadius: 0
+                topRightRadius: 0
+                implicitWidth: clockContent.implicitWidth + 40
+                implicitHeight: clockContent.implicitHeight + 8
+
+                Row {
+                    id: clockContent
+                    anchors.centerIn: parent
+                    spacing: 12
+
+                    ClockWidget {
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: theme.text
+                    }
+
+                    BatteryWidget {
+                        anchors.verticalCenter: parent.verticalCenter
+                        colorNormal: theme.text
+                        colorWarning: theme.warn
+                    }
+                }
             }
         }
     }
