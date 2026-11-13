@@ -62,7 +62,7 @@ Fully dynamic — no hardcoded external output name:
 
 ## Animations (`animations.lua`)
 
-Beziers: `easeOutQuint`, `easeInOutCubic`, `linear`, `almostLinear`, `quick`. Spring: `easy` (mass 1, stiffness 70, dampening 15). Windows use the `easy` spring (`windowsIn` pops in at 87%), workspaces cross-fade (`almostLinear`), layers fade with `easeOutQuint`/`linear`.
+Material 3 "emphasized" scheme (speeds in deciseconds). Beziers: `emphasizedDecel` (enters/moves), `emphasizedAccel` (exits), `standard` (fades/border), `linear`. Windows pop in 80% @3 / out 90% @2, moves slide @3; workspaces **slide** @5 (In/Out inherit; special slidevert @4); layers slide (in @4, out @3); fades @2–3; border/zoomFactor @5/@3 `standard`. No spring curves, no `global` override — every leaf set explicitly.
 
 ## Devices (`devices.lua`)
 
