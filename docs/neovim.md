@@ -6,7 +6,7 @@
 
 - `init.lua` — bootstraps `folke/lazy.nvim` into `stdpath/lazy/lazy.nvim`, runs `lazy.setup` with `NvChad` (branch `v2.5`, imports `nvchad.plugins`) + local `lua/plugins/`. **Not** `vim.pack.add`. `mapleader` = space; base46 cache (`vim.g.base46_cache`) loaded via `dofile` for `defaults` + `statusline`.
 - `lua/chadrc.lua` — NvChad UI config; reads the theme name from `~/.config/themes/current/nvim` (written by `theme-set`, fallback `static_noir`) + `transparency = true`. Theme files: `lua/themes/` (base46; `static_noir.lua` from `dotfiles_macbook`, plus custom `adventure`/`after_hours`/`aurora_drift` derived from ghostty palettes).
-- **Theme-change gotcha**: base46 caches compiled highlights in `stdpath/data/base46/` and never recompiles on chadrc edits. After changing the theme: `rm -rf ~/.local/share/nvim/base46 && nvim --headless "+lua require('base46').load_all_highlights()" "+qa!"`, else the old theme persists. `theme-set` runs this automatically on every switch.
+- **Theme-change gotcha**: base46 caches compiled highlights in `stdpath/data/base46/` and never recompiles on chadrc edits. After changing the theme: `rm -rf ~/.local/share/nvim/base46 && nvim --headless "+lua require('base46').load_all_highlights()" "+qa!"`, else the old theme persists. `theme-set` runs this automatically on every switch (the E5113 from `init.lua` doffing the not-yet-existing cache is harmless — the rebuild completes in the same run) and additionally live-switches any running instances over their server sockets.
 - `lua/options.lua` — `relativenumber`.
 - `lua/mappings.lua` — visual J/K move lines, `C-d`/`u`/`o`/`i` center cursor, tmux-aware nav re-maps, DAP keys.
 - `lua/configs/` — `lazy.lua`, `lspconfig.lua`, `conform.lua`, `dap.lua`.

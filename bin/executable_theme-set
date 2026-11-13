@@ -10,9 +10,14 @@
 # Usage: theme-set [name] · theme-set list · theme-set current
 set -euo pipefail
 
+# THEME_SET_DEBUG=1 → timestamp each step to stderr
+_dbg() { [[ -z ${THEME_SET_DEBUG:-} ]] || printf '%s %s\n' "$(date +%T.%N)" "$*" >&2; }
+
 themes_dir="$HOME/.config/themes"
 state_dir="$HOME/.local/state/theme"
 current_dir="$themes_dir/current"
+
+_dbg start
 
 list_themes() {
 	find "$themes_dir" -mindepth 1 -maxdepth 1 -type d ! -name current ! -name '.*' -printf '%f\n' | sort
@@ -59,22 +64,47 @@ mv "$tmp" "$current_dir"
 
 mkdir -p "$state_dir"
 printf '%s\n' "$name" >"$state_dir/current"
+_dbg swapped
 
 # apply
 pkill -SIGUSR2 ghostty 2>/dev/null || true
+_dbg ghostty-signalled
 hyprctl reload >/dev/null 2>&1 || true
+_dbg hypr-reloaded
 tmux source-file "$current_dir/tmux.conf" 2>/dev/null || true
+_dbg tmux-sourced
 
 # quickshell: FileView watches palette.json, but the swap replaces the whole dir — restart.
 # (no hyprctl dispatch exec: the Lua DSL rewrites its syntax)
 pkill -x quickshell 2>/dev/null || true
-sleep 0.3
+for _ in {1..6}; do
+	pgrep -x quickshell >/dev/null 2>&1 || break
+	sleep 0.05
+done
 setsid quickshell >/dev/null 2>&1 &
+_dbg quickshell-restarted
 
-# nvim: base46 caches compiled highlights and never recompiles on its own — rebuild for next launch
+# nvim: base46 caches compiled highlights and never recompiles on its own — rebuild for next launch.
+# One run is enough: the E5113 from init.lua doffing the not-yet-existing cache is harmless
+# (the rebuild still completes) and the output is discarded anyway. This is the slow step (~0.5-1s).
 rm -rf "$HOME/.local/share/nvim/base46"
 nvim --headless "+lua require('base46').load_all_highlights()" "+qa!" >/dev/null 2>&1 || true
+_dbg base46-rebuilt
+
+# running nvim instances: live-switch via server sockets (same recipe as NvChad's theme picker)
+nvtheme=$(cat "$current_dir/nvim" 2>/dev/null || true)
+if [[ -n $nvtheme ]]; then
+	lua_cmd="require('nvconfig').base46.theme='${nvtheme}'; require('base46').load_all_highlights(); local ok=pcall(require,'plenary.reload'); if ok then require('plenary.reload').reload_module('volt.highlights'); require('volt.highlights') end"
+	for sock in /run/user/$UID/nvim.*.*; do
+		[[ -S $sock ]] || continue
+		_dbg "send → $sock"
+		# --headless matters: with a TTY on stdout the client starts a terminal
+		# probe and waits ~1s for feature responses before sending
+		nvim --headless --server "$sock" --remote-send ":lua ${lua_cmd}<CR>" >/dev/null 2>&1 || true
+		_dbg "sent ✓ $sock"
+	done
+	_dbg nvim-live-switched
+fi
 
 # bat uses --theme=ansi — follows the terminal palette, nothing to do
 
-echo "theme: $name (open a new nvim to see it there)"

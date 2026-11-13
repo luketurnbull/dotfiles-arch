@@ -37,8 +37,7 @@ Usage: `theme-set [name]` (fzf picker, `select` fallback) · `theme-set list` ·
 3. Reloads: `pkill -SIGUSR2 ghostty` (official reload signal), `hyprctl reload`, `tmux source-file`
 4. Restarts quickshell via `setsid` (`hyprctl dispatch exec` is broken by the hypr Lua DSL)
 5. Rebuilds the base46 highlight cache headlessly (the `docs/neovim.md` gotcha, automated)
-
-nvim needs a fresh launch to pick up the theme; everything else applies live.
+6. Live-switches **running** nvim instances via their server sockets (`/run/user/$UID/nvim.*.*`) — same recipe as NvChad's own theme picker (`nvconfig.base46.theme = …` + `load_all_highlights` + volt reload). Omarchy doesn't do this; we do.
 
 ## Adding a theme
 
