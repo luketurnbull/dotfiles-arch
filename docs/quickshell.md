@@ -1,35 +1,41 @@
 # Quickshell
 
-Status bar in QML: `dot_config/quickshell/` → `~/.config/quickshell/`. quickshell `0.3.2`, autostarted by `hyprland.lua` (`hl.exec_cmd("quickshell")`). Top bar: Hyprland workspaces top-left, clock centered, battery top-right.
+Status bar in QML: `dot_config/quickshell/` → `~/.config/quickshell/`.
 
-## Files
+## Layout
+
+Top bar, 30px tall, pill-shaped widgets on a transparent background.
 
 | File | Role |
 |---|---|
-| `shell.qml` | Root `Scope` → `Bar {}` |
-| `Bar.qml` | One `PanelWindow` per screen (`Variants` over `Quickshell.screens`), anchored top/left/right, `implicitHeight: 30`, transparent. `margins.left/right: 5` mirror hyprland's normal `gaps_out` (hardcoded — desyncs while ALT+G recording gaps are on; Quickshell can't read `general.gaps_out` live). `Row` + `Repeater` over `Hyprland.workspaces` left, `ClockWidget` centered (`anchors.horizontalCenter` + `anchors.top` — exact center, flush top like the other pills), battery pill right |
-| `Pill.qml` | Generic pill: `Rectangle` + centered bold 10pt uppercase `Text`. Props: `text` (required), `textColor`, `horizontalPadding`, `verticalPadding`. `radius: 999` with `topLeftRadius`/`topRightRadius: 0` (Qt ≥6.7 per-corner radii) → flat top flush with screen edge, rounded bottom |
-| `ClockWidget.qml` | `Pill` bound to `Time.time` |
-| `Time.qml` | `pragma Singleton`: `SystemClock` formatted `hh:mm`. Uses `SystemClock.Minutes` precision — seconds aren't displayed, and the quickshell docs note Minutes improves battery life (fewer wake-ups/repaints) |
-| `BatteryWidget.qml` | `Pill` bound to battery % from `Quickshell.Services.UPower` |
-| `Theme.qml` | Active-theme palette loader: `FileView` on `~/.config/themes/current/palette.json` (`watchChanges`, noir defaults) exposing `bg`/`bgSolid`/`text`/`accent`/`warn` |
+| `shell.qml` | Root: `Scope` + `Variants` over `Quickshell.screens` |
+| `Bar.qml` | One `PanelWindow` per screen, holds all pills |
+| `Pill.qml` | Generic pill: `Rectangle` + centered content. Props: `text`, `textColor`, `horizontalPadding`, `verticalPadding`, `fontPointSize`, `contentItem`. Default content is a `Text` label; override `contentItem` to host custom content. |
+| `CenterBlock.qml` | Center pill: clock + battery in a `Row` (12pt, `verticalPadding: 12`). Uses `Pill` with custom `contentItem`. Add future widgets to this Row. |
+| `ClockWidget.qml` | `Text` showing `Time.time` (12pt, bold, uppercase) |
+| `BatteryWidget.qml` | `Text` showing a Nerd Font battery glyph (12pt) |
+| `Time.qml` | `pragma Singleton`: `SystemClock` with `Minutes` precision |
+
+All positioned with `anchors.top: parent.top`. Left: workspaces. Center: `CenterBlock`. Right: battery (now part of `CenterBlock`).
 
 ## Styling
 
-All pills share `Pill.qml`. Margins are 0 → pills hang from the very top of the screen. Workspace pills are dimmed unless `active`. Colours come from `Theme.qml` (see table) — `theme-set` restarts the bar on switch since the swap replaces the whole `current/` dir.
-
-`ExclusionMode.Auto` (default with 3 anchors) reserves 30px above windows; set `exclusiveZone: 0` in `Bar.qml` if the bar should float over windows instead.
+- `horizontalPadding: 20`, `verticalPadding: 10`, `radius: 999` with flat top corners.
+- Workspace pills dimmed (opacity 0.6) unless active.
+- Colors from `Theme.qml` (reads `~/.config/themes/current/palette.json`).
 
 ## Battery logic
 
-- `percentage` is a plain property binding to `UPower.displayDevice.percentage` (0–1, rendered as `%`) — event-driven over DBus, no polling. (A redundant `Connections` handler used to overwrite it, breaking the binding on first fire; removed.)
-- Text turns red (`#ff4d42`) below 15%, white otherwise.
+- `percentage` is a plain property bound to `UPower.displayDevice.percentage` (0–1), event-driven over DBus, no polling.
+- Text shows a Nerd Font glyph picked from a 10-step array (`floor(percentage * 10)`, clamped to 9).
+- `charging` (from `UPowerDevice.state`) swaps to the charging glyph set.
+- Glyphs turn red (`#ff4d42`) below 15%.
 
-## Dependencies
+## Gotchas
 
-- `upower` — battery data (in `packages.yaml`).
-- `qt6-declarative` — pulled in as a quickshell dependency; provides **`qmlls6`**, the QML language server used by Neovim (`vim.lsp.enable` list includes `qmlls` with `cmd = { "qmlls6" }`). See `neovim.md`.
+- Battery glyph codepoints in the `F089x` block are **non-contiguous** (0/50/70 are skipped in the charging set) — both arrays are hardcoded, don't do math on them.
+- If the battery shows as tofu/blank, Qt6 font fallback didn't kick in (QTBUG-110502) — add `font.family: "Symbols Nerd Font"` to `BatteryWidget.qml` (confirm the exact family with `fc-list | grep -i symbols`).
 
 ## Extending
 
-New widget = new `.qml` file wrapping `Pill`, referenced from `Bar.qml` (auto-reloads on save when quickshell is running). The bar window is a plain `PanelWindow` — add a `TrayWidget`, `MediaWidget`, etc. as siblings of `ClockWidget`.
+New widget = new `.qml` file, add to `CenterBlock.qml`'s `Row` (for center) or `Bar.qml` (for a new position). Quickshell auto-reloads on save.

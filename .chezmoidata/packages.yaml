@@ -55,6 +55,7 @@ packages:
       - wl-clipboard
       - man-pages
       - upower
+      - ttf-nerd-fonts-symbols
       - htop
 
       # Programs

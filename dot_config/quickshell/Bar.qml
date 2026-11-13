@@ -1,5 +1,5 @@
-import Quickshell
 import QtQuick
+import Quickshell
 import Quickshell.Hyprland
 
 Scope {
@@ -21,7 +21,7 @@ Scope {
                 right: true
             }
 
-            // Mirror hyprland normal gaps_out (appearance.lua): 5 both sides.
+            // Mirror hyprland gaps_out (appearance.lua): 5 both sides.
             // Hardcoded — desyncs while ALT+G recording gaps are active.
             margins {
                 left: 5
@@ -45,24 +45,17 @@ Scope {
                         color: theme.bgSolid
                         text: "%1".arg(workspace.modelData.name)
                         textColor: theme.text
+                        fontPointSize: 12
                     }
                 }
             }
 
-            ClockWidget {
+            CenterBlock {
                 id: clock
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
                 color: theme.bg
                 textColor: theme.text
-            }
-
-            BatteryWidget {
-                id: battery
-                anchors.top: parent.top
-                anchors.right: parent.right
-                color: theme.bg
-                colorNormal: theme.text
                 colorWarning: theme.warn
             }
         }
