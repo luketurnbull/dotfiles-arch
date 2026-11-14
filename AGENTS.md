@@ -33,7 +33,7 @@ Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 
 ## Keybinds (Hyprland, mainMod = SUPER)
 
-`SUPER+T` ghostty · `SUPER+B` helium · `SUPER+N` obsidian · `SUPER+SHIFT+S` obs · `SUPER+SHIFT+B` blender · `SUPER+W` close · `SUPER+hjkl/arrows` focus · `SUPER+SHIFT+*` move · `SUPER+0-9` workspace · `SUPER+F10/F11/F12` mute/vol · `SUPER+SHIFT+M` exit · `ALT+G` toggle 16:9 recording gaps · `ALT+B` quickshell battery/stats popup. tmux prefix is default `C-b`.
+`SUPER+T` ghostty · `SUPER+B` helium · `SUPER+N` obsidian · `SUPER+SHIFT+S` obs · `SUPER+SHIFT+B` blender · `SUPER+W` close · `SUPER+hjkl/arrows` focus · `SUPER+SHIFT+*` move · `SUPER+0-9` workspace · `SUPER+F10/F11/F12` mute/vol · `SUPER+SHIFT+M` exit · `ALT+G` toggle 16:9 recording gaps · `ALT+B` quickshell stats sidebar. tmux prefix is default `C-b`.
 
 ## Gotchas
 

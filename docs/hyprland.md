@@ -60,7 +60,7 @@ Fully dynamic — no hardcoded external output name:
 | `SUPER+T` / `SUPER+B` | ghostty / helium AppImage |
 | `SUPER+N` / `SUPER+SHIFT+S` / `SUPER+SHIFT+B` | obsidian / obs / blender |
 | `ALT+G` | toggle 16:9 recording gaps |
-| `ALT+B` | toggle quickshell battery/stats popup (`hl.dsp.global("quickshell:batterymenu")` → `GlobalShortcut` in `MenuState.qml`) |
+| `ALT+B` | toggle quickshell stats sidebar (`hl.dsp.global("quickshell:batterymenu")` → `GlobalShortcut` in `MenuState.qml`) |
 | `SUPER+W` | close window |
 | `SUPER+hjkl` / arrows | focus (one loop over direction table) |
 | `SUPER+SHIFT+hjkl` / arrows | move window (same loop) |

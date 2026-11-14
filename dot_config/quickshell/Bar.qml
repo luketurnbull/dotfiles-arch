@@ -68,11 +68,6 @@ Scope {
                     onClicked: MenuState.toggle("battery")
                 }
             }
-
-            BatteryMenu {
-                anchorItem: batteryPill
-                screenName: modelData.name
-            }
         }
     }
 }

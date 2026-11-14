@@ -6,4 +6,5 @@ Scope {
     readonly property var _menuState: MenuState
 
     Bar {}
+    StatsSidebar {}
 }
