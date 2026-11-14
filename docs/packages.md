@@ -28,6 +28,5 @@ Edit `packages.yaml` → `chezmoi apply`. That's it.
 
 - `quickshell` is in the pacman list; its dependency `qt6-declarative` provides `qmlls6` (QML LSP for Neovim).
 - `upower` provides battery data for the quickshell `BatteryWidget`.
-- `socat` is used by `hypr/monitor-added.sh` (currently unused — see `hyprland.md`).
 - LSP servers (`bash-language-server`, `autotools-language-server`) come from here, **not** Mason — see `neovim.md`.
 - AUR packages need `paru` installed manually first (it's the bootstrap exception).

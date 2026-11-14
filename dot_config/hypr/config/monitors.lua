@@ -5,7 +5,8 @@ local externalMonitor = nil
 local function setupMonitors()
 	local laptopDisplay = {
 		output = laptopDisplayName,
-		disabled = hasLidDown,
+		-- never disable the only remaining display (lid closed, nothing plugged in)
+		disabled = hasLidDown and externalMonitor ~= nil,
 		scale = 1.25,
 	}
 
@@ -40,6 +41,15 @@ local function configureAll()
 end
 
 configureAll()
+
+-- Hotplug: deferred so monitor reconfig never runs synchronously inside the
+-- event-handler call stack
+local function scheduleConfigure()
+	hl.timer(configureAll, { type = "oneshot", timeout = 1 })
+end
+
+hl.on("monitor.added", scheduleConfigure)
+hl.on("monitor.removed", scheduleConfigure)
 
 hl.bind("switch:off:Lid Switch", function()
 	hasLidDown = false

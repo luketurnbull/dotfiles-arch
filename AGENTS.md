@@ -11,7 +11,7 @@ Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 | Shell (zsh) | `dot_zshrc` | `docs/shell.md` |
 | Starship | `dot_config/starship.toml` | `docs/shell.md` |
 | Neovim | `dot_config/nvim/` (NvChad v2.5 + lazy.nvim) | `docs/neovim.md` |
-| Hyprland | `dot_config/hypr/` (Lua DSL, `hl.*`) | `docs/hyprland.md` |
+| Hyprland | `dot_config/hypr/` (Lua DSL, `hl.*`; modules in `config/`, shared code in `lib/`) | `docs/hyprland.md` |
 | Quickshell | `dot_config/quickshell/` (QML bar) | `docs/quickshell.md` |
 | Ghostty | `dot_config/ghostty/` | `docs/ghostty.md` |
 | tmux | `dot_config/tmux/tmux.conf` | `docs/tmux.md` |
@@ -38,8 +38,8 @@ Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 ## Gotchas
 
 - **NvChad sets mason `PATH = "skip"`** — LSP servers come from pacman/AUR, not Mason; `js-debug-adapter` is referenced by absolute `stdpath/data/mason` path. Never `:MasonInstallAll`.
-- **`devices.lua` disables the internal ThinkPad keyboard** — re-enable if no external keyboard.
-- **`monitors.lua` is dynamic**: any non-`eDP-1` output = external (scale 1.25 at `0x0`, laptop `auto-down`); lid switch toggles `eDP-1`. `monitor-added.sh` (socat hotplug watcher) exists but is **not wired into autostart** — currently unused.
+- **`config/devices.lua` disables the internal ThinkPad keyboard** — re-enable if no external keyboard.
+- **`config/monitors.lua` is dynamic**: any non-`eDP-1` output = external (scale 1.25 at `0x0`, laptop `auto-down`); lid switch toggles `eDP-1` (guarded — never disables the last remaining display). Hotplug is handled natively: `hl.on("monitor.added"/"monitor.removed")` → `configureAll()` deferred via 1ms `hl.timer` (reconfiguring synchronously inside the handler call stack can crash Hyprland). The old socat `monitor-added.sh` was removed along with the `socat` package.
 - **ghostty no longer runs `command = tmux`** — shell integration now injects normally (tabs/splits inherit cwd). Detached tmux sessions keep their apps alive invisibly — sweep occasionally (command in `docs/ghostty.md`).
 - **`~/.config/themes/current/` + `~/.local/state/theme/` are runtime state** written by `theme-set` — never add them to the chezmoi source; chezmoi would revert them on apply.
 - **`hyprctl dispatch exec` is broken by the hypr Lua DSL** — scripts spawn processes via `setsid … &` instead (see `bin/theme-set`).
