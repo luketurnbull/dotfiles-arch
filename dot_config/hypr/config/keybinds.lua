@@ -27,6 +27,9 @@ hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(variables.noteEditor))
 -- Blender
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(variables.blender))
 
+-- Quickshell battery/stats popup (GlobalShortcut in MenuState.qml)
+hl.bind("ALT + B", hl.dsp.global("quickshell:batterymenu"))
+
 --------------------------------------------------------
 -- Audio keybinds --------------------------------------
 --------------------------------------------------------

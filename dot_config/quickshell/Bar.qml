@@ -13,7 +13,7 @@ Scope {
 
             // Content-driven height — pills can never be clipped by the window.
             // workspaces.y accounts for the row's topMargin.
-            implicitHeight: Math.max(workspaces.y + workspaces.implicitHeight, clock.implicitHeight)
+            implicitHeight: Math.max(workspaces.y + workspaces.implicitHeight, clock.implicitHeight, batteryPill.implicitHeight)
 
             anchors {
                 top: true
@@ -46,14 +46,32 @@ Scope {
                 implicitWidth: clockContent.implicitWidth + 40
                 implicitHeight: clockContent.implicitHeight + 8
 
-                Row {
-                    id: clockContent
-                    anchors.centerIn: parent
-                    spacing: 12
+                ClockWidget { id: clockContent; anchors.centerIn: parent }
+            }
 
-                    ClockWidget { anchors.verticalCenter: parent.verticalCenter }
-                    BatteryWidget { anchors.verticalCenter: parent.verticalCenter }
+            Rectangle {
+                id: batteryPill
+                anchors.top: parent.top
+                anchors.right: parent.right
+
+                color: Theme.bg
+                radius: height / 2
+                topLeftRadius: 0
+                topRightRadius: 0
+                implicitWidth: batteryWidget.implicitWidth + 40
+                implicitHeight: batteryWidget.implicitHeight + 8
+
+                BatteryWidget { id: batteryWidget; anchors.centerIn: parent }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: MenuState.toggle("battery")
                 }
+            }
+
+            BatteryMenu {
+                anchorItem: batteryPill
+                screenName: modelData.name
             }
         }
     }
