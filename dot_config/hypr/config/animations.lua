@@ -9,7 +9,7 @@ hl.animation({ leaf = "windowsOut", enabled = true, speed = 2, bezier = "emphasi
 hl.animation({ leaf = "windowsMove", enabled = true, speed = 3, bezier = "emphasizedDecel", style = "slide" })
 
 -- workspaces (slide out / slide in; workspacesIn/Out inherit from parent)
-hl.animation({ leaf = "workspaces", enabled = true, speed = 5, bezier = "emphasizedDecel", style = "slide" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 3, bezier = "emphasizedDecel", style = "slide" })
 hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 4, bezier = "emphasizedDecel", style = "slidevert" })
 
 -- fades
