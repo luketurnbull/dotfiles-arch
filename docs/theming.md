@@ -15,7 +15,7 @@ Each theme dir holds a canonical palette + per-app files derived from it:
 | `nvim` | NvChad | base46 theme name only (`tokyonight`, `gruvbox`, or a custom file in `nvim/lua/themes/`) |
 | `tmux.conf` | tmux | `pane-border-style`, `pane-active-border-style`, `mode-style`, `message-style` |
 | `hyprland.lua` | Hyprland | returns `{ active = "rgb(...)", inactive = "rgb(...)" }` |
-| `palette.json` | quickshell | `{ bg, bgSolid, text, accent, warn, border }` — `bg` carries the `ee` alpha prefix; `border` mirrors `hyprland.lua` `active` |
+| `obsidian` | Obsidian | dark-mode CSS snippet (CSS variables under `.theme-dark`) |
 
 ## Hookups (chezmoi-managed side)
 
@@ -26,7 +26,7 @@ Each theme dir holds a canonical palette + per-app files derived from it:
 | tmux | `source-file -q ~/.config/themes/current/tmux.conf` |
 | Hyprland | `appearance.lua`: `pcall(dofile, …/current/hyprland.lua)`, fallback noir values |
 | Quickshell | `Theme.qml`: `FileView` on `current/palette.json` with `watchChanges` |
-| bat | **nothing** — `--theme="ansi"` follows the terminal palette for free |
+| Obsidian | copies `current/obsidian` → `<vault>/.obsidian/snippets/theme-sync.css`, enables it in `appearance.json`, best-effort `xdotool` reload |
 
 ## `theme-set` (`~/bin/theme-set`)
 

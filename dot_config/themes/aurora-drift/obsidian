@@ -1,0 +1,57 @@
+/* Obsidian theme sync snippet — dark mode only. */
+.theme-dark {
+  --background-primary: #050814;
+  --background-primary-alt: #050814;
+  --background-secondary: #050814;
+  --background-secondary-alt: #050814;
+  --background-modifier-border: #263449;
+  --background-modifier-form-field: #050814;
+  --background-modifier-form-field-highlighted: #263449;
+  --background-modifier-box-shadow: rgba(0, 0, 0, 0.3);
+  --background-modifier-success: #80e5bd;
+  --background-modifier-error: #ff6b6b;
+  --background-modifier-error-hover: #ff8b8b;
+  --background-modifier-warning: #ffd166;
+
+  --text-normal: #e6f1ff;
+  --text-muted: #c0cad6;
+  --text-faint: #263449;
+  --text-on-accent: #050814;
+  --text-error: #ff6b6b;
+  --text-success: #80e5bd;
+  --text-warning: #ffd166;
+
+  --interactive-normal: #050814;
+  --interactive-hover: #263449;
+  --interactive-accent: #00e5ff;
+  --interactive-accent-hover: #91bdff;
+  --interactive-accent-rgb: 0, 229, 255;
+
+  --link-color: #00e5ff;
+  --link-color-hover: #91bdff;
+  --link-external-color: #6ea8ff;
+  --link-external-color-hover: #91bdff;
+
+  --code-background: #050814;
+  --code-normal: #e6f1ff;
+
+  --scrollbar-bg: #050814;
+  --scrollbar-thumb-bg: #263449;
+}
+
+
+/* Minimal chrome — hide tabs, ribbons, status bar, view headers */
+.workspace-ribbon,
+.status-bar,
+.workspace-tab-header-container,
+.view-header,
+.nav-header,
+.titlebar-button {
+  display: none !important;
+}
+
+/* breathing room at top of file explorer */
+.nav-files-container,
+.workspace-leaf-content[data-type="file-explorer"] .view-content {
+  padding-top: 24px !important;
+}

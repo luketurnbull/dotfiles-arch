@@ -106,5 +106,45 @@ if [[ -n $nvtheme ]]; then
 	_dbg nvim-live-switched
 fi
 
+# obsidian: copy the generated snippet into the vault and ensure it's enabled.
+# Vault config is user data — theme-set owns these writes, not chezmoi.
+obsidian_vault="$HOME/notes"
+if [[ -d $obsidian_vault/.obsidian ]]; then
+	obsidian_snippets="$obsidian_vault/.obsidian/snippets"
+	mkdir -p "$obsidian_snippets"
+	cp -f "$current_dir/obsidian" "$obsidian_snippets/theme-sync.css"
+	_dbg obsidian-snippet-copied
+	# idempotently add theme-sync to appearance.json cssSnippets
+	obsidian_appearance="$obsidian_vault/.obsidian/appearance.json"
+	if [[ -f $obsidian_appearance ]]; then
+		if command -v python3 >/dev/null 2>&1; then
+			python3 - "$obsidian_appearance" <<'PY' || true
+import json, sys
+p = sys.argv[1]
+try:
+    with open(p) as f:
+        data = json.load(f)
+except Exception:
+    data = {}
+snips = data.get("cssSnippets")
+if not isinstance(snips, list):
+    snips = []
+if "theme-sync" not in snips:
+    snips.append("theme-sync")
+data["cssSnippets"] = snips
+with open(p, "w") as f:
+    json.dump(data, f, indent=2)
+    f.write("\n")
+PY
+		fi
+	fi
+	_dbg obsidian-appearance-updated
+	# best-effort reload (obsidian has no signal); xdotool optional
+	if command -v xdotool >/dev/null 2>&1; then
+		xdotool search --name "Obsidian" key --window "%1" ctrl+r >/dev/null 2>&1 || true
+		_dbg obsidian-reloaded
+	fi
+fi
+
 # bat uses --theme=ansi — follows the terminal palette, nothing to do
 
