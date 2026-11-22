@@ -171,7 +171,7 @@ Scope {
                 }
             }
 
-            // --- Morph popout (dummy content for now) ---
+            // --- Morph popout (clock content is still a dummy) ---
 
             MorphPopout {
                 id: popout
@@ -202,17 +202,7 @@ Scope {
                 PopoutLoader {
                     name: "battery"
                     popout: popout
-                    sourceComponent: Rectangle {
-                        implicitWidth: 220
-                        implicitHeight: 150
-                        radius: 8
-                        color: Theme.warn
-
-                        StyledText {
-                            anchors.centerIn: parent
-                            text: "battery popout"
-                        }
-                    }
+                    sourceComponent: BatteryPopout {}
                 }
             }
         }

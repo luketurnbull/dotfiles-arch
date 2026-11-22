@@ -39,6 +39,4 @@ Singleton {
     // The bar window reserves stripHeight + popoutMaxHeight; popout content
     // taller than this is clipped by the window.
     property real popoutMaxHeight: 400
-
-    property real sidebarWidth: 300
 }
