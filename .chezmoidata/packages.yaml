@@ -74,3 +74,4 @@ packages:
       - autotools-language-server
       - roslyn-language-server
       - netcoredbg
+      - kanata-bin
