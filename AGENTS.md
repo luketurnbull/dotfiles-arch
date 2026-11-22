@@ -33,7 +33,7 @@ Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 
 ## Keybinds (Hyprland, mainMod = SUPER)
 
-`SUPER+T` ghostty · `SUPER+B` helium · `SUPER+N` obsidian · `SUPER+SHIFT+S` obs · `SUPER+SHIFT+B` blender · `SUPER+W` close · `SUPER+hjkl/arrows` focus · `SUPER+SHIFT+*` move · `SUPER+0-9` workspace · `SUPER+F10/F11/F12` mute/vol · `SUPER+SHIFT+M` exit · `ALT+G` toggle 16:9 recording gaps · `ALT+B` quickshell stats sidebar. tmux prefix is default `C-b`.
+`SUPER+T` ghostty · `SUPER+B` helium · `SUPER+N` obsidian · `SUPER+SHIFT+S` obs · `SUPER+SHIFT+B` blender · `SUPER+W` close · `SUPER+hjkl/arrows` focus · `SUPER+SHIFT+*` move · `SUPER+0-9` workspace · `SUPER+F10/F11/F12` mute/vol · `SUPER+SHIFT+M` exit · `ALT+G` toggle 16:9 recording gaps · `ALT+B` quickshell battery popout. tmux prefix is default `C-b`.
 
 ## Gotchas
 
@@ -44,4 +44,4 @@ Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 - **`~/.config/themes/current/` + `~/.local/state/theme/` are runtime state** written by `theme-set` — never add them to the chezmoi source; chezmoi would revert them on apply.
 - **`hyprctl dispatch exec` is broken by the hypr Lua DSL** — scripts spawn processes via `setsid … &` instead (see `bin/theme-set`).
 - **Zen chrome linker script was removed** — `userChrome.css` must be symlinked into each profile manually (steps in `docs/zen-browser.md`).
-- `quickshell` autostarts from `hyprland.lua`; top bar = battery + clock + workspaces; styling centralized in singletons `Theme.qml` (colors) + `Appearance.qml` (sizes), with shared `StyledText`/`Workspaces` components. `qmlls6` comes from `qt6-declarative` (quickshell dep).
+- `quickshell` autostarts from hyprland (`config/autostart.lua`); top bar = battery + clock + workspaces, with morphing popouts (`MorphPopout`/`PopoutLoader` — hover or click a pill, ALT+B pins battery). Styling centralized in singletons `Theme.qml` (colors) + `Appearance.qml` (sizes/curves), with shared `StyledText`/`Workspaces` components. `qmlls6` comes from `qt6-declarative` (quickshell dep). chezmoi v2 `apply` never deletes targets of removed source files — `rm` them in `~/` manually.
