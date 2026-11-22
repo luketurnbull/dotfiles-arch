@@ -28,6 +28,10 @@ M.ui = {
 	-- hide the top buffer tabline; nvchad's <leader>x close_buffer relies on
 	-- tabufline's vim.t.bufs state, so mappings.lua provides its own remap
 	tabufline = { enabled = false },
+	statusline = {
+		theme = "vscode",
+		order = { "mode", "file", "git" },
+	},
 }
 
 return M

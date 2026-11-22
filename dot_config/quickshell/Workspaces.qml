@@ -21,10 +21,10 @@ Row {
                 }
 
                 if (exists) {
-                    return 0.75;
+                    return 0.70;
                 }
 
-                return 0.25;
+                return 0.20;
             }
 
             opacity: getOpacity()

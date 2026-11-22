@@ -1,0 +1,15 @@
+BasedOnStyle: LLVM
+Cpp11BracedListStyle: true
+
+# Force a break after `{` for braced initializer lists when they
+# exceed the column limit.
+BreakAfterOpenBracketBracedList: true
+BreakBeforeCloseBracketBracedList: true
+
+# One designated field/argument per line.
+PackArguments:
+  BinPack: UseBreakAfter
+  BreakAfter: 1
+
+# Indent contents of braced init lists.
+BracedInitializerIndentWidth: 4
