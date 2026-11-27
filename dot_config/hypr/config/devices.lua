@@ -1,4 +1,5 @@
-hl.device({
-	name = "at-translated-set-2-keyboard",
-	enabled = false,
-})
+-- Internal keyboard (at-translated-set-2-keyboard) is managed by kanata
+-- (see docs/keyboard.md): kanata grabs the device exclusively and emits a
+-- virtual keyboard, so no Hyprland-side disable is needed here. When kanata
+-- is stopped the internal keyboard works as stock — a useful fallback.
+-- Do NOT add a disable rule for kanata's virtual keyboard ("Kanata").

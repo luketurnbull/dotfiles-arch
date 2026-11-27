@@ -33,5 +33,5 @@ Snapshot 2026-09-19 (`pacman -Q`); the kernel in particular drifts with every up
 
 ## Notes
 
-- Internal keyboard (`at-translated-set-2-keyboard`) is **disabled** in `dot_config/hypr/devices.lua` — an external keyboard is used.
+- Internal keyboard (`at-translated-set-2-keyboard`) is remapped by **kanata** (homerow mods etc. — see `docs/keyboard.md`). External keyboard: beekeeb **Piantor** (Vial).
 - ~876 pacman packages installed; managed list in `.chezmoidata/packages.yaml`.

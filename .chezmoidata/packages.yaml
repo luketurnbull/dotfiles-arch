@@ -57,6 +57,7 @@ packages:
       - upower
       - ttf-nerd-fonts-symbols
       - htop
+      - uinput
 
       # Programs
       - obsidian

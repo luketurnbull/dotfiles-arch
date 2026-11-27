@@ -1,0 +1,28 @@
+;; kanata — internal ThinkPad keyboard only ("AT Translated Set 2 keyboard").
+;; Standard QWERTY with Piantor/Vial home-row mods and Caps Lock as Escape.
+;; Tap = key, hold = modifier; tapping term 200ms, plain tap-hold.
+;; See docs/keyboard.md. Emergency exit: LCtrl+Space+Esc.
+
+(defcfg
+  linux-dev-names-include ("AT Translated Set 2 keyboard")
+  process-unmapped-keys yes
+)
+
+(defsrc
+  caps a s d f j k l ;
+)
+
+(defalias
+  a (tap-hold 200 200 a lsft)
+  s (tap-hold 200 200 s lalt)
+  d (tap-hold 200 200 d lmet)
+  f (tap-hold 200 200 f lctl)
+  j (tap-hold 200 200 j rctl)
+  k (tap-hold 200 200 k rmet)
+  l (tap-hold 200 200 l ralt)
+  ; (tap-hold 200 200 ; rsft)
+)
+
+(deflayer base
+  esc @a @s @d @f @j @k @l @;
+)

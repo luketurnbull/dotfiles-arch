@@ -1,0 +1,9 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+# Restart kanata when its config changes (kanata has no file watcher).
+# kanata.kbd hash: {{ include "dot_config/kanata/kanata.kbd" | sha256sum }}
+if systemctl --user -q is-active kanata 2>/dev/null; then
+  systemctl --user restart kanata
+fi
+exit 0
+{{ end -}}

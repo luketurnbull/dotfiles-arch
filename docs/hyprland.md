@@ -18,7 +18,7 @@ error in one module doesn't kill the others.
 | `config/appearance.lua` | Gaps/borders/rounding/blur + `toggleGaps()` recording mode |
 | `config/animations.lua` | Custom beziers + animation definitions |
 | `config/keybinds.lua` | All keybinds |
-| `config/devices.lua` | Disables internal keyboard |
+| `config/devices.lua` | Comment stub — internal keyboard handled by kanata (see `docs/keyboard.md`) |
 | `config/autostart.lua` | `hyprland.start` autostart list |
 | `lib/theme.lua` | Loads border colours from the active theme (written by `theme-set`); fallback noir |
 | `hyprpaper.conf` | Wallpaper (not Lua; hardcodes `DP-2` + `eDP-1`) |
@@ -60,7 +60,6 @@ Fully dynamic — no hardcoded external output name:
 | `SUPER+T` / `SUPER+B` | ghostty / helium AppImage |
 | `SUPER+N` / `SUPER+SHIFT+S` / `SUPER+SHIFT+B` | obsidian / obs / blender |
 | `ALT+G` | toggle 16:9 recording gaps |
-| `ALT+B` | toggle quickshell stats sidebar (`hl.dsp.global("quickshell:batterymenu")` → `GlobalShortcut` in `MenuState.qml`) |
 | `SUPER+W` | close window |
 | `SUPER+hjkl` / arrows | focus (one loop over direction table) |
 | `SUPER+SHIFT+hjkl` / arrows | move window (same loop) |
@@ -90,8 +89,11 @@ slidevert @4); layers slide (in @4, out @3); fades @2–3; border/zoomFactor @5/
 
 ## Devices (`config/devices.lua`)
 
-`at-translated-set-2-keyboard` (internal ThinkPad keyboard) is **disabled** — an
-external keyboard is expected. Re-enable here if needed.
+Comment stub only. The internal keyboard is remapped by **kanata** (see
+`docs/keyboard.md`), which grabs the device at evdev level and emits a virtual
+`Kanata` keyboard — Hyprland never needs to disable the physical one, and must
+never disable the virtual one. Stock keyboard behavior returns when kanata is
+stopped.
 
 ## Wallpaper (`hyprpaper.conf`)
 
