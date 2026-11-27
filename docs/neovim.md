@@ -24,13 +24,15 @@
 
 ## LSP (`lua/configs/lspconfig.lua`)
 
-`nvchad.configs.lspconfig.defaults()` then `vim.lsp.enable{ "html", "cssls", "clangd", "qmlls", "bashls", "autotools_ls", "roslyn_ls" }`; `qmlls` overridden with `cmd = { "qmlls6" }` (from `qt6-declarative`, a quickshell dep).
+`nvchad.configs.lspconfig.defaults()` then `vim.lsp.enable{ "html", "cssls", "clangd", "qmlls", "bashls", "autotools_ls", "roslyn_ls", "rust_analyzer" }`; `qmlls` overridden with `cmd = { "qmlls6" }` (from `qt6-declarative`, a quickshell dep).
 
 **Server binaries come from pacman/AUR, not Mason** — NvChad sets mason `PATH = "skip"`, so Mason-installed binaries are invisible to `vim.lsp.enable`. `bash-language-server` + `shellcheck` (pacman) feed bashls; `autotools-language-server` + `roslyn-language-server` from AUR (the AUR binary name matches lspconfig's `roslyn_ls` fallback cmd, so no override needed; roots on `.sln`/`.slnx`/`.csproj`). Avoid `:MasonInstallAll` — it scrapes the lspconfig list and would duplicate pacman servers inside Mason.
 
+**Rust exception**: pacman installs `rustup`; `run_once_install-rust-toolchain.sh.tmpl` installs the stable toolchain plus `rust-analyzer`, `rust-src`, and `rustfmt`. `~/.cargo/bin` (Cargo-installed tools) and `/usr/lib/rustup/bin` (Arch's rust-analyzer proxy) are on zsh's `PATH`, so lspconfig's default `rust-analyzer` command resolves without an override.
+
 ## Formatting (`lua/configs/conform.lua`)
 
-`stylua` (lua), `clang-format` (c). `format_on_save` timeout 500ms, `lsp_fallback = true`.
+`stylua` (lua), `clang-format` (c); Rust uses rust-analyzer/rustfmt through the LSP fallback. `format_on_save` timeout 500ms, `lsp_fallback = true`.
 
 ## DAP (`lua/configs/dap.lua`)
 

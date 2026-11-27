@@ -26,6 +26,7 @@ packages:
       - lua-language-server
       - stylua
       - clang
+      - rustup
       - nvm
       - pnpm
       - bash-language-server
@@ -57,7 +58,6 @@ packages:
       - upower
       - ttf-nerd-fonts-symbols
       - htop
-      - uinput
 
       # Programs
       - obsidian

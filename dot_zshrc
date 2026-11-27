@@ -1,7 +1,7 @@
 # Default editors
 export EDITOR="nvim"
 export VISUAL="nvim"
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.cargo/bin:/usr/lib/rustup/bin:$HOME/bin:/usr/local/bin:$PATH
 # Pi
 export PATH="/home/luke/.local/share/pi-node/node-v22.23.2-linux-x64/bin:$PATH"
 

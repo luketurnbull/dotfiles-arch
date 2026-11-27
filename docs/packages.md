@@ -29,4 +29,5 @@ Edit `packages.yaml` → `chezmoi apply`. That's it.
 - `quickshell` is in the pacman list; its dependency `qt6-declarative` provides `qmlls6` (QML LSP for Neovim).
 - `upower` provides battery data for the quickshell `BatteryWidget`.
 - LSP servers (`bash-language-server`, `autotools-language-server`) come from here, **not** Mason — see `neovim.md`.
+- `rustup` is installed via pacman; `run_once_install-rust-toolchain.sh.tmpl` installs stable Rust plus the `rust-analyzer`, `rust-src`, and `rustfmt` components. It conflicts with pacman's `rust`/`cargo`/`rustfmt` packages, so switching to rustup replaces those.
 - AUR packages need `paru` installed manually first (it's the bootstrap exception).

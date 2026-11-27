@@ -2,7 +2,7 @@
 
 ## zsh (`dot_zshrc` → `~/.zshrc`)
 
-- `EDITOR`/`VISUAL = nvim`; `PATH` prepends `~/bin`, `/usr/local/bin`.
+- `EDITOR`/`VISUAL = nvim`; `PATH` prepends `~/.cargo/bin`, `/usr/lib/rustup/bin`, `~/bin`, `/usr/local/bin`.
 - Man pages: `MANROFFOPT="-c"`, `MANPAGER="sh -c 'col -bx | bat -l man -p'"`.
 - History: 50000 entries in `~/.zsh_history`, dedup options (`EXTENDED_HISTORY`, `INC_APPEND_HISTORY`, `SHARE_HISTORY`, `HIST_EXPIRE_DUPS_FIRST`, `HIST_IGNORE_DUPS`/`_ALL_DUPS`/`_SPACE`, `HIST_SAVE_NO_DUPS`, `HIST_REDUCE_BLANKS`).
 - Completion: `compinit` with menu select + case-insensitive matching.

@@ -1,0 +1,7 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+set -eu
+
+rustup default stable
+rustup component add rust-analyzer rust-src rustfmt
+{{ end -}}
