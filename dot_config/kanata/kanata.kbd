@@ -1,6 +1,7 @@
 ;; kanata — internal ThinkPad keyboard only ("AT Translated Set 2 keyboard").
-;; Standard QWERTY with Piantor/Vial home-row mods and Caps Lock as Escape.
-;; Tap = key, hold = modifier; tapping term 200ms, plain tap-hold.
+;; Standard QWERTY with Piantor/Vial home-row mods, Caps Lock as Escape,
+;; and Space held for the numbers/symbols layer.
+;; Tap = key, hold = modifier/layer; tapping term 200ms, plain tap-hold.
 ;; See docs/keyboard.md. Emergency exit: LCtrl+Space+Esc.
 
 (defcfg
@@ -9,7 +10,10 @@
 )
 
 (defsrc
-  caps a s d f j k l ;
+  tab  q    w    e    r    t    y    u    i    o    p    [
+  caps a    s    d    f    g    h    j    k    l    ;    '
+  n    m    ,    .    /    rsft
+  spc
 )
 
 (defalias
@@ -21,8 +25,19 @@
   k (tap-hold 200 200 k rmet)
   l (tap-hold 200 200 l ralt)
   ; (tap-hold 200 200 ; rsft)
+  spc (tap-hold 200 200 spc (layer-while-held numbers))
 )
 
 (deflayer base
-  esc @a @s @d @f @j @k @l @;
+  tab  q    w    e    r    t    y    u    i    o    p    [
+  esc  @a   @s   @d   @f   g    h    @j   @k   @l   @;   '
+  n    m    ,    .    /    rsft
+  @spc
+)
+
+(deflayer numbers
+  S-grv S-1  S-2  S-3  S-4  S-5  S-6  S-7  S-8  S-9  S-0  S--
+  grv   1    2    3    4    5    6    7    8    9    0    -
+  \     S-[  S-]  [    ]    S-\
+  _
 )

@@ -17,6 +17,7 @@ Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 | tmux | `dot_config/tmux/tmux.conf` | `docs/tmux.md` |
 | bat | `dot_config/bat/` | `docs/shell.md` |
 | Kanata (kb remapper) | `dot_config/kanata/` + `dot_config/systemd/user/` | `docs/keyboard.md` |
+| Piantor hotplug inhibit | `keyboards/piantor-internal-keyboard.sh` + `keyboards/99-piantor-internal-keyboard.rules` (repo-only; root-owned copies in `/usr/local/sbin` + `/etc/udev/rules.d`) | `docs/keyboard.md` |
 | Zen Browser | `dot_config/zen-chrome/userChrome.css` | `docs/zen-browser.md` |
 | opencode | `dot_config/opencode/` | `docs/opencode.md` |
 | Packages | `.chezmoidata/packages.yaml` + `run_onchange_install-packages.sh.tmpl` | `docs/packages.md` |
@@ -40,6 +41,7 @@ Deep detail per topic lives in `docs/` (repo-only, chezmoi-ignored).
 
 - **NvChad sets mason `PATH = "skip"`** — LSP servers come from pacman/AUR, not Mason; `js-debug-adapter` is referenced by absolute `stdpath/data/mason` path. Never `:MasonInstallAll`.
 - **Internal keyboard is remapped by kanata** (systemd user service; setup in `docs/keyboard.md`). It grabs `at-translated-set-2-keyboard` and emits a virtual `Kanata` device — never disable that one in `config/devices.lua`. `systemctl --user stop kanata` → stock keyboard fallback; emergency exit LCtrl+Space+Esc.
+- **Piantor presence inhibits the physical internal keyboard** via root-owned udev helper/rule (`/usr/local/sbin/piantor-internal-keyboard`, `/etc/udev/rules.d/99-piantor-internal-keyboard.rules`); sources are repo-only in `keyboards/`, install/update steps in `docs/keyboard.md`. Recovery: `sudo /usr/local/sbin/piantor-internal-keyboard enable`. Kanata and ThinkPad extra buttons are not disabled.
 - **`config/monitors.lua` is dynamic**: any non-`eDP-1` output = external (scale 1.25 at `0x0`, laptop `auto-down`); lid switch toggles `eDP-1` (guarded — never disables the last remaining display). Hotplug is handled natively: `hl.on("monitor.added"/"monitor.removed")` → `configureAll()` deferred via 1ms `hl.timer` (reconfiguring synchronously inside the handler call stack can crash Hyprland). The old socat `monitor-added.sh` was removed along with the `socat` package.
 - **ghostty no longer runs `command = tmux`** — shell integration now injects normally (tabs/splits inherit cwd). Detached tmux sessions keep their apps alive invisibly — sweep occasionally (command in `docs/ghostty.md`).
 - **`~/.config/themes/current/` + `~/.local/state/theme/` are runtime state** written by `theme-set` — never add them to the chezmoi source; chezmoi would revert them on apply.

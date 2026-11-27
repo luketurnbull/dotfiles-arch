@@ -1,0 +1,7 @@
+# Inhibit the built-in keyboard while the beekeeb Piantor is connected.
+# Remove events expose PRODUCT, but not ID_VENDOR_ID/ID_MODEL_ID.
+ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="beeb/1/*", RUN+="/usr/local/sbin/piantor-internal-keyboard sync"
+ACTION=="remove", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{PRODUCT}=="beeb/1/*", RUN+="/usr/local/sbin/piantor-internal-keyboard enable"
+
+# Handle coldplug regardless of USB/internal-keyboard discovery order.
+ACTION=="add", SUBSYSTEM=="input", KERNEL=="event[0-9]*", ATTRS{name}=="AT Translated Set 2 keyboard", RUN+="/usr/local/sbin/piantor-internal-keyboard sync"
