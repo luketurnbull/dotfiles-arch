@@ -1,6 +1,5 @@
 use amane::{
-    Center, Color, Parent, Rectangle, Row, Service, Text, Weight::Bold, Widget, Workspace,
-    Workspaces,
+    Center, Color, Rectangle, Row, Service, Text, Weight::Bold, Widget, Workspace, Workspaces,
 };
 
 pub fn view() -> Row {
@@ -19,11 +18,11 @@ fn button(workspace: &Workspace) -> Rectangle {
     let id = workspace.id();
 
     let rect = Rectangle::new()
-        .width(24.0)
-        .height(Parent)
+        .width(28.0)
+        .height(28.0)
         .align_child(Center, Center)
         .fill("000000")
-        .blur(20.0)
+        .blur(200.0)
         .radius(10.0)
         .on_click(move |_| Workspaces::focus(id))
         .child(
@@ -34,12 +33,12 @@ fn button(workspace: &Workspace) -> Rectangle {
         );
 
     if workspace.focused() {
-        return rect.border(1.0, "#FFFFFF");
+        return rect.opacity(0.9).border(1.0, "#FFFFFF55");
     }
 
     if workspace.windows() > 0 {
-        return rect.opacity(0.7);
+        return rect.opacity(0.5);
     }
 
-    return rect.opacity(0.25);
+    return rect.opacity(0.0);
 }

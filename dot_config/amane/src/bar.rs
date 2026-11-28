@@ -1,24 +1,36 @@
 mod left;
+mod right;
 
-use amane::{Full, Layer, LayerWindow, Monitor, Parent, Rectangle, Vertical, Zone};
+use amane::{
+    Align, Full, Justify, Layer, LayerWindow, Monitor, Parent, Rectangle, Row, Vertical, Zone,
+    children,
+};
 
 pub fn view(_: &Monitor) -> LayerWindow {
+    let columns = children![
+        Rectangle::new()
+            .width(Parent)
+            .height(Parent)
+            .child(left::view()),
+        Rectangle::new()
+            .width(Parent)
+            .height(Parent)
+            .align_child(Align::Center, Align::Center)
+            .child(right::view()),
+        Rectangle::new().width(Parent).height(Parent)
+    ];
+
     LayerWindow::new()
         .width(Full)
-        .height(24.0)
+        .height(28.0)
         .margin(amane::Margin {
-            top: 2,
+            top: 10,
             right: 5,
-            bottom: 0,
-            left: 5,
+            bottom: 8,
+            left: 6,
         })
         .space(Zone::Reserve)
         .layer(Layer::Top)
         .anchor_vertical(Vertical::Top)
-        .child(
-            Rectangle::new()
-                .width(Parent)
-                .height(Parent)
-                .child(left::view()),
-        )
+        .child(Row::new(columns).justify(Justify::Center))
 }
